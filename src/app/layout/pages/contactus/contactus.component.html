@@ -1,0 +1,253 @@
+
+<section class="contact-section">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- LEFT: CONTACT INFORMATION -->
+      <div class="col-lg-5">
+        <h2 class="section-title">Get in Touch</h2>
+
+        <div class="contact-info-list">
+
+          <!-- OFFICE ADDRESS -->
+          <div class="contact-info-card office-card">
+            <div class="contact-icon office-icon">
+              <i class="fa-solid fa-phone-volume"></i>
+            </div>
+            <div class="contact-info">
+              <h4>Our Office Address</h4>
+              <p>Cairo</p>
+            </div>
+          </div>
+
+          <!-- CONTACT NUMBER -->
+          <div class="contact-info-card phone-card">
+            <div class="contact-icon phone-icon">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <div class="contact-info">
+              <h4>Contact Number</h4>
+              <p>00 000 00 00</p>
+            </div>
+          </div>
+
+          <!-- EMAIL ADDRESS -->
+          <div class="contact-info-card email-card">
+            <div class="contact-icon email-icon">
+              <i class="fa-regular fa-envelope"></i>
+            </div>
+            <div class="contact-info">
+              <h4>Email Address</h4>
+              <p>info&#64;kingcotto.com</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT: CONTACT FORM -->
+      <div class="col-lg-7">
+        <h2 class="section-title form-title">
+          Feel free to message us
+        </h2>
+
+        <form
+          #contactForm="ngForm"
+          (ngSubmit)="onSubmit()"
+          novalidate
+        >
+
+          <!-- NAME + PHONE -->
+          <div class="row g-4 mb-4">
+
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control contact-input"
+                placeholder="Your Name"
+                name="name"
+                [(ngModel)]="contact.name"
+                #name="ngModel"
+                required
+                minlength="2"
+                [class.is-invalid]="name.invalid && name.touched"
+                [disabled]="loading"
+              />
+
+              <small
+                class="field-error"
+                *ngIf="name.invalid && name.touched"
+              >
+                Please enter your name (at least 2 characters).
+              </small>
+            </div>
+
+            <div class="col-md-6">
+              <input
+                type="tel"
+                class="form-control contact-input"
+                placeholder="Your Phone Number"
+                name="phone"
+                [(ngModel)]="contact.phone"
+                #phone="ngModel"
+                required
+                [class.is-invalid]="phone.invalid && phone.touched"
+                [disabled]="loading"
+              />
+
+              <small
+                class="field-error"
+                *ngIf="phone.invalid && phone.touched"
+              >
+                Please enter your phone number.
+              </small>
+            </div>
+
+          </div>
+
+          <!-- EMAIL -->
+          <div class="mb-4">
+            <input
+              type="email"
+              class="form-control contact-input"
+              placeholder="Your Email"
+              name="email"
+              [(ngModel)]="contact.email"
+              #email="ngModel"
+              required
+              email
+              [class.is-invalid]="email.invalid && email.touched"
+              [disabled]="loading"
+            />
+
+            <small
+              class="field-error"
+              *ngIf="email.invalid && email.touched"
+            >
+              Please enter a valid email address.
+            </small>
+          </div>
+
+          <!-- SUBJECT -->
+          <div class="mb-4">
+            <input
+              type="text"
+              class="form-control contact-input"
+              placeholder="Subject"
+              name="subject"
+              [(ngModel)]="contact.subject"
+              #subject="ngModel"
+              required
+              [class.is-invalid]="subject.invalid && subject.touched"
+              [disabled]="loading"
+            />
+
+            <small
+              class="field-error"
+              *ngIf="subject.invalid && subject.touched"
+            >
+              Please enter the subject.
+            </small>
+          </div>
+
+          <!-- MESSAGE -->
+          <div class="mb-4">
+            <textarea
+              class="form-control contact-textarea"
+              placeholder="Write Your Comment"
+              name="message"
+              [(ngModel)]="contact.message"
+              #message="ngModel"
+              required
+              minlength="5"
+              [class.is-invalid]="message.invalid && message.touched"
+              [disabled]="loading"
+            ></textarea>
+
+            <small
+              class="field-error"
+              *ngIf="message.invalid && message.touched"
+            >
+              Please enter your message (at least 5 characters).
+            </small>
+          </div>
+
+          <!-- CAPTCHA CHECKBOX -->
+          <div
+            class="captcha-box mb-4"
+            [class.captcha-verified]="captchaChecked"
+          >
+            <label class="captcha-label">
+              <input
+                type="checkbox"
+                name="captcha"
+                [(ngModel)]="captchaChecked"
+                [disabled]="loading"
+                aria-label="I'm not a robot"
+              />
+
+              <span>I'm not a robot</span>
+            </label>
+
+            <div class="captcha-brand">
+              <i
+                class="fa-solid"
+                [class.fa-shield-halved]="!captchaChecked"
+                [class.fa-circle-check]="captchaChecked"
+              ></i>
+              <small>CAPTCHA</small>
+              <small class="captcha-status" *ngIf="captchaChecked">
+                Verified
+              </small>
+            </div>
+          </div>
+
+          <!-- SUCCESS MESSAGE -->
+          <div
+            class="alert alert-success"
+            *ngIf="successMessage"
+            role="status"
+            aria-live="polite"
+          >
+            <i class="fa-solid fa-circle-check me-2"></i>
+            {{ successMessage }}
+          </div>
+
+          <!-- ERROR MESSAGE -->
+          <div
+            class="alert alert-danger"
+            *ngIf="errorMessage"
+            role="alert"
+            aria-live="assertive"
+          >
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            {{ errorMessage }}
+          </div>
+
+          <!-- SUBMIT BUTTON -->
+          <button
+            type="submit"
+            class="send-btn"
+            [disabled]="loading || !contactForm.valid || !captchaChecked"
+          >
+            <ng-container class="bg-primary" *ngIf="!loading; else  loadingTemplate">
+              <button class="btn " ><span >Send Message</span>
+              <i class="fa-solid fa-paper-plane"></i></button>
+            </ng-container>
+
+            <ng-template #loadingTemplate>
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              <span>Sending...</span>
+            </ng-template>
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>

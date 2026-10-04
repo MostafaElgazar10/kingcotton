@@ -1,0 +1,397 @@
+:host {
+  display: block;
+  color: #171717;
+}
+
+.checkout-page {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 34px 24px 60px;
+  font-family: Arial, sans-serif;
+}
+
+/* Checkout steps */
+.checkout-steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: min(620px, 100%);
+  margin: 0 auto 78px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 90px;
+  color: #5680e2;
+  font-size: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.step-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #5680e2;
+  color: #fff;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.step-line {
+  flex: 1;
+  height: 1px;
+  margin-top: 23px;
+}
+
+.completed-line {
+  background: #5680e2;
+}
+
+.pending-line {
+  border-top: 1px dashed #555;
+}
+
+/* Main layout */
+.checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(320px, 1.05fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.payment-card,
+.summary-card {
+  background: #f7f7f7;
+  padding: 28px 24px;
+}
+
+.payment-card {
+  min-height: 260px;
+
+  h2 {
+    margin: 12px 0 32px;
+    font-size: 21px;
+    font-weight: 600;
+  }
+}
+
+.payment-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 24px;
+  cursor: pointer;
+
+  input[type='radio'] {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+    margin: 2px 0 0;
+    border: 1px solid #999;
+    border-radius: 50%;
+    background: #e5e5e5;
+    cursor: pointer;
+
+    &:checked {
+      border-color: #e91e63;
+      background: #fff;
+      box-shadow: inset 0 0 0 5px #fff;
+      outline: 1px solid #e91e63;
+    }
+
+    &:checked::after {
+      content: '';
+      display: block;
+      width: 9px;
+      height: 9px;
+      margin: 4px;
+      border-radius: 50%;
+      background: #e91e63;
+    }
+  }
+}
+
+.payment-option-content {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 16px;
+
+  strong {
+    font-weight: 600;
+  }
+
+  small {
+    font-size: 14px;
+    color: #222;
+  }
+}
+
+/* ================================
+   SUMMARY CARD
+================================ */
+
+.summary-card {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 16px;
+  padding: 26px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+  position: sticky;
+  top: 25px;
+}
+
+
+/* ================================
+   TITLE
+================================ */
+
+.summary-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+
+/* ================================
+   COUPON
+================================ */
+
+.coupon-section {
+  margin-bottom: 25px;
+}
+
+.coupon-section label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 9px;
+}
+
+.coupon-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.coupon-input-group .form-control {
+  height: 44px;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  padding: 0 13px;
+  font-size: 14px;
+  color: #333;
+  box-shadow: none;
+  transition: 0.25s ease;
+}
+
+.coupon-input-group .form-control:focus {
+  border-color: #005c86;
+  box-shadow: 0 0 0 3px rgba(0, 92, 134, 0.08);
+}
+
+.coupon-button {
+  min-width: 82px;
+  height: 44px;
+  border: none;
+  border-radius: 8px;
+  background: #005c86;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.coupon-button:hover:not(:disabled) {
+  background: #004b6d;
+  transform: translateY(-1px);
+}
+
+.coupon-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* Coupon message */
+
+.coupon-message {
+  margin: 9px 0 0;
+  font-size: 13px;
+  color: #666;
+}
+
+
+/* ================================
+   PRICE DETAILS
+================================ */
+
+.price-details {
+  padding-top: 3px;
+}
+
+.price-details h5 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 18px;
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.price-row span:last-child {
+  color: #222;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+
+/* ================================
+   DIVIDER
+================================ */
+
+.price-divider {
+  height: 1px;
+  background: #eeeeee;
+  margin: 18px 0;
+}
+
+
+/* ================================
+   FINAL PRICE
+================================ */
+
+.price-row.final-price {
+  margin-bottom: 0;
+  padding: 4px 0;
+  font-size: 16px;
+  color: #1f2937;
+}
+
+.price-row.final-price strong {
+  font-size: 23px;
+  font-weight: 800;
+  color: #005c86;
+  white-space: nowrap;
+}
+
+
+/* ================================
+   CONTINUE BUTTON
+================================ */
+
+.continue-button {
+  width: 100%;
+  height: 48px;
+  margin-top: 25px;
+  border: none;
+  border-radius: 9px;
+  background: #005c86;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.continue-button:hover:not(:disabled) {
+  background: #004b6d;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(0, 92, 134, 0.22);
+}
+
+.continue-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* ================================
+   BACK BUTTON
+================================ */
+
+.back-button {
+  width: 100%;
+  height: 44px;
+  margin-top: 10px;
+  border: 1px solid #dfe3e8;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #555;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.back-button:hover:not(:disabled) {
+  border-color: #005c86;
+  color: #005c86;
+  background: #f7fbfd;
+}
+
+.back-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 991px) {
+
+  .summary-card {
+    position: static;
+    margin-top: 25px;
+  }
+
+}
+
+@media (max-width: 576px) {
+
+  .summary-card {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .summary-title {
+    font-size: 21px;
+  }
+
+  .coupon-input-group {
+    gap: 6px;
+  }
+
+  .coupon-button {
+    min-width: 72px;
+  }
+
+  .price-row.final-price strong {
+    font-size: 20px;
+  }
+
+}

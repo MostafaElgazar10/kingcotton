@@ -1,0 +1,181 @@
+
+<section class="terms-section-page">
+
+  <!-- Hero -->
+  <header class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="container position-relative">
+
+      <div class="row">
+
+        <div class="col-12">
+
+          <h1 class="hero-title d-flex justify-content-center mb-5">
+            Terms & Condition
+          </h1>
+
+          <h3 class="d-flex justify-content-center text-white">
+
+            <a
+              routerLink="/home"
+              class="breadcrumb-home"
+            >
+              Home
+            </a>
+
+            <span class="mx-3">
+              //
+            </span>
+
+            <a
+              routerLink="/terms"
+              class="breadcrumb-home"
+            >
+              Terms & Condition
+            </a>
+
+          </h3>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- Loading -->
+  <div
+    *ngIf="loading"
+    class="container"
+  >
+
+    <div class="loading-box">
+
+      <div
+        class="spinner-border"
+        role="status"
+      ></div>
+
+      <p>
+        Loading Terms & Condition...
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- Error -->
+  <div
+    *ngIf="!loading && error"
+    class="container"
+  >
+
+    <div class="error-box">
+
+      <i class="bi bi-exclamation-circle"></i>
+
+      <h3>
+        Something went wrong
+      </h3>
+
+      <p>
+        We couldn't load the Terms & Condition page.
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="loadTermsPage()"
+      >
+        Try Again
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- Content -->
+  <div
+    *ngIf="!loading && !error && page"
+    class="container"
+  >
+
+    <div class="terms-content-wrapper">
+
+      <!-- Main Content -->
+      <article
+        class="terms-content"
+        [innerHTML]="formatContent(page.content)"
+      >
+      </article>
+
+
+      <!-- Sidebar -->
+      <aside class="terms-sidebar">
+
+        <div class="terms-card">
+
+          <div class="terms-card-icon">
+            <i class="bi bi-file-earmark-text"></i>
+          </div>
+
+          <h3>
+            Terms & Condition
+          </h3>
+
+          <p>
+            Please read our terms carefully before using
+            Genius Shop and its services.
+          </p>
+
+        </div>
+
+
+        <div class="terms-card">
+
+          <div class="terms-card-icon">
+            <i class="bi bi-shield-check"></i>
+          </div>
+
+          <h3>
+            Your Responsibilities
+          </h3>
+
+          <p>
+            Using our platform means agreeing to follow
+            the applicable terms and conditions.
+          </p>
+
+        </div>
+
+
+        <div class="terms-card">
+
+          <div class="terms-card-icon">
+            <i class="bi bi-headset"></i>
+          </div>
+
+          <h3>
+            Customer Support
+          </h3>
+
+          <p>
+            If you have any questions about our terms,
+            please contact our customer support team.
+          </p>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</section>

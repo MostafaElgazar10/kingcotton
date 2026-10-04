@@ -1,0 +1,339 @@
+<section class="order-success-page">
+
+  <div class="order-success-card">
+
+    <!-- ========================= -->
+    <!-- SUCCESS ICON -->
+    <!-- ========================= -->
+
+    <div class="success-icon">
+      <i class="fas fa-check"></i>
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- TITLE -->
+    <!-- ========================= -->
+
+    <h1>
+      Order Placed Successfully
+    </h1>
+
+    <p class="success-text">
+      Thank you for your order!
+    </p>
+
+
+    <!-- ========================= -->
+    <!-- ORDER INFO -->
+    <!-- ========================= -->
+
+    <div class="order-info">
+
+      <div class="info-item">
+
+        <span>
+          Order#
+        </span>
+
+        <strong>
+          {{ orderNumber }}
+        </strong>
+
+      </div>
+
+
+      <div class="info-item">
+
+        <span>
+          Order Date
+        </span>
+
+        <strong>
+          {{ orderDate }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- PICKUP LOCATION -->
+    <!-- ========================= -->
+
+    <div class="details-section">
+
+      <h2>
+        PickUp Location
+      </h2>
+
+      <div class="detail-row">
+
+        <i class="fas fa-location-dot"></i>
+
+        <span>
+          {{ pickupLocation }}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- BILLING ADDRESS -->
+    <!-- ========================= -->
+
+    <div class="details-section">
+
+      <h2>
+        Billing Address
+      </h2>
+
+      <div class="detail-row">
+
+        <i class="fas fa-user"></i>
+
+        <span>
+          {{ customerName }}
+        </span>
+
+      </div>
+
+      <div class="detail-row">
+
+        <i class="fas fa-location-dot"></i>
+
+        <span>
+          {{ customerAddress }}
+        </span>
+
+      </div>
+
+      <div class="detail-row">
+
+        <i class="fas fa-phone"></i>
+
+        <span>
+          {{ customerPhone }}
+        </span>
+
+      </div>
+
+      <div class="detail-row">
+
+        <i class="fas fa-envelope"></i>
+
+        <span>
+          {{ customerEmail }}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- PAYMENT -->
+    <!-- ========================= -->
+
+    <div class="details-section">
+
+      <h2>
+        Payment Information
+      </h2>
+
+      <div class="payment-row">
+
+        <span>
+          Tax
+        </span>
+
+        <strong>
+          {{ tax | number:'1.0-2' }} EGP
+        </strong>
+
+      </div>
+
+      <div class="payment-row">
+
+        <span>
+          Paid Amount
+        </span>
+
+        <strong>
+          {{ total | number:'1.0-2' }} EGP
+        </strong>
+
+      </div>
+
+      <div class="payment-row">
+
+        <span>
+          Payment Method
+        </span>
+
+        <strong>
+          {{ paymentMethod }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- SHIPPING -->
+    <!-- ========================= -->
+
+    <div class="details-section">
+
+      <h2>
+        Shipping Method
+      </h2>
+
+      <div class="detail-row">
+
+        <i class="fas fa-truck"></i>
+
+        <span>
+          {{ shippingMethod }}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- PRODUCTS -->
+    <!-- ========================= -->
+
+    <div class="details-section products-section">
+
+      <h2>
+        Ordered Products
+      </h2>
+
+
+      <div
+        class="product-item"
+        *ngFor="let product of products"
+      >
+
+        <!-- IMAGE -->
+
+        <div class="product-image">
+
+          <img
+            [src]="product.thumbnail"
+            [alt]="product.title"
+          />
+
+        </div>
+
+
+        <!-- DETAILS -->
+
+        <div class="product-info">
+
+          <h3>
+            {{ product.title }}
+          </h3>
+
+          <p>
+            Quantity:
+            <strong>
+              {{ product.quantity }}
+            </strong>
+          </p>
+
+          <p *ngIf="product.size">
+            Size:
+            <strong>
+              {{ product.size }}
+            </strong>
+          </p>
+
+          <p *ngIf="product.color">
+            Color:
+            <strong>
+              {{ product.color }}
+            </strong>
+          </p>
+
+        </div>
+
+
+        <!-- PRICE -->
+
+        <div class="product-price">
+
+          <span>
+            {{ product.price | number:'1.0-2' }} EGP
+          </span>
+
+          <strong>
+            {{
+              getProductTotal(product)
+              | number:'1.0-2'
+            }}
+            EGP
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- EMPTY -->
+
+      <div
+        class="empty-products"
+        *ngIf="products.length === 0"
+      >
+
+        No products found.
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- TOTAL -->
+    <!-- ========================= -->
+
+    <div class="total-box">
+
+      <span>
+        Total
+      </span>
+
+      <strong>
+        {{ total | number:'1.0-2' }} EGP
+      </strong>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- CONTINUE SHOPPING -->
+    <!-- ========================= -->
+
+    <button
+      type="button"
+      class="continue-btn"
+      (click)="continueShopping()"
+    >
+
+      <i class="fas fa-arrow-left"></i>
+
+      Continue Shopping
+
+    </button>
+
+  </div>
+ <div class="maan">alooo</div>
+</section>

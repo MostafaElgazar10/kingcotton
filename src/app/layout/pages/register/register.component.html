@@ -1,0 +1,171 @@
+
+<div class="register-page">
+  <div class="register-card">
+
+    <h2 class="register-title">Create New Account</h2>
+
+    <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+
+      <!-- Full Name -->
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input
+          id="fullName"
+          type="text"
+          name="fullName"
+          [(ngModel)]="fullName"
+          placeholder="Enter your full name"
+          autocomplete="name"
+          required
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email address"
+          autocomplete="email"
+          required
+        />
+      </div>
+
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input
+          id="phone"
+          type="tel"
+          name="phone"
+          [(ngModel)]="phone"
+          placeholder="Enter your phone number"
+          autocomplete="tel"
+          required
+        />
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input
+          id="address"
+          type="text"
+          name="address"
+          [(ngModel)]="address"
+          placeholder="Enter your address"
+          autocomplete="street-address"
+          required
+        />
+      </div>
+
+      <!-- Create Password -->
+      <div class="form-group">
+        <label for="password">Create Password</label>
+
+        <div class="password-wrapper">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Enter your password"
+            autocomplete="new-password"
+            required
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="showPassword = !showPassword"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          >
+            <span *ngIf="!showPassword">◉</span>
+            <span *ngIf="showPassword">◎</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+
+        <div class="password-wrapper">
+          <input
+            id="confirmPassword"
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            placeholder="Enter your password"
+            autocomplete="new-password"
+            required
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="showConfirmPassword = !showConfirmPassword"
+            [attr.aria-label]="showConfirmPassword ? 'Hide password' : 'Show password'"
+          >
+            <span *ngIf="!showConfirmPassword">◉</span>
+            <span *ngIf="showConfirmPassword">◎</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CAPTCHA visual checkbox -->
+      <div class="captcha-box">
+        <label class="captcha-check">
+          <input
+            type="checkbox"
+            name="captchaChecked"
+            [(ngModel)]="captchaChecked"
+          />
+          <span>I'm not a robot</span>
+        </label>
+
+        <div class="captcha-brand">
+          <span class="captcha-symbol">⟳</span>
+          <small>reCAPTCHA</small>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div
+        *ngIf="errorMessage"
+        class="alert alert-danger"
+        role="alert"
+      >
+        {{ errorMessage }}
+      </div>
+
+      <!-- Success -->
+      <div
+        *ngIf="successMessage"
+        class="alert alert-success"
+        role="status"
+      >
+        {{ successMessage }}
+      </div>
+
+      <!-- Register Button -->
+      <button
+        type="submit"
+        class="register-btn"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Registering...' : 'Register' }}
+      </button>
+
+      <!-- Login link -->
+      <p class="login-text">
+        Already have an account?
+        <a routerLink="/login">Login</a>
+      </p>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,227 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 29px 20px;
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 645px;
+  padding: 38px;
+  background: #f7f7f8;
+  box-sizing: border-box;
+}
+
+.register-title {
+  margin: 0 0 35px;
+  color: #202631;
+  text-align: center;
+  font-size: 29px;
+  font-weight: 700;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 13px;
+  color: #111;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  height: 50px;
+  padding: 0 11px;
+  border: 1px solid #d9dfe5;
+  border-radius: 6px;
+  outline: none;
+  background: #fff;
+  color: #222;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input::placeholder {
+  color: #777;
+  opacity: 1;
+}
+
+.form-group input:focus {
+  border-color: #5b82df;
+  box-shadow: 0 0 0 3px rgba(91, 130, 223, 0.12);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 45px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: #999;
+  font-size: 19px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.password-toggle:hover {
+  color: #5279d8;
+}
+
+.captcha-box {
+  width: 302px;
+  max-width: 100%;
+  min-height: 76px;
+  margin: 16px 0 32px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #d1d1d1;
+  border-radius: 3px;
+  background: #fafafa;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.captcha-check {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.captcha-check input {
+  width: 27px;
+  height: 27px;
+  margin: 0;
+  accent-color: #5279d8;
+  cursor: pointer;
+}
+
+.captcha-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  gap: 1px;
+}
+
+.captcha-symbol {
+  color: #5279d8;
+  font-size: 35px;
+  line-height: 1;
+}
+
+.captcha-brand small {
+  font-size: 9px;
+}
+
+.register-btn {
+  display: block;
+  width: 100%;
+  height: 54px;
+  border: 1px solid #5b82df;
+  border-radius: 7px;
+  background: #5b82df;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.register-btn:hover {
+  background: #426bd0;
+}
+
+.register-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.alert {
+  margin: 0 0 15px;
+  padding: 11px 13px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.alert-danger {
+  background: #f8d7da;
+  color: #842029;
+}
+
+.alert-success {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+.login-text {
+  margin: 30px 0 0;
+  color: #202631;
+  text-align: center;
+  font-size: 14px;
+}
+
+.login-text a {
+  color: #5279d8;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+  .register-page {
+    padding: 0 8px;
+  }
+
+  .register-card {
+    padding: 25px 22px;
+  }
+
+  .register-title {
+    font-size: 24px;
+    margin-bottom: 28px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    font-size: 15px;
+  }
+
+  .captcha-box {
+    margin-bottom: 30px;
+  }
+}

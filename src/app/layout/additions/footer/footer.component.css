@@ -1,0 +1,266 @@
+/* ==========================================
+   NEWSLETTER
+========================================== */
+
+.newsletter-bar {
+  background-color: #5b82df;
+  padding: 36px 0;
+}
+
+.newsletter-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.newsletter-title {
+  margin: 0;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.newsletter-form {
+  display: flex;
+  width: 100%;
+  max-width: 480px;
+}
+
+.newsletter-input {
+  flex: 1;
+  height: 52px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 4px 0 0 4px;
+  font-size: 15px;
+  outline: none;
+}
+
+.newsletter-btn {
+  width: 110px;
+  height: 52px;
+  border: 0;
+  border-radius: 0 4px 4px 0;
+  background-color: #000;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.newsletter-btn:hover {
+  background-color: #222;
+}
+
+.newsletter-feedback {
+  background-color: #5b82df;
+  color: #fff;
+  text-align: right;
+  margin: 0;
+  padding: 0 20px 16px;
+  font-size: 14px;
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.site-footer {
+  background-color: #280000;
+  padding: 70px 0;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-col {
+  color: #fff;
+}
+
+.footer-logo {
+  height: 60px;
+  margin-bottom: 24px;
+}
+
+
+/* Contact list */
+
+.footer-contact-list {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+
+  transition: color 0.2s ease;
+}
+
+a.contact-link:hover {
+  color: #5b82df;
+}
+
+.contact-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: #fff;
+  color: #280000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+}
+
+
+/* Social icons */
+
+.social-list {
+  display: flex;
+  gap: 10px;
+}
+
+.social-btn {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+  background: #fff;
+  color: #280000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+  text-decoration: none;
+
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.social-btn:hover {
+  background: #5b82df;
+  color: #fff;
+}
+
+
+/* Headings */
+
+.footer-heading {
+  margin: 0 0 24px;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+
+/* Link lists */
+
+.footer-link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-link,
+.footer-link-btn {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover,
+.footer-link-btn:hover {
+  color: #5b82df;
+}
+
+
+/* ==========================================
+   COPYRIGHT BAR
+========================================== */
+
+.copyright-bar {
+  background-color: #1f1f1f;
+  padding: 18px 0;
+}
+
+.copyright-bar p {
+  margin: 0;
+  text-align: center;
+  color: #d1d5db;
+  font-size: 14px;
+}
+
+.copyright-link {
+  color: #5b82df;
+  text-decoration: none;
+}
+
+.copyright-link:hover {
+  text-decoration: underline;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 991px) {
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-col:first-child {
+    grid-column: 1 / -1;
+  }
+
+}
+
+@media (max-width: 576px) {
+
+  .newsletter-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

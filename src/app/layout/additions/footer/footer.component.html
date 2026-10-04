@@ -1,0 +1,169 @@
+<!-- ==========================================
+     NEWSLETTER
+=========================================== -->
+
+<div class="newsletter-bar">
+
+  <div class="container newsletter-inner">
+
+    <h2 class="newsletter-title">Sign Up To Newslatter</h2>
+
+    <div class="newsletter-form">
+
+      <input
+        type="email"
+        class="newsletter-input"
+        placeholder="Enter Your Email"
+        [(ngModel)]="newsletterEmail"
+        name="newsletterEmail"
+      >
+
+      <button
+        type="button"
+        class="newsletter-btn"
+        (click)="onSubscribe()"
+      >
+        Send
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<p class="newsletter-feedback" *ngIf="newsletterMessage">
+  {{ newsletterMessage }}
+</p>
+
+
+<!-- ==========================================
+     FOOTER
+=========================================== -->
+
+<footer class="site-footer">
+
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <!-- Column 1: Logo + Contact + Social -->
+      <div class="footer-col">
+
+        <img
+          src="../../../../assets/images/17811630385f22638f-640b-41f5-8bfd-e19ff18591a1-removebg-previewpng.png"
+          alt="King Cotto"
+          class="footer-logo"
+        >
+
+        <ul class="footer-contact-list">
+
+          <li>
+            <a href="tel:00000000000" class="contact-link">
+              <span class="contact-icon"><i class="bi bi-telephone-fill"></i></span>
+              00 000 000 000
+            </a>
+          </li>
+
+          <li>
+            <a href="mailto:info@kingcotto.com" class="contact-link">
+              <span class="contact-icon"><i class="bi bi-envelope-fill"></i></span>
+              infokingcotto.com
+            </a>
+          </li>
+
+          <li>
+            <span class="contact-link">
+              <span class="contact-icon"><i class="bi bi-geo-alt-fill"></i></span>
+              Cairo
+            </span>
+          </li>
+
+        </ul>
+
+        <div class="social-list">
+
+          <a href="#" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <i class="bi bi-facebook"></i>
+          </a>
+
+          <a href="#" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <i class="bi bi-twitter"></i>
+          </a>
+
+          <a href="#" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <i class="bi bi-linkedin"></i>
+          </a>
+
+          <a href="#" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <i class="bi bi-google"></i>
+          </a>
+
+          <a href="#" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <i class="bi bi-dribbble"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- Column 2: Product Category -->
+      <div class="footer-col">
+
+        <h3 class="footer-heading">Product Category</h3>
+
+        <ul class="footer-link-list">
+
+          <li *ngFor="let category of categories">
+            <button
+              type="button"
+              class="footer-link-btn"
+              (click)="goToCategory(category.id)"
+            >
+              {{ category.name }}
+            </button>
+          </li>
+
+        </ul>
+
+      </div>
+
+
+      <!-- Column 3: Customer Care -->
+      <div class="footer-col">
+
+        <h3 class="footer-heading">Customer Care</h3>
+
+        <ul class="footer-link-list">
+
+          <li><a routerLink="/" class="footer-link">Home</a></li>
+          <li><a routerLink="/faq" class="footer-link">Faq</a></li>
+          <li><a routerLink="/aboutus" class="footer-link">About Us</a></li>
+          <li><a routerLink="/privacy-policy" class="footer-link">Privacy & Policy</a></li>
+          <li><a routerLink="/Terms & Condition" class="footer-link">Terms & Condition</a></li>
+          <li><a routerLink="/contactus" class="footer-link">Contact Us</a></li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- ==========================================
+     COPYRIGHT BAR
+=========================================== -->
+
+<div class="copyright-bar">
+  <div class="container">
+    <p>
+      COPYRIGHT © {{ currentYear }}. All Rights Reserved By
+      <a href="https://topbusiness.io" target="_blank" rel="noopener noreferrer" class="copyright-link">TopBusiness</a>
+    </p>
+  </div>
+</div>

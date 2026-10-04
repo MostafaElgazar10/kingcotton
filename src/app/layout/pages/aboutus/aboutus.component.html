@@ -1,0 +1,177 @@
+<section class="about-section">
+
+  <!-- ===================================== -->
+  <!-- HERO -->
+  <!-- ===================================== -->
+
+<header class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="container position-relative">
+
+        <div class="row">
+
+            <div class="col--8">
+
+                <h1 class="hero-title d-flex justify-content-center mb-5">
+                    AboutUs
+                </h1>
+                <h3 class="d-flex justify-content-center text-white ">
+    <a routerLink="/home" class="breadcrumb-home">Home</a>
+    <span class="mx-3">// </span>
+        <a routerLink="/aboutus" class="breadcrumb-home">Aboutus</a>
+
+</h3>  </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+  <!-- ===================================== -->
+  <!-- LOADING -->
+  <!-- ===================================== -->
+
+  <div
+    *ngIf="loading"
+    class="container"
+  >
+
+    <div class="loading-box">
+
+      <div
+        class="spinner-border"
+        role="status"
+      ></div>
+
+      <p>
+        Loading About Us...
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================== -->
+  <!-- ERROR -->
+  <!-- ===================================== -->
+
+  <div
+    *ngIf="!loading && error"
+    class="container"
+  >
+
+    <div class="error-box">
+
+      <i class="bi bi-exclamation-circle"></i>
+
+      <h3>
+        Something went wrong
+      </h3>
+
+      <p>
+        We couldn't load the About Us page.
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="loadAboutPage()"
+      >
+        Try Again
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================== -->
+  <!-- CONTENT -->
+  <!-- ===================================== -->
+
+  <div
+    *ngIf="!loading && !error && page"
+    class="container"
+  >
+
+    <div class="about-content-wrapper">
+
+      <!-- CONTENT -->
+
+      <article
+        class="about-content"
+        [innerHTML]="formatContent(page.content)"
+      >
+      </article>
+
+
+      <!-- SIDE CARD -->
+
+      <aside class="about-sidebar">
+
+        <div class="about-card">
+
+          <div class="about-card-icon">
+            <i class="bi bi-bag-check"></i>
+          </div>
+
+          <h3>
+            Quality Shopping
+          </h3>
+
+          <p>
+            We are committed to creating a smooth,
+            convenient and enjoyable shopping experience.
+          </p>
+
+        </div>
+
+
+        <div class="about-card">
+
+          <div class="about-card-icon">
+            <i class="bi bi-shield-check"></i>
+          </div>
+
+          <h3>
+            Trust & Security
+          </h3>
+
+          <p>
+            Your shopping experience is built around
+            trust, transparency and reliable service.
+          </p>
+
+        </div>
+
+
+        <div class="about-card">
+
+          <div class="about-card-icon">
+            <i class="bi bi-headset"></i>
+          </div>
+
+          <h3>
+            Customer Support
+          </h3>
+
+          <p>
+            Our goal is to make your experience
+            simple and enjoyable.
+          </p>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</section>

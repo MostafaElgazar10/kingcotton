@@ -1,0 +1,208 @@
+
+<section class="privacy-section">
+
+  <!-- ===================================== -->
+  <!-- HERO -->
+  <!-- ===================================== -->
+
+  <header class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="container position-relative">
+
+      <div class="row">
+
+        <div class="col--8">
+
+          <h1
+            class="hero-title d-flex justify-content-center mb-5"
+          >
+            Privacy & Policy
+          </h1>
+
+          <h3
+            class="d-flex justify-content-center text-white"
+          >
+
+            <a
+              routerLink="/home"
+              class="breadcrumb-home"
+            >
+              Home
+            </a>
+
+            <span class="mx-3">
+              //
+            </span>
+
+            <a
+              routerLink="/privacy-policy"
+              class="breadcrumb-home"
+            >
+              Privacy & Policy
+            </a>
+
+          </h3>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- ===================================== -->
+  <!-- LOADING -->
+  <!-- ===================================== -->
+
+  <div
+    *ngIf="loading"
+    class="container"
+  >
+
+    <div class="loading-box">
+
+      <div
+        class="spinner-border"
+        role="status"
+      ></div>
+
+      <p>
+        Loading Privacy Policy...
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================== -->
+  <!-- ERROR -->
+  <!-- ===================================== -->
+
+  <div
+    *ngIf="!loading && error"
+    class="container"
+  >
+
+    <div class="error-box">
+
+      <i class="bi bi-exclamation-circle"></i>
+
+      <h3>
+        Something went wrong
+      </h3>
+
+      <p>
+        We couldn't load the Privacy Policy page.
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="loadPrivacyPage()"
+      >
+        Try Again
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================== -->
+  <!-- CONTENT -->
+  <!-- ===================================== -->
+
+  <div
+    *ngIf="!loading && !error && page"
+    class="container"
+  >
+
+    <div class="privacy-content-wrapper">
+
+      <!-- CONTENT -->
+
+      <article
+        class="privacy-content"
+        [innerHTML]="formatContent(page.content)"
+      >
+      </article>
+
+
+      <!-- SIDE CARD -->
+
+      <aside class="privacy-sidebar">
+
+
+        <div class="privacy-card">
+
+          <div class="privacy-card-icon">
+
+            <i class="bi bi-shield-check"></i>
+
+          </div>
+
+          <h3>
+            Your Privacy
+          </h3>
+
+          <p>
+            We value your privacy and are committed
+            to protecting your personal information.
+          </p>
+
+        </div>
+
+
+        <div class="privacy-card">
+
+          <div class="privacy-card-icon">
+
+            <i class="bi bi-lock"></i>
+
+          </div>
+
+          <h3>
+            Data Security
+          </h3>
+
+          <p>
+            We take appropriate measures to help
+            protect your information and keep it secure.
+          </p>
+
+        </div>
+
+
+        <div class="privacy-card">
+
+          <div class="privacy-card-icon">
+
+            <i class="bi bi-person-check"></i>
+
+          </div>
+
+          <h3>
+            Your Rights
+          </h3>
+
+          <p>
+            You have rights and choices regarding
+            your personal information and account.
+          </p>
+
+        </div>
+
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</section>
+

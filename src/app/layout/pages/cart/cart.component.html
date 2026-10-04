@@ -1,0 +1,377 @@
+<header class="hero">
+
+  <div class="hero-overlay"></div>
+
+  <div class="container position-relative">
+
+    <div class="row">
+
+      <div class="col--8">
+
+        <h1
+          class="hero-title d-flex justify-content-center mb-5"
+        >
+          Cart
+        </h1>
+
+        <h3
+          class="d-flex justify-content-center text-white"
+        >
+          Home
+
+          <span class="mx-3">
+            //
+          </span>
+
+          Cart
+        </h3>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<section class="cart-section">
+
+  <div class="container">
+
+
+    <!-- =========================
+         EMPTY CART
+    ========================== -->
+
+    <div
+      class="empty-cart"
+      *ngIf="cartItems.length === 0"
+    >
+
+      <div class="empty-icon">
+
+        <i class="bi bi-cart-x"></i>
+
+      </div>
+
+      <h2>
+        Your Cart Is Empty
+      </h2>
+
+      <p>
+        You don't have any products
+        in your cart yet.
+      </p>
+
+      <button
+        type="button"
+        class="continue-shopping-btn"
+        routerLink="/product"
+      >
+        Continue Shopping
+      </button>
+
+    </div>
+
+
+    <!-- =========================
+         CART CONTENT
+    ========================== -->
+
+    <div
+      class="row g-4"
+      *ngIf="cartItems.length > 0"
+    >
+
+
+      <!-- =========================
+           CART PRODUCTS
+      ========================== -->
+
+      <div class="col-lg-8">
+
+        <div class="cart-table">
+
+
+          <!-- TABLE HEADER -->
+
+          <div class="cart-header">
+
+            <div class="header-product">
+              Product Name
+            </div>
+
+            <div>
+              Price
+            </div>
+
+            <div>
+              Quantity
+            </div>
+
+            <div>
+              Subtotal
+            </div>
+
+            <div>
+              Action
+            </div>
+
+          </div>
+
+
+          <!-- PRODUCTS -->
+
+          <div
+            class="cart-item"
+            *ngFor="let product of cartItems"
+          >
+
+
+            <!-- PRODUCT -->
+
+            <div class="cart-product">
+
+              <div class="product-image">
+
+                <img
+                  [src]="product.thumbnail"
+                  [alt]="product.title"
+                >
+
+              </div>
+
+
+              <div class="product-name">
+
+                <!-- Product Name -->
+
+                <div>
+                  {{ product.title }}
+                </div>
+
+
+                <!-- Color / Size -->
+
+                <div class="product-variant">
+
+                  <!-- COLOR -->
+
+                <!-- COLOR -->
+<span *ngIf="product.color">
+  Color :
+
+  <span
+    class="cart-color"
+    [style.backgroundColor]="product.color"
+    [title]="product.color"
+  ></span>
+</span>
+
+<!-- SIZE -->
+<span *ngIf="product.size">
+  Size :
+  {{ product.size }}
+</span>
+
+
+                  <!-- SIZE -->
+
+                 
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div class="cart-price">
+
+              {{ product.current_price }}EGP
+
+            </div>
+
+
+            <!-- QUANTITY -->
+
+            <div class="quantity-control">
+
+              <button
+                type="button"
+                (click)="decreaseQuantity(product)"
+              >
+                -
+              </button>
+
+              <span>
+                {{ product.quantity }}
+              </span>
+
+              <button
+                type="button"
+                (click)="increaseQuantity(product)"
+              >
+                +
+              </button>
+
+            </div>
+
+
+            <!-- SUBTOTAL -->
+
+            <div class="item-subtotal">
+
+              {{ getItemSubtotal(product) }}EGP
+
+            </div>
+
+
+            <!-- DELETE -->
+
+            <div class="cart-action">
+
+              <button
+                type="button"
+                class="delete-btn"
+                (click)="removeProduct(product)"
+              >
+
+                <i
+                  class="bi bi-trash3"
+                ></i>
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- CLEAR CART -->
+
+          <div class="cart-footer">
+
+            <button
+              type="button"
+              class="clear-cart-btn"
+              (click)="clearCart()"
+            >
+              Clear Cart
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           CART SUMMARY
+      ========================== -->
+
+      <div class="col-lg-4">
+
+        <div class="cart-summary">
+
+          <h2>
+            Cart Summary
+          </h2>
+
+
+          <!-- SUBTOTAL -->
+
+          <div class="summary-row">
+
+            <span>
+              SUBTOTAL
+              ({{ itemsCount }} ITEMS)
+            </span>
+
+            <strong>
+              {{ subtotal }}EGP
+            </strong>
+
+          </div>
+
+
+          <!-- DISCOUNT -->
+
+          <div class="summary-row">
+
+            <span>
+              DISCOUNT
+            </span>
+
+            <strong>
+              {{ discount }}EGP
+            </strong>
+
+          </div>
+
+
+          <!-- COUPON -->
+
+          <div class="coupon-section">
+
+            <label>
+              COUPON CODE
+            </label>
+
+            <div class="coupon-input">
+
+              <input
+                type="text"
+                placeholder="Coupon Code"
+              >
+
+              <button
+                type="button"
+              >
+                Apply
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- TOTAL -->
+
+          <div class="summary-total">
+
+            <span>
+              TOTAL
+            </span>
+
+            <strong>
+              {{ total }}EGP
+            </strong>
+
+          </div>
+
+
+          <!-- CHECKOUT -->
+
+          <button
+            type="button"
+            class="checkout-btn"
+            (click)="proceedToCheckout()"
+          >
+
+            Proceed To Checkout
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

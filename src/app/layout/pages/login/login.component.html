@@ -1,0 +1,84 @@
+
+<div class="login-page">
+  <div class="login-card">
+
+    <h2 class="login-title">
+      Welcome Back! Please login
+    </h2>
+
+    <form (ngSubmit)="onLogin()">
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email address"
+          required
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Your Password</label>
+        <div class="password-wrapper">
+          <input
+            id="password"
+            type="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Enter your password"
+            required
+          />
+          <span class="password-icon">◉</span>
+        </div>
+      </div>
+
+      <!-- Remember & Forgot -->
+      <div class="login-options">
+        <label class="remember-me">
+          <input type="checkbox" />
+          <span>Remember me</span>
+        </label>
+
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+
+      <!-- Login -->
+      <button
+        type="submit"
+        class="login-btn"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Logging in...' : 'Login' }}
+      </button>
+
+      <!-- Error -->
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Separator -->
+      <div class="or-divider">
+        <span>Or</span>
+      </div>
+
+      <!-- Google -->
+      <button type="button" class="google-btn">
+        <span class="google-icon">G</span>
+        <span>Login With Google</span>
+      </button>
+
+      <!-- Register -->
+      <p class="register-text">
+  Don't have an account?
+  <a [routerLink]="['/register']">
+    Create New Account
+  </a>
+</p>
+    </form>
+  </div>
+</div>

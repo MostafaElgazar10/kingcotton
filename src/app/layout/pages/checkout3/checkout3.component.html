@@ -1,0 +1,195 @@
+
+<div class="checkout-page" dir="ltr">
+  <div class="container">
+
+    <!-- Checkout Steps -->
+    <div class="checkout-steps">
+      <div class="step completed">
+        <div class="step-circle">
+          <i class="fas fa-check"></i>
+        </div>
+        <span>Address</span>
+      </div>
+
+      <div class="step-connector completed"></div>
+
+      <div class="step completed">
+        <div class="step-circle">
+          <i class="fas fa-check"></i>
+        </div>
+        <span>Details</span>
+      </div>
+
+      <div class="step-connector active"></div>
+
+      <div class="step active">
+        <div class="step-circle">3</div>
+        <span>Payment</span>
+      </div>
+    </div>
+
+    <!-- Checkout Content -->
+    <div class="row checkout-content">
+
+      <!-- Payment Method -->
+      <div class="col-lg-8 col-md-7">
+        <div class="payment-card">
+
+          <h4 class="payment-title">Select payment Method</h4>
+
+          <div class="payment-options">
+
+            <!-- Cash On Delivery -->
+            <label
+              class="payment-option"
+              [class.selected]="paymentMethod === 'cash'"
+            >
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="cash"
+                [(ngModel)]="paymentMethod"
+              />
+
+              <div class="payment-details">
+                <h6>Cash On Delivery</h6>
+                <p>Pay with cash upon delivery.</p>
+              </div>
+            </label>
+
+            <!-- Mobile Money -->
+            <label
+              class="payment-option"
+            >
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="mobile_money"
+                [(ngModel)]="paymentMethod"
+              />
+
+              <div class="payment-details">
+                <h6>Mobile Money</h6>
+                <p>(5 - 6 days)</p>
+              </div>
+            </label>
+
+          </div>
+
+          <!-- Error Message -->
+          <div
+            class="alert alert-danger checkout-error"
+            *ngIf="errorMessage"
+          >
+            {{ errorMessage }}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="col-lg-4 col-md-5">
+        <div class="summary-card">
+
+          <h3 class="summary-title">Summery</h3>
+
+          <!-- Coupon -->
+          <div class="coupon-section">
+            <label for="couponCode">Apply Coupon Code</label>
+
+            <div class="coupon-input-group">
+              <input
+                id="couponCode"
+                type="text"
+                class="form-control"
+                placeholder="Coupon Code"
+                [(ngModel)]="couponCode"
+                name="couponCode"
+                [disabled]="loading"
+              />
+
+              <button
+                type="button"
+                class="coupon-button"
+                (click)="applyCoupon()"
+                [disabled]="loading"
+              >
+                Apply
+              </button>
+            </div>
+
+            <p
+              class="coupon-message"
+              *ngIf="couponMessage"
+            >
+              {{ couponMessage }}
+            </p>
+          </div>
+
+          <!-- Price Details -->
+          <div class="price-details">
+            <h5>Price Details</h5>
+
+            <div class="price-row">
+              <span>Total</span>
+              <span>{{ total | number:'1.0-2' }}EGP</span>
+            </div>
+
+            <div class="price-row">
+              <span>Tax</span>
+              <span>{{ tax | number:'1.0-2' }}%</span>
+            </div>
+
+            <div class="price-row">
+              <span>Shipping Cost</span>
+              <span>{{ shippingCost | number:'1.0-2' }}EGP</span>
+            </div>
+
+            <div class="price-row">
+              <span>Packaging Cost</span>
+              <span>{{ packingCost | number:'1.0-2' }}EGP</span>
+            </div>
+
+            <div class="price-divider"></div>
+
+            <div class="price-row final-price">
+              <span>Final Price</span>
+              <strong>{{ finalPrice | number:'1.0-2' }}EGP</strong>
+            </div>
+          </div>
+
+          <!-- Continue Button -->
+          <button
+            type="button"
+            class="continue-button"
+            (click)="continueToPayment()"
+            [disabled]="loading"
+          >
+            <span *ngIf="!loading">
+              Continue
+              <i class="fas fa-long-arrow-alt-right"></i>
+            </span>
+
+            <span *ngIf="loading">
+              <i class="fas fa-spinner fa-spin"></i>
+              Processing...
+            </span>
+          </button>
+
+          <!-- Back Button -->
+          <button
+            type="button"
+            class="back-button"
+            (click)="backToDetails()"
+            [disabled]="loading"
+          >
+            <i class="fas fa-long-arrow-alt-left"></i>
+            Back To Details
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

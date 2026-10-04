@@ -1,0 +1,732 @@
+  <header class="hero">
+
+        <div class="hero-overlay"></div>
+
+        <div class="container position-relative">
+
+            <div class="row">
+
+                <div class="col--8">
+
+                
+
+                    <h1 class="hero-title d-flex justify-content-center mb-5">
+                        Product Details
+                    </h1>
+          
+                    <h3 class="d-flex justify-content-center text-white ">Home <span class="text-white">//  {{ product?.title }}  </span></h3>
+
+                  
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+       
+
+    </header>
+
+<!-- ==========================================
+     PRODUCT DETAILS
+========================================== -->
+
+<section class="product-details-section py-5">
+
+  <div class="container">
+
+    <!-- Loading -->
+
+    <div
+      *ngIf="loading"
+      class="text-center py-5"
+    >
+
+      <div
+        class="spinner-border"
+        role="status"
+      ></div>
+
+      <p class="mt-3">
+        Loading product...
+      </p>
+
+    </div>
+
+
+    <!-- Error -->
+
+    <div
+      *ngIf="!loading && errorMessage"
+      class="alert alert-danger text-center"
+    >
+      {{ errorMessage }}
+    </div>
+
+
+    <!-- Product -->
+
+    <div
+      *ngIf="!loading && product"
+      class="row g-5"
+    >
+
+      <!-- ==========================================
+           LEFT - PRODUCT IMAGES
+      =========================================== -->
+
+      <div class="col-lg-6">
+
+        <div class="product-gallery">
+
+          <!-- Main Image -->
+
+          <div class="main-product-image">
+
+            <img
+              [src]="selectedImage"
+              [alt]="product.title"
+              (error)="onImageError($event)"
+            />
+
+          </div>
+
+
+          <!-- Thumbnails -->
+
+          <div
+            class="product-thumbnails"
+            *ngIf="galleryImages.length > 1"
+          >
+
+            <button
+              type="button"
+              class="thumbnail-btn"
+              *ngFor="let image of galleryImages"
+              [class.active]="selectedImage === image"
+              (click)="selectImage(image, $event)"
+            >
+
+              <img
+                [src]="image"
+                [alt]="product.title"
+                (error)="onImageError($event)"
+              />
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==========================================
+           RIGHT - PRODUCT INFORMATION
+      =========================================== -->
+
+      <div class="col-lg-6">
+
+        <div class="product-info">
+
+          <!-- Product Title -->
+
+          <h1 class="product-title">
+            {{ product.title }}
+          </h1>
+
+
+          <!-- Price -->
+
+          <div class="product-price">
+
+            <span class="current-price">
+              {{ product.current_price }}EGP
+            </span>
+
+            <span
+              *ngIf="getDiscount() > 0"
+              class="old-price"
+            >
+              {{ product.previous_price }}EGP
+            </span>
+
+            <span
+              *ngIf="getDiscount() > 0"
+              class="discount-badge"
+            >
+              -{{ getDiscount() }}%
+            </span>
+
+          </div>
+
+
+          <!-- Rating -->
+
+          <div class="product-rating">
+
+            <i class="bi bi-star-fill"></i>
+
+            <span class="rating-number">
+
+              {{ product.rating | number:'1.1-1' }}
+
+              ({{ product.reviews.length }} Reviews)
+
+            </span>
+
+          </div>
+
+          <hr>
+
+
+          <!-- Meta -->
+
+          <p class="product-meta">
+
+            <strong>
+              Availability :
+            </strong>
+
+            <span
+              [class.out-of-stock]="!inStock"
+            >
+              {{ inStock ? 'In Stock' : 'Out Of Stock' }}
+            </span>
+
+          </p>
+
+
+          <p
+            class="product-meta"
+            *ngIf="product.estimated_shipping_time"
+          >
+
+            <strong>
+              Estimated Shipping Time :
+            </strong>
+
+            <span>
+              {{ product.estimated_shipping_time }}
+            </span>
+
+          </p>
+
+
+          <!-- ==========================================
+               SIZES
+          =========================================== -->
+
+          <div
+            class="product-option"
+            *ngIf="getSizes().length"
+          >
+
+            <span class="option-label">
+              Size :
+            </span>
+
+            <div class="size-options">
+
+              <button
+                type="button"
+                *ngFor="
+                  let size of getSizes();
+                  let i = index
+                "
+                class="size-btn"
+                [class.active]="selectedSize === size"
+                [disabled]="!isSizeAvailable(i)"
+                (click)="selectSize(size)"
+              >
+                {{ size }}
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- ==========================================
+               COLORS
+          =========================================== -->
+
+          <div
+            class="product-option"
+            *ngIf="getColors().length"
+          >
+
+            <span class="option-label">
+              Color :
+            </span>
+
+            <div class="color-options">
+
+              <button
+                type="button"
+                *ngFor="let color of getColors()"
+                class="color-btn"
+                [class.active]="selectedColor === color"
+                [title]="color"
+                (click)="selectColor(color)"
+              >
+
+                <span
+                  [style.backgroundColor]="color"
+                ></span>
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- ==========================================
+               QUANTITY
+          =========================================== -->
+
+          <div class="product-option">
+
+            <span class="option-label">
+              Quantity :
+            </span>
+
+            <div class="quantity-box">
+
+              <button
+                type="button"
+                (click)="decreaseQuantity()"
+              >
+                -
+              </button>
+
+              <span>
+                {{ quantity }}
+              </span>
+
+              <button
+                type="button"
+                (click)="increaseQuantity()"
+              >
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- ==========================================
+               CART ACTIONS
+          =========================================== -->
+
+          <div class="cart-actions">
+
+            <button
+              type="button"
+              class="add-to-cart-btn"
+              [disabled]="!inStock"
+              (click)="addToCart()"
+            >
+              Add To Cart
+            </button>
+
+            <button
+              type="button"
+              class="buy-now-btn"
+              [disabled]="!inStock"
+              (click)="buyNow()"
+            >
+              Buy Now
+            </button>
+
+          </div>
+
+
+          <!-- Share -->
+
+          <div class="share-row">
+
+            <h3>
+              Share:
+            </h3>
+
+            <button
+              type="button"
+              class="share-btn facebook"
+              aria-label="Share on Facebook"
+              (click)="share('facebook')"
+            >
+              <i
+                class="fa-brands fa-facebook-f"
+              ></i>
+            </button>
+
+            <button
+              type="button"
+              class="share-btn twitter"
+              aria-label="Share on Twitter"
+              (click)="share('twitter')"
+            >
+              <i
+                class="fa-brands fa-twitter"
+              ></i>
+            </button>
+
+            <button
+              type="button"
+              class="share-btn linkedin"
+              aria-label="Share on LinkedIn"
+              (click)="share('linkedin')"
+            >
+              <i
+                class="fa-brands fa-linkedin-in"
+              ></i>
+            </button>
+
+            <button
+              type="button"
+              class="share-btn whatsapp"
+              aria-label="Share on WhatsApp"
+              (click)="share('whatsapp')"
+            >
+              <i
+                class="fa-brands fa-whatsapp"
+              ></i>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         DETAILS / POLICY
+    =========================================== -->
+
+    <div
+      *ngIf="!loading && product"
+      class="product-description-section mt-5"
+    >
+
+      <ul
+        class="nav nav-tabs"
+        role="tablist"
+      >
+
+        <li class="nav-item">
+
+          <button
+            class="nav-link active"
+            data-bs-toggle="tab"
+            data-bs-target="#details"
+            type="button"
+          >
+            Details
+          </button>
+
+        </li>
+
+        <li class="nav-item">
+
+          <button
+            class="nav-link"
+            data-bs-toggle="tab"
+            data-bs-target="#policy"
+            type="button"
+          >
+            Policy
+          </button>
+
+        </li>
+
+      </ul>
+
+
+      <div
+        class="tab-content border border-top-0 p-4"
+      >
+
+        <!-- Details -->
+
+        <div
+          class="tab-pane fade show active"
+          id="details"
+        >
+
+          <div
+            [innerHTML]="product.details"
+          ></div>
+
+        </div>
+
+
+        <!-- Policy -->
+
+        <div
+          class="tab-pane fade"
+          id="policy"
+        >
+
+          <div
+            [innerHTML]="product.policy"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         RELATED PRODUCTS
+    =========================================== -->
+
+    <div
+      *ngIf="relatedProducts.length"
+      class="related-products-section"
+    >
+
+      <div class="container">
+
+        <!-- Section Title -->
+
+        <div class="related-heading text-center">
+
+          <h2 class="related-title">
+            Related Products
+          </h2>
+
+        </div>
+
+
+        <!-- Products -->
+
+        <div class="row g-4">
+
+          <div
+            class="col-lg-3 col-md-6"
+            *ngFor="let related of visibleRelated"
+          >
+
+            <div
+              class="single-product"
+              [routerLink]="['/products', related.id]"
+            >
+
+              <!-- ==========================================
+                   PRODUCT IMAGE
+              =========================================== -->
+
+              <div class="img-wrapper">
+
+                <!-- Discount -->
+
+                <span
+                  class="product-badge"
+                  *ngIf="getItemDiscount(related) > 0"
+                >
+                  -{{ getItemDiscount(related) }}%
+                </span>
+
+
+                <!-- Wishlist -->
+
+                <button
+                  type="button"
+                  class="add-to-wishlist-btn"
+                  (click)="$event.stopPropagation()"
+                >
+
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+
+                    <path
+                      d="M12 21C12 21 3 15.5 3 9.5C3 6.5 5 4 8 4C10 4 11.5 5 12 6.5C12.5 5 14 4 16 4C19 4 21 6.5 21 9.5C21 15.5 12 21 12 21Z"
+                      stroke="#030712"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+
+                  </svg>
+
+                </button>
+
+
+                <!-- Product Image -->
+
+                <img
+                  class="product-img"
+                  [src]="related.thumbnail"
+                  [alt]="related.title"
+                />
+
+
+                <!-- Hover Actions -->
+
+                <div
+                  class="product-actions"
+                  (click)="$event.stopPropagation()"
+                >
+
+                  <!-- Compare -->
+
+                  <button
+                    type="button"
+                    class="action-btn"
+                  >
+
+                    <i
+                      class="fa-solid fa-infinity"
+                    ></i>
+
+                  </button>
+
+
+                  <!-- Add To Cart -->
+
+                  <button
+                    type="button"
+                    class="add-cart"
+                    (click)="
+                      addRelatedToCart(related);
+                      $event.stopPropagation()
+                    "
+                  >
+                    Add To Cart
+                  </button>
+
+
+                  <!-- Eye -->
+
+                  <button
+                    type="button"
+                    class="action-btn"
+                    [routerLink]="[
+                      '/products',
+                      related.id
+                    ]"
+                    (click)="$event.stopPropagation()"
+                  >
+
+                    <i
+                      class="bi bi-eye"
+                    ></i>
+
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <!-- ==========================================
+                   PRODUCT CONTENT
+              =========================================== -->
+
+              <div class="content-wrapper">
+
+                <!-- Title -->
+
+                <h6 class="product-title-sm">
+                  {{ related.title }}
+                </h6>
+
+
+                <!-- Price -->
+
+                <div class="price-wrapper">
+
+                  <h6>
+                    {{ related.current_price }}EGP
+                  </h6>
+
+                  <del
+                    *ngIf="
+                      getItemDiscount(related) > 0
+                    "
+                  >
+                    {{ related.previous_price }}EGP
+                  </del>
+
+                </div>
+
+
+                <!-- Rating -->
+
+                <div class="ratings-wrapper">
+
+                  <span class="stars">
+
+                    <i
+                      *ngFor="
+                        let star of [1,2,3,4,5]
+                      "
+                      class="bi"
+                      [class.bi-star-fill]="
+                        star <= (+related.rating)
+                      "
+                      [class.bi-star]="
+                        star > (+related.rating)
+                      "
+                    ></i>
+
+                  </span>
+
+                  <span class="rating-title">
+                    {{ related.rating }} (0)
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             PAGINATION DOTS
+        =========================================== -->
+
+        <div
+          class="related-dots"
+          *ngIf="relatedPages.length > 1"
+        >
+
+          <button
+            type="button"
+            *ngFor="let page of relatedPages"
+            [class.active]="page === relatedPage"
+            [attr.aria-label]="
+              'Page ' + (page + 1)
+            "
+            (click)="changeRelatedPage(page)"
+          ></button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

@@ -1,0 +1,382 @@
+/* =========================================
+   ABOUT SECTION
+========================================= */
+
+.about-section {
+  background: #fff;
+
+  min-height: 100vh;
+
+  padding-bottom: 80px;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+.hero {
+    min-height: 500px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    background-image: url("https://king-cotton.topbusiness.io/assets/images/1724480495Imagexxxxxpng.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+
+    background-color: rgba(0, 0, 0, 0.58);
+}
+
+
+
+.hero-title {
+    color: #fff;
+
+    font-size: 68px;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+
+
+
+
+.hero-subtitle {
+    color: #e2b84b;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+}
+ 
+.breadcrumb-home {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor : pointer
+}
+
+.breadcrumb-home:hover {
+  color: #5b82df;
+}
+
+/* =========================================
+   CONTENT LAYOUT
+========================================= */
+
+.about-content-wrapper {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) 320px;
+
+  gap: 50px;
+
+  padding-top: 70px;
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.about-content {
+  color: #1a1616;
+
+  font-size: 16px;
+
+  line-height: 1.9;
+}
+
+
+.about-content h2 {
+  color: #111827;
+
+  font-size: 28px;
+
+  font-weight: 700;
+
+  margin-top: 35px;
+
+  margin-bottom: 18px;
+
+  position: relative;
+
+  padding-left: 18px;
+}
+
+
+.about-content h2:first-child {
+  margin-top: 0;
+}
+
+
+.about-content h2::before {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+
+  top: 6px;
+
+  width: 4px;
+
+  height: calc(100% - 12px);
+
+  background: #5383ec;
+
+  border-radius: 4px;
+}
+
+
+.about-content p {
+  margin-bottom: 22px;
+
+  white-space: normal;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.about-sidebar {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+
+.about-card {
+  background: #fff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  padding: 25px;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.about-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+.about-card-icon {
+  width: 50px;
+
+  height: 50px;
+
+  border-radius: 10px;
+
+  background: #eef3ff;
+
+  color: #5383ec;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 23px;
+
+  margin-bottom: 18px;
+}
+
+
+.about-card h3 {
+  color: #111827;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  margin-bottom: 10px;
+}
+
+
+.about-card p {
+  color: #6b7280;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  margin: 0;
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.loading-box {
+  min-height: 400px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #6b7280;
+}
+
+
+.loading-box .spinner-border {
+  color: #5383ec;
+
+  margin-bottom: 15px;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.error-box {
+  min-height: 400px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+.error-box > i {
+  font-size: 50px;
+
+  color: #dc3545;
+
+  margin-bottom: 15px;
+}
+
+
+.error-box h3 {
+  color: #111827;
+
+  margin-bottom: 8px;
+}
+
+
+.error-box p {
+  color: #6b7280;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 991px) {
+
+  .about-hero {
+    padding: 70px 0 60px;
+  }
+
+
+  .about-hero h1 {
+    font-size: 40px;
+  }
+
+
+  .about-content-wrapper {
+    grid-template-columns: 1fr;
+
+    gap: 40px;
+
+    padding-top: 50px;
+  }
+
+
+  .about-sidebar {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+}
+
+
+@media (max-width: 767px) {
+
+  .about-hero {
+    padding: 55px 20px 50px;
+  }
+
+
+  .about-hero h1 {
+    font-size: 34px;
+  }
+
+
+  .about-hero p {
+    font-size: 15px;
+  }
+
+
+  .about-content-wrapper {
+    padding-top: 40px;
+  }
+
+
+  .about-content {
+    font-size: 15px;
+
+    line-height: 1.8;
+  }
+
+
+  .about-content h2 {
+    font-size: 23px;
+  }
+
+
+  .about-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 575px) {
+
+  .about-hero h1 {
+    font-size: 30px;
+  }
+
+
+  .about-badge {
+    font-size: 11px;
+  }
+
+}

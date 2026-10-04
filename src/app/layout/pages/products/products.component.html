@@ -1,0 +1,354 @@
+
+<header class="hero">
+  <div class="hero-overlay"></div>
+  <div class="container position-relative">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="hero-title d-flex justify-content-center mb-5">
+          Product
+        </h1>
+        <h3 class="d-flex justify-content-center text-white">
+          Home <span class="mx-3">//</span> Product
+        </h3>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="products-section py-5">
+  <div class="container px-4">
+    <div class="row g-4">
+
+      <!-- ==================== SIDEBAR ==================== -->
+      <div class="col-lg-3 col-md-4">
+
+        <!-- Product Categories -->
+        <div class="filter-box categories-box mb-4">
+          <h3>Product categories</h3>
+          <div class="filter-line"></div>
+
+          <ul class="category-list">
+            <li *ngFor="let category of categories">
+
+              <!-- Main Category -->
+              <div
+                class="category-item"
+                [class.active]="isCategorySelected(category.id)"
+              >
+                <span
+                  (click)="selectCategory(category.id)"
+                  style="cursor: pointer"
+                >
+                  {{ category.name }}
+                </span>
+
+                <button
+                  *ngIf="category.sub_categories?.length"
+                  type="button"
+                  class="category-toggle"
+                  (click)="toggleCategory(category.id)"
+                >
+                  {{ isCategoryExpanded(category.id) ? '−' : '+' }}
+                </button>
+              </div>
+
+              <!-- Sub Categories -->
+              <ul
+                class="subcategory-list"
+                *ngIf="isCategoryExpanded(category.id)"
+              >
+                <li
+                  *ngFor="let subCategory of category.sub_categories"
+                  [class.active]="isSubcategorySelected(subCategory.id)"
+                  (click)="selectSubcategory(subCategory.id)"
+                  style="cursor: pointer"
+                >
+                  {{ subCategory.name }}
+                </li>
+              </ul>
+
+            </li>
+          </ul>
+        </div>
+
+        <!-- ==================== PRICE RANGE ==================== -->
+       
+<!-- ==================== PRICE RANGE ==================== -->
+
+<div class="filter-box price-box">
+
+  <h3>Price Range</h3>
+
+  <div class="filter-line"></div>
+
+  <div class="price-slider">
+
+    <!-- MIN PRICE -->
+    <input
+      type="range"
+      min="0"
+      max="5000"
+      step="10"
+      [(ngModel)]="priceMin"
+      (input)="onMinPriceChange()"
+      class="range-min"
+    >
+
+    <!-- MAX PRICE -->
+    <input
+      type="range"
+      min="0"
+      max="5000"
+      step="10"
+      [(ngModel)]="priceMax"
+      (input)="onMaxPriceChange()"
+      class="range-max"
+    >
+
+  </div>
+
+  <!-- CURRENT RANGE -->
+  <div class="price-value">
+    <span>{{ priceMin }} EGP</span>
+    <span>-</span>
+    <span>{{ priceMax }} EGP</span>
+  </div>
+
+  <!-- APPLY -->
+  <button
+    type="button"
+    class="filter-btn apply-btn"
+    (click)="applyFilter()"
+  >
+    Apply Filter
+  </button>
+
+  <!-- CLEAR -->
+  <button
+    type="button"
+    class="filter-btn clear-btn"
+    (click)="clearFilter()"
+  >
+    Clear Filter
+  </button>
+
+</div>
+
+      </div>
+
+      <!-- ==================== PRODUCTS AREA ==================== -->
+      <div class="col-lg-9 col-md-8">
+
+        <!-- ==================== PRODUCTS HEADER ==================== -->
+        <div class="products-header mb-4">
+
+          <div class="products-count">
+            <h3>
+              Total Products Found:
+              <span>{{ products.length }}</span>
+            </h3>
+          </div>
+
+          <div class="products-actions">
+
+            <!-- Sort -->
+            <div class="sort-box">
+              <span>Sort by:</span>
+
+              <select
+                [(ngModel)]="selectedSort"
+                (change)="onSortChange()"
+              >
+                <option value="latest">Latest Product</option>
+                <option value="oldest">Oldest Product</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+              </select>
+            </div>
+
+            <!-- View Buttons -->
+            <div class="view-buttons">
+
+              <!-- List -->
+              <button
+                type="button"
+                class="view-btn"
+                [class.active]="viewMode === 'list'"
+                (click)="setViewMode('list')"
+              >
+                <i class="fa-solid fa-list"></i>
+              </button>
+
+              <!-- Grid -->
+              <button
+                type="button"
+                class="view-btn"
+                [class.active]="viewMode === 'grid'"
+                (click)="setViewMode('grid')"
+              >
+                <i class="fa-solid fa-grip"></i>
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== STATE MESSAGES ==================== -->
+
+        <!-- Loading -->
+        <div class="state-message" *ngIf="loading">
+          Loading...
+        </div>
+
+        <!-- Error -->
+        <div class="state-message error" *ngIf="!loading && errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <!-- Empty Products -->
+        <div
+          class="state-message"
+          *ngIf="!loading && !errorMessage && products.length === 0"
+        >
+          No products found.
+        </div>
+
+        <!-- ==================== PRODUCTS ==================== -->
+        <div
+          class="products-container"
+          [class.list-view]="viewMode === 'list'"
+          *ngIf="!loading && !errorMessage && products.length > 0"
+        >
+
+          <div
+            class="product-item"
+            *ngFor="let product of products"
+          >
+
+            <div
+              class="single-product"
+              [routerLink]="['/products', product.id]"
+            >
+
+              <!-- ==================== IMAGE ==================== -->
+              <div class="img-wrapper">
+
+                <!-- Discount -->
+                <span
+                  class="product-badge"
+                  *ngIf="hasPreviousPrice(product)"
+                >
+                  -{{ getDiscount(product) }}%
+                </span>
+
+                <!-- Wishlist -->
+                <button
+                  type="button"
+                  class="add-to-wishlist-btn"
+                  (click)="$event.stopPropagation()"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M12 21C12 21 3 15.5 3 9.5C3 6.5 5 4 8 4C10 4 11.5 5 12 6.5C12.5 5 14 4 16 4C19 4 21 6.5 21 9.5C21 15.5 12 21 12 21Z"
+                      stroke="#030712"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+
+                <!-- Product Image -->
+                <img
+                  class="product-img"
+                  [src]="product.thumbnail"
+                  [alt]="product.title"
+                >
+
+                <!-- ==================== PRODUCT ACTIONS ==================== -->
+                <div
+                  class="product-actions"
+                  (click)="$event.stopPropagation()"
+                >
+
+                  <!-- Compare -->
+                  <button
+                    type="button"
+                    class="action-btn"
+                  >
+                    <i class="fa-solid fa-infinity"></i>
+                  </button>
+
+                  <!-- Add To Cart -->
+                  <button
+                    type="button"
+                    class="add-cart"
+                    (click)="addToCart(product); $event.stopPropagation()"
+                  >
+                    Add To Cart
+                  </button>
+
+                  <!-- Details -->
+                  <button
+                    type="button"
+                    class="action-btn"
+                    [routerLink]="['/products', product.id]"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <i class="bi bi-eye"></i>
+                  </button>
+
+                </div>
+              </div>
+
+              <!-- ==================== PRODUCT INFO ==================== -->
+              <div class="content-wrapper">
+
+                <!-- Product Title -->
+                <h6 class="product-title">
+                  {{ product.title }}
+                </h6>
+
+                <!-- Price -->
+                <div class="price-wrapper">
+                  <h6>
+                    {{ product.current_price }}EGP
+                  </h6>
+
+                  <del *ngIf="hasPreviousPrice(product)">
+                    {{ product.previous_price }}EGP
+                  </del>
+                </div>
+
+                <!-- Rating -->
+                <div class="ratings-wrapper">
+
+                  <span class="stars">
+                    <i
+                      *ngFor="let star of [1, 2, 3, 4, 5]"
+                      class="bi"
+                      [class.bi-star-fill]="star <= getStars(product.rating)"
+                      [class.bi-star]="star > getStars(product.rating)"
+                    ></i>
+                  </span>
+
+                  <span class="rating-title">
+                    {{ product.rating }} (0)
+                  </span>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

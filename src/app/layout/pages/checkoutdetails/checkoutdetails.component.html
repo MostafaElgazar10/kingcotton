@@ -1,0 +1,270 @@
+
+<header class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="container position-relative">
+
+        <div class="row">
+
+            <div class="col--8">
+
+                <h1 class="hero-title d-flex justify-content-center mb-5">
+                    Product
+                </h1>
+                <h3 class="d-flex justify-content-center text-white ">Home <span class="mx-3">// </span> Product</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ==========================================
+     STEPPER
+=========================================== -->
+
+<div class="checkout-stepper">
+
+  <div class="step completed">
+    <div class="step-circle"><i class="bi bi-check-lg"></i></div>
+    <span class="step-label">Address</span>
+  </div>
+
+  <div class="step-line completed"></div>
+
+  <div class="step active">
+    <div class="step-circle">2</div>
+    <span class="step-label">Details</span>
+  </div>
+
+  <div class="step-line"></div>
+
+  <div class="step">
+    <div class="step-circle">3</div>
+    <span class="step-label">Payment</span>
+  </div>
+
+</div>
+
+
+<div class="checkout-container">
+
+  <div class="details-grid">
+
+    <!-- Left Main Content -->
+    <div class="main-content">
+
+      <!-- Billing Address Box -->
+      <div class="card-box address-box">
+        <div class="address-header">
+          <h2 class="card-title">Billing Address</h2>
+          <button class="btn-edit" (click)="goToAddressStep()">Edit</button>
+        </div>
+
+        <div class="address-details">
+          <p><i class="icon">👤</i> {{ billingAddress.name }}</p>
+          <p *ngIf="billingAddress.address"><i class="icon">📍</i> {{ billingAddress.address }}</p>
+          <p *ngIf="billingAddress.phone"><i class="icon">📞</i> {{ billingAddress.phone }}</p>
+          <p><i class="icon">✉️</i> {{ billingAddress.email }}</p>
+        </div>
+      </div>
+
+      <!-- Empty cart -->
+      <div class="card-box" *ngIf="shopGroups.length === 0">
+        <p>Your cart is empty.</p>
+      </div>
+
+      <!-- One block per shop -->
+      <div *ngFor="let group of shopGroups; let i = index" class="card-box item-card">
+
+        <!-- Shop Info (shown ONCE per shop) -->
+        <div class="shop-info">
+          <p><strong>Shop Name :</strong> {{ group.shopName }}</p>
+          <p><strong>Shop Phone :</strong> {{ group.shopPhone }}</p>
+          <p><strong>Shop Address:</strong> {{ group.shopAddress }}</p>
+        </div>
+
+        <!-- All products from this shop -->
+        <div
+          *ngFor="let item of group.items"
+          class="product-info-row"
+        >
+          <div class="product-img-wrapper">
+            <img [src]="item.thumbnail" [alt]="item.title" class="product-img" />
+          </div>
+          <div class="product-details">
+            <h3 class="product-title">{{ item.title }}</h3>
+            <p class="product-meta">Price : <span>{{ item.current_price }}EGP</span></p>
+            <p class="product-meta">Quantity : <span>{{ item.quantity }}</span></p>
+            <p class="product-meta color-row">
+  Color :
+  <span
+    class="color-swatch"
+    [style.backgroundColor]="item.color">
+  </span>
+</p>
+            <p class="product-meta">
+              Total Price :
+              <span>
+                {{ getItemTotal(item) }}EGP
+                <ng-container *ngIf="getItemDiscount(item) > 0">
+                  ({{ getItemDiscount(item) }}% Off)
+                </ng-container>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="shop-divider"></div>
+
+        <!-- Packaging Choice (once per shop) -->
+        <div class="option-banner">
+          <span>
+            <strong>Packageing :</strong>
+            {{ getPackagingOption(group).label }}+EGP{{ getPackagingOption(group).cost }}
+          </span>
+          <button (click)="openPackageModal(i)" class="btn-action">Select Package</button>
+        </div>
+
+        <!-- Shipping Choice (once per shop) -->
+        <div class="option-banner">
+          <span>
+            <strong>Shipping :</strong>
+            {{ getShippingOption(group).label }}+EGP{{ getShippingOption(group).cost }}
+          </span>
+          <button (click)="openShippingModal(i)" class="btn-action">Select Shipping</button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Right Side Summary Card -->
+    <div class="card-box summary-card">
+      <h3 class="summary-title">Summery</h3>
+
+      <div class="summary-details">
+        <h4 class="summary-subtitle">Price Details</h4>
+        <div class="summary-row">
+          <span>Total MRP</span>
+          <span>{{ totalMRP }}EGP</span>
+        </div>
+        <div class="summary-row">
+          <span>Tax</span>
+          <span>{{ taxPercentage }}%</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping Cost</span>
+          <span>EGP{{ shippingCost }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Packaging Cost</span>
+          <span>EGP{{ packagingCost }}</span>
+        </div>
+      </div>
+
+      <div class="final-price-row">
+        <span>Final Price</span>
+        <span class="price-highlight">{{ finalPrice | number:'1.2-2' }}EGP</span>
+      </div>
+
+      <div class="actions-wrapper">
+        <button type="submit" class="btn-primary" (click)="onContinue()">Continue &rarr;</button>
+        <button class="btn-secondary" (click)="goToPreviousStep()">&larr; Back To Previous Step</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ==========================================
+     SHIPPING MODAL
+=========================================== -->
+
+<div class="modal-overlay" *ngIf="activeModal === 'shipping'" (click)="closeModal()">
+
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2>Shipping</h2>
+      <button type="button" class="modal-close" (click)="closeModal()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+      <label
+        class="modal-option"
+        *ngFor="let option of shippingOptions"
+      >
+
+        <input
+          type="radio"
+          name="shipping-option"
+          [checked]="option.id === shopGroups[activeGroupIndex!].shippingOptionId"
+          (change)="selectShippingOption(option.id)"
+        >
+
+        <span>
+          {{ option.label }}
+          <ng-container *ngIf="option.cost > 0"> + EGP{{ option.cost }}</ng-container>
+          ({{ option.duration }})
+        </span>
+
+      </label>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ==========================================
+     PACKAGING MODAL
+=========================================== -->
+
+<div class="modal-overlay" *ngIf="activeModal === 'package'" (click)="closeModal()">
+
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2>Packaging</h2>
+      <button type="button" class="modal-close" (click)="closeModal()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+      <label
+        class="modal-option"
+        *ngFor="let option of packagingOptions"
+      >
+
+        <input
+          type="radio"
+          name="packaging-option"
+          [checked]="option.id === shopGroups[activeGroupIndex!].packagingOptionId"
+          (change)="selectPackagingOption(option.id)"
+        >
+
+        <span>
+          {{ option.label }}
+          <ng-container *ngIf="option.cost > 0"> + EGP{{ option.cost }}</ng-container>
+        </span>
+
+      </label>
+
+    </div>
+
+  </div>
+
+</div>
