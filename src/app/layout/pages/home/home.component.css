@@ -147,6 +147,20 @@
   color: #0c0b0b;
 }
 
+/* Categories */
+.categories-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .categories-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
 
 /* =========================================
    EXPLORE PRODUCTS - TABS NAVBAR
