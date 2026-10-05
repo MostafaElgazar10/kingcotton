@@ -1,210 +1,700 @@
+
 <div class="checkout-container">
 
-  <!-- Stepper -->
+  <!-- ===================================================== -->
+  <!-- STEPPER -->
+  <!-- ===================================================== -->
+
   <div class="stepper-wrapper">
+
     <div class="step-item">
       <div class="step-circle active">1</div>
       <span class="step-label active">Address</span>
     </div>
+
     <div class="step-line"></div>
+
     <div class="step-item">
       <div class="step-circle">2</div>
       <span class="step-label">Details</span>
     </div>
+
     <div class="step-line"></div>
+
     <div class="step-item">
       <div class="step-circle">3</div>
       <span class="step-label">Payment</span>
     </div>
+
   </div>
 
-  <!-- Form Layout -->
-  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-grid">
 
-    <!-- Left Form Fields -->
+  <!-- ===================================================== -->
+  <!-- FORM -->
+  <!-- ===================================================== -->
+
+  <form
+    [formGroup]="checkoutForm"
+    (ngSubmit)="onSubmit()"
+    class="checkout-grid"
+  >
+
+    <!-- =================================================== -->
+    <!-- LEFT FORM -->
+    <!-- =================================================== -->
+
     <div class="form-group-container">
-      
-      <!-- Personal Information -->
+
+
+      <!-- ================================================= -->
+      <!-- PERSONAL INFORMATION -->
+      <!-- ================================================= -->
+
       <div>
-        <h2 class="section-title">Personal Information</h2>
+
+        <h2 class="section-title">
+          Personal Information
+        </h2>
+
+
         <div class="grid-2">
+
+
+          <!-- Name -->
+
           <div class="field-box">
-            <label>Name</label>
-            <input type="text" formControlName="personalName" placeholder="Enter Your Name" class="input-control" />
+
+            <label for="personalName">
+              Name
+            </label>
+
+            <input
+              id="personalName"
+              type="text"
+              formControlName="personalName"
+              placeholder="Enter Your Name"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('personalName')?.touched &&
+                checkoutForm.get('personalName')?.invalid
+              "
+            />
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('personalName')?.touched &&
+                checkoutForm.get('personalName')?.invalid
+              "
+            >
+              {{ getErrorMessage('personalName') }}
+            </div>
+
           </div>
+
+
+          <!-- Email -->
+
           <div class="field-box">
-            <label>Email</label>
-            <input type="email" formControlName="personalEmail" placeholder="Enter Your Email" class="input-control" />
+
+            <label for="personalEmail">
+              Email
+            </label>
+
+            <input
+              id="personalEmail"
+              type="email"
+              formControlName="personalEmail"
+              placeholder="Enter Your Email"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('personalEmail')?.touched &&
+                checkoutForm.get('personalEmail')?.invalid
+              "
+            />
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('personalEmail')?.touched &&
+                checkoutForm.get('personalEmail')?.invalid
+              "
+            >
+              {{ getErrorMessage('personalEmail') }}
+            </div>
+
           </div>
+
         </div>
+
+
+        <!-- Create Account -->
+
         <div class="checkbox-group">
-          <input type="checkbox" id="createAcc" formControlName="createAccount" />
-          <label for="createAcc">Create an account ?</label>
+
+          <input
+            type="checkbox"
+            id="createAcc"
+            formControlName="createAccount"
+          />
+
+          <label for="createAcc">
+            Create an account ?
+          </label>
+
         </div>
+
       </div>
 
-      <!-- Billing Details -->
+
+
+      <!-- ================================================= -->
+      <!-- BILLING DETAILS -->
+      <!-- ================================================= -->
+
       <div>
-        <h2 class="section-title">Billing Details</h2>
-        
+
+        <h2 class="section-title">
+          Billing Details
+        </h2>
+
+
+        <!-- Shipping / Name -->
+
         <div class="grid-2">
+
+
+          <!-- Shipping -->
+
           <div class="field-box">
-            <label>Shipping</label>
-            <select formControlName="shippingOption" class="input-control">
-              <option value="ship_to_address">Ship To Address</option>
+
+            <label for="shippingOption">
+              Shipping
+            </label>
+
+            <select
+              id="shippingOption"
+              formControlName="shippingOption"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('shippingOption')?.touched &&
+                checkoutForm.get('shippingOption')?.invalid
+              "
+            >
+
+              <option value="ship_to_address">
+                Ship To Address
+              </option>
+
             </select>
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('shippingOption')?.touched &&
+                checkoutForm.get('shippingOption')?.invalid
+              "
+            >
+              {{ getErrorMessage('shippingOption') }}
+            </div>
+
           </div>
+
+
+          <!-- Billing Name -->
+
           <div class="field-box">
-            <label>Name</label>
-            <input type="text" formControlName="billingName" placeholder="Full Name" class="input-control" />
+
+            <label for="billingName">
+              Name
+            </label>
+
+            <input
+              id="billingName"
+              type="text"
+              formControlName="billingName"
+              placeholder="Full Name"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('billingName')?.touched &&
+                checkoutForm.get('billingName')?.invalid
+              "
+            />
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('billingName')?.touched &&
+                checkoutForm.get('billingName')?.invalid
+              "
+            >
+              {{ getErrorMessage('billingName') }}
+            </div>
+
           </div>
+
         </div>
 
-        <div class="grid-2" style="margin-top: 16px;">
+
+
+        <!-- Email / Phone -->
+
+        <div
+          class="grid-2"
+          style="margin-top: 16px;"
+        >
+
+
+          <!-- Billing Email -->
+
           <div class="field-box">
-            <label>Email</label>
-            <input type="email" formControlName="billingEmail" placeholder="Your Email" class="input-control" />
+
+            <label for="billingEmail">
+              Email
+            </label>
+
+            <input
+              id="billingEmail"
+              type="email"
+              formControlName="billingEmail"
+              placeholder="Your Email"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('billingEmail')?.touched &&
+                checkoutForm.get('billingEmail')?.invalid
+              "
+            />
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('billingEmail')?.touched &&
+                checkoutForm.get('billingEmail')?.invalid
+              "
+            >
+              {{ getErrorMessage('billingEmail') }}
+            </div>
+
           </div>
+
+
+          <!-- Phone -->
+
           <div class="field-box">
-            <label>Phone Number</label>
-            <input type="text" formControlName="phone" placeholder="Phone Number" class="input-control" />
+
+            <label for="phone">
+              Phone Number
+            </label>
+
+            <input
+              id="phone"
+              type="text"
+              formControlName="phone"
+              placeholder="Phone Number"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('phone')?.touched &&
+                checkoutForm.get('phone')?.invalid
+              "
+            />
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('phone')?.touched &&
+                checkoutForm.get('phone')?.invalid
+              "
+            >
+              {{ getErrorMessage('phone') }}
+            </div>
+
           </div>
+
         </div>
 
-        <!-- Country / State / City -->
-        <div class="grid-3" style="margin-top: 16px;">
+
+
+        <!-- ================================================= -->
+        <!-- COUNTRY / STATE / CITY -->
+        <!-- ================================================= -->
+
+        <div
+          class="grid-3"
+          style="margin-top: 16px;"
+        >
+
+
+          <!-- Country -->
+
           <div class="field-box">
-            <label>Country</label>
-            <select formControlName="country" class="input-control">
-              <option value="" disabled selected>Select Country</option>
-              <option *ngFor="let c of countries" [value]="c.code">{{ c.name }}</option>
+
+            <label for="country">
+              Country
+            </label>
+
+            <select
+              id="country"
+              formControlName="country"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('country')?.touched &&
+                checkoutForm.get('country')?.invalid
+              "
+            >
+
+              <option value="">
+                Select Country
+              </option>
+
+              <option
+                *ngFor="let c of countries"
+                [value]="c.code"
+              >
+                {{ c.name }}
+              </option>
+
             </select>
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('country')?.touched &&
+                checkoutForm.get('country')?.invalid
+              "
+            >
+              {{ getErrorMessage('country') }}
+            </div>
+
           </div>
+
+
+          <!-- State -->
+
           <div class="field-box">
-            <label>State / Region</label>
-            <select formControlName="state" class="input-control">
-              <option value="" disabled selected>Select State</option>
-              <option *ngFor="let s of states" [value]="s">{{ s }}</option>
+
+            <label for="state">
+              State / Region
+            </label>
+
+            <select
+              id="state"
+              formControlName="state"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('state')?.touched &&
+                checkoutForm.get('state')?.invalid
+              "
+            >
+
+              <option value="">
+                Select State
+              </option>
+
+              <option
+                *ngFor="let s of states"
+                [value]="s"
+              >
+                {{ s }}
+              </option>
+
             </select>
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('state')?.touched &&
+                checkoutForm.get('state')?.invalid
+              "
+            >
+              {{ getErrorMessage('state') }}
+            </div>
+
           </div>
+
+
+          <!-- City -->
+
           <div class="field-box">
-            <label>City</label>
-            <input type="text" formControlName="city" placeholder="City" class="input-control" />
+
+            <label for="city">
+              City
+            </label>
+
+            <input
+              id="city"
+              type="text"
+              formControlName="city"
+              placeholder="City"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('city')?.touched &&
+                checkoutForm.get('city')?.invalid
+              "
+            />
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('city')?.touched &&
+                checkoutForm.get('city')?.invalid
+              "
+            >
+              {{ getErrorMessage('city') }}
+            </div>
+
           </div>
+
         </div>
 
-        <div class="grid-2" style="margin-top: 16px;">
+
+
+        <!-- ================================================= -->
+        <!-- ADDRESS / POSTAL CODE -->
+        <!-- ================================================= -->
+
+        <div
+          class="grid-2"
+          style="margin-top: 16px;"
+        >
+
+
+          <!-- Address -->
+
           <div class="field-box">
-            <label>Address</label>
-            <input type="text" formControlName="address" placeholder="Address" class="input-control" />
+
+            <label for="address">
+              Address
+            </label>
+
+            <input
+              id="address"
+              type="text"
+              formControlName="address"
+              placeholder="Address"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('address')?.touched &&
+                checkoutForm.get('address')?.invalid
+              "
+            />
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('address')?.touched &&
+                checkoutForm.get('address')?.invalid
+              "
+            >
+              {{ getErrorMessage('address') }}
+            </div>
+
           </div>
+
+
+          <!-- Postal Code -->
+
           <div class="field-box">
-            <label>Postal Code</label>
-            <input type="text" formControlName="postalCode" placeholder="Postal Code" class="input-control" />
+
+            <label for="postalCode">
+              Postal Code
+            </label>
+
+            <input
+              id="postalCode"
+              type="text"
+              formControlName="postalCode"
+              placeholder="Postal Code"
+              class="input-control"
+              [class.is-invalid]="
+                checkoutForm.get('postalCode')?.touched &&
+                checkoutForm.get('postalCode')?.invalid
+              "
+            />
+
+            <div
+              class="validation-error"
+              *ngIf="
+                checkoutForm.get('postalCode')?.touched &&
+                checkoutForm.get('postalCode')?.invalid
+              "
+            >
+              {{ getErrorMessage('postalCode') }}
+            </div>
+
           </div>
+
         </div>
 
       </div>
 
     </div>
 
-    <!-- Right Side Summary -->
-  <div class="summary-card">
 
-  <h3 class="section-title" style="margin-bottom: 0;">
-    Summery
-  </h3>
 
-  <div class="summary-details">
+    <!-- ===================================================== -->
+    <!-- RIGHT SIDE SUMMARY -->
+    <!-- ===================================================== -->
 
-    <h4 style="margin: 0; font-size: 15px; font-weight: 700;">
-      Price Details
-    </h4>
+    <div class="summary-card">
 
-    <!-- Total MRP -->
-    <div class="summary-row">
-      <span>Total MRP</span>
 
-      <span>
-        {{ totalMRP | number:'1.0-2' }}EGP
-      </span>
+      <h3
+        class="section-title"
+        style="margin-bottom: 0;"
+      >
+        Summary
+      </h3>
+
+
+      <div class="summary-details">
+
+        <h4
+          style="
+            margin: 0;
+            font-size: 15px;
+            font-weight: 700;
+          "
+        >
+          Price Details
+        </h4>
+
+
+        <!-- Total MRP -->
+
+        <div class="summary-row">
+
+          <span>
+            Total MRP
+          </span>
+
+          <span>
+            {{ totalMRP | number:'1.0-2' }} EGP
+          </span>
+
+        </div>
+
+
+        <!-- Discount -->
+
+        <div class="summary-row">
+
+          <span>
+            Discount
+          </span>
+
+          <span>
+            -{{ discount | number:'1.0-2' }} EGP
+          </span>
+
+        </div>
+
+
+        <!-- Tax -->
+
+        <div class="summary-row">
+
+          <span>
+            Tax
+          </span>
+
+          <span>
+            {{ tax }}%
+          </span>
+
+        </div>
+
+
+        <!-- Shipping -->
+
+        <div class="summary-row">
+
+          <span>
+            Shipping Cost
+          </span>
+
+          <span>
+            {{ shippingCost | number:'1.0-2' }} EGP
+          </span>
+
+        </div>
+
+
+        <!-- Packaging -->
+
+        <div class="summary-row">
+
+          <span>
+            Packaging Cost
+          </span>
+
+          <span>
+            {{ packagingCost | number:'1.0-2' }} EGP
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- FINAL PRICE -->
+      <!-- ================================================= -->
+
+      <div class="final-price-row">
+
+        <span>
+          Final Price
+        </span>
+
+        <span class="price-text">
+          {{ finalPrice | number:'1.0-2' }} EGP
+        </span>
+
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- FORM ERROR -->
+      <!-- ================================================= -->
+
+      <div
+        class="form-error-message"
+        *ngIf="errorMessage"
+      >
+        <i class="fa-solid fa-circle-exclamation"></i>
+
+        {{ errorMessage }}
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- BUTTONS -->
+      <!-- ================================================= -->
+
+      <div>
+
+        <button
+          type="submit"
+          class="btn-primary"
+        >
+          Continue &rarr;
+        </button>
+
+
+        <button
+          type="button"
+          class="btn-secondary"
+        >
+          &larr; Back To Previous Step
+        </button>
+
+      </div>
+
     </div>
-
-    <!-- Discount -->
-    <div class="summary-row">
-      <span>Discount</span>
-
-      <span>
-        -{{ discount | number:'1.0-2' }}EGP
-      </span>
-    </div>
-
-    <!-- Tax -->
-    <div class="summary-row">
-      <span>Tax</span>
-
-      <span>
-        {{ tax }}%
-      </span>
-    </div>
-
-    <!-- Shipping Cost -->
-    <div class="summary-row">
-      <span>Shipping Cost</span>
-
-      <span>
-        {{ shippingCost | number:'1.0-2' }}EGP
-      </span>
-    </div>
-
-    <!-- Packaging Cost -->
-    <div class="summary-row">
-      <span>Packaging Cost</span>
-
-      <span>
-        {{ packagingCost | number:'1.0-2' }}EGP
-      </span>
-    </div>
-
-  </div>
-
-
-  <!-- Final Price -->
-
-  <div class="final-price-row">
-
-    <span>
-      Final Price
-    </span>
-
-    <span class="price-text">
-      {{ finalPrice | number:'1.0-2' }}EGP
-    </span>
-
-  </div>
-
-
-  <!-- Buttons -->
-
-  <div>
-
-    <button
-      type="submit"
-      class="btn-primary"
-    >
-      Continue &rarr;
-    </button>
-
-    <button
-      type="button"
-      class="btn-secondary"
-    >
-      &larr; Back To Previous Step
-    </button>
-
-  </div>
-
-</div>
 
   </form>
+
 </div>

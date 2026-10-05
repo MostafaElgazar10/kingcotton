@@ -1,3 +1,4 @@
+
 import { Component, inject, OnInit } from '@angular/core';
 
 import {
@@ -158,98 +159,89 @@ export class CheckoutComponent implements OnInit {
     // FORM
     // =======================================================
 
-    this.checkoutForm =
-      this.fb.group({
+    this.checkoutForm = this.fb.group({
 
-        personalName: [
-          '',
-          Validators.required
-        ],
-
-        personalEmail: [
-
-          '',
-
-          [
-            Validators.required,
-            Validators.email
-          ]
-
-        ],
-
-        createAccount: [
-          false
-        ],
-
-        shippingOption: [
-
-          'ship_to_address',
-
-          Validators.required
-
-        ],
-
-        billingName: [
-
-          '',
-          Validators.required
-
-        ],
-
-        billingEmail: [
-
-          '',
-
-          [
-            Validators.required,
-            Validators.email
-          ]
-
-        ],
-
-        phone: [
-
-          '',
-          Validators.required
-
-        ],
-
-        country: [
-
-          '',
-          Validators.required
-
-        ],
-
-        state: [
-
-          '',
-          Validators.required
-
-        ],
-
-        city: [
-
-          '',
-          Validators.required
-
-        ],
-
-        address: [
-
-          '',
-          Validators.required
-
-        ],
-
-        postalCode: [
-
-          '',
-          Validators.required
-
+      personalName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3)
         ]
+      ],
 
-      });
+      personalEmail: [
+        '',
+        [
+          Validators.required,
+          Validators.email
+        ]
+      ],
+
+      createAccount: [
+        false
+      ],
+
+      shippingOption: [
+        'ship_to_address',
+        Validators.required
+      ],
+
+      billingName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3)
+        ]
+      ],
+
+      billingEmail: [
+        '',
+        [
+          Validators.required,
+          Validators.email
+        ]
+      ],
+
+      phone: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[0-9]{10,15}$/)
+        ]
+      ],
+
+      country: [
+        '',
+        Validators.required
+      ],
+
+      state: [
+        '',
+        Validators.required
+      ],
+
+      city: [
+        '',
+        Validators.required
+      ],
+
+      address: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5)
+        ]
+      ],
+
+      postalCode: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[0-9]{4,10}$/)
+        ]
+      ]
+
+    });
 
 
     // =======================================================
@@ -257,11 +249,10 @@ export class CheckoutComponent implements OnInit {
     // =======================================================
 
     const savedAddress =
-      this.checkoutStateService
-        .getBillingAddress();
+      this.checkoutStateService.getBillingAddress();
 
 
-    if (savedAddress) {
+    if (savedAddress !== null) {
 
       this.checkoutForm.patchValue({
 
@@ -299,6 +290,87 @@ export class CheckoutComponent implements OnInit {
     // =======================================================
 
     this.loadCartSummary();
+
+  }
+
+
+  // =========================================================
+  // VALIDATION ERROR MESSAGE
+  // =========================================================
+
+  getErrorMessage(fieldName: string): string {
+
+    const control =
+      this.checkoutForm.get(fieldName);
+
+
+    if (!control || !control.touched) {
+      return '';
+    }
+
+
+    // =======================================================
+    // REQUIRED
+    // =======================================================
+
+    if (control.hasError('required')) {
+
+      return 'This field is required.';
+
+    }
+
+
+    // =======================================================
+    // EMAIL
+    // =======================================================
+
+    if (control.hasError('email')) {
+
+      return 'Please enter a valid email address.';
+
+    }
+
+
+    // =======================================================
+    // MIN LENGTH
+    // =======================================================
+
+    if (control.hasError('minlength')) {
+
+      const requiredLength =
+        control.errors?.['minlength']?.requiredLength;
+
+      return `Minimum ${requiredLength} characters required.`;
+
+    }
+
+
+    // =======================================================
+    // PATTERN
+    // =======================================================
+
+    if (control.hasError('pattern')) {
+
+      if (fieldName === 'phone') {
+
+        return 'Please enter a valid phone number.';
+
+      }
+
+
+      if (fieldName === 'postalCode') {
+
+        return 'Please enter a valid postal code.';
+
+      }
+
+
+      return 'Invalid format.';
+
+    }
+
+
+    return '';
 
   }
 
@@ -373,9 +445,10 @@ export class CheckoutComponent implements OnInit {
                 );
 
 
-              /*
-               * السعر قبل الخصم
-               */
+              // =================================================
+              // PREVIOUS PRICE
+              // =================================================
+
               const previousPrice =
                 Number(
                   product.previous_price ??
@@ -388,9 +461,10 @@ export class CheckoutComponent implements OnInit {
                 );
 
 
-              /*
-               * السعر الحالي بعد الخصم
-               */
+              // =================================================
+              // CURRENT PRICE
+              // =================================================
+
               const currentPrice =
                 Number(
                   product.current_price ??
@@ -400,23 +474,26 @@ export class CheckoutComponent implements OnInit {
                 );
 
 
-              /*
-               * إجمالي السعر الأصلي للمنتج
-               */
+              // =================================================
+              // ORIGINAL TOTAL
+              // =================================================
+
               const productOriginalTotal =
                 previousPrice * quantity;
 
 
-              /*
-               * إجمالي السعر الحالي
-               */
+              // =================================================
+              // CURRENT TOTAL
+              // =================================================
+
               const productCurrentTotal =
                 currentPrice * quantity;
 
 
-              /*
-               * قيمة الخصم
-               */
+              // =================================================
+              // DISCOUNT
+              // =================================================
+
               const productDiscount =
                 Math.max(
                   0,
@@ -475,32 +552,31 @@ export class CheckoutComponent implements OnInit {
             discountTotal;
 
 
-          /*
-           * tax = 0 حاليًا
-           */
+          // =================================================
+          // TAX
+          // =================================================
+
           this.tax = 0;
 
 
-          /*
-           * Shipping = 0 حاليًا
-           */
+          // =================================================
+          // SHIPPING
+          // =================================================
+
           this.shippingCost = 0;
 
 
-          /*
-           * Packaging = 0 حاليًا
-           */
+          // =================================================
+          // PACKAGING
+          // =================================================
+
           this.packagingCost = 0;
 
 
-          /*
-           * السعر النهائي:
-           *
-           * السعر الحالي للمنتجات
-           * + الضريبة
-           * + الشحن
-           * + التغليف
-           */
+          // =================================================
+          // FINAL PRICE
+          // =================================================
+
           this.finalPrice =
             currentTotal +
             (
@@ -564,6 +640,7 @@ export class CheckoutComponent implements OnInit {
 
         },
 
+
         error: (error) => {
 
           console.error(
@@ -598,13 +675,19 @@ export class CheckoutComponent implements OnInit {
       this.checkoutForm
         .markAllAsTouched();
 
+
       this.errorMessage =
         'Please fill in all required fields.';
+
 
       return;
 
     }
 
+
+    // =======================================================
+    // CLEAR ERROR
+    // =======================================================
 
     this.errorMessage = '';
 
