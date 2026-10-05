@@ -416,3 +416,360 @@
     }
   }
 }
+/* ================================
+   CAPTCHA BOX
+================================ */
+
+.captcha-box {
+  width: 100%;
+  min-height: 72px;
+
+  padding: 14px 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #fff;
+
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+
+  transition: all 0.25s ease;
+}
+
+
+/* Hover */
+
+.captcha-box:hover {
+  border-color: #025abe;
+
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ================================
+   LABEL
+================================ */
+
+.captcha-label {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 0;
+
+  cursor: pointer;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  color: #20242a;
+}
+
+
+/* ================================
+   CHECKBOX
+================================ */
+
+.captcha-label input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+
+  margin: 0;
+
+  cursor: pointer;
+
+  accent-color: #198754;
+
+  appearance: none;
+
+  border: 2px solid #b8bec7;
+  border-radius: 5px;
+
+  background: #fff;
+
+  transition: all 0.2s ease;
+}
+
+
+/* Checked */
+
+.captcha-label input[type="checkbox"]:checked {
+  background-color: #198754;
+
+  border-color: #198754;
+
+  position: relative;
+}
+
+
+/* Check mark */
+
+.captcha-label input[type="checkbox"]:checked::after {
+  content: "✓";
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: #fff;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+/* Hover */
+
+.captcha-label input[type="checkbox"]:hover {
+  border-color: #025abe;
+}
+
+
+/* ================================
+   CAPTCHA BRAND
+================================ */
+
+.captcha-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #777;
+}
+
+
+.captcha-brand i {
+  font-size: 22px;
+
+  color: #777;
+
+  transition: all 0.25s ease;
+}
+
+
+.captcha-brand small {
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* ================================
+   VERIFIED
+================================ */
+
+.captcha-box.captcha-verified {
+  border-color: #198754;
+
+  background: #f4fff8;
+}
+
+
+.captcha-box.captcha-verified .captcha-brand i {
+  color: #198754;
+
+  transform: scale(1.08);
+}
+
+
+.captcha-status {
+  color: #198754 !important;
+
+  font-weight: 700;
+
+  margin-left: 3px;
+}
+
+
+/* ================================
+   DISABLED
+================================ */
+
+.captcha-label input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.6;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 576px) {
+
+  .captcha-box {
+    padding: 12px 14px;
+
+    min-height: 65px;
+  }
+
+  .captcha-label {
+    font-size: 14px;
+
+    gap: 9px;
+  }
+
+  .captcha-label input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+  }
+
+  .captcha-brand i {
+    font-size: 19px;
+  }
+
+  .captcha-brand small {
+    font-size: 9px;
+  }
+}
+
+
+
+
+```css
+.send-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 190px;
+  height: 52px;
+  padding: 5px 6px 5px 20px;
+
+  border: 1px solid #005c86;
+  border-radius: 50px;
+
+  background: #005c86;
+  color: #fff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+  overflow: hidden;
+
+  transition: all 0.3s ease;
+}
+
+/* Text */
+.send-text {
+  position: relative;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+/* Circular icon */
+.send-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff;
+  color: #005c86;
+
+  border-radius: 50%;
+
+  transition: all 0.35s ease;
+}
+
+.send-icon i {
+  font-size: 14px;
+  transition: transform 0.35s ease;
+}
+
+/* Hover */
+.send-btn:hover:not(:disabled) {
+  background: #fff;
+  color: #005c86;
+}
+
+.send-btn:hover:not(:disabled) .send-icon {
+  background: #005c86;
+  color: #fff;
+}
+
+.send-btn:hover:not(:disabled) .send-icon i {
+  transform: translateX(3px);
+}
+
+/* Click */
+.send-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Disabled */
+.send-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Loading */
+.loading-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.loading-content .spinner-border {
+  width: 17px;
+  height: 17px;
+}
+
+
+
+.send-btn {
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 6px;
+  background-color: #5b83df;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.send-btn:hover:not(:disabled) {
+  background-color: #4d75d2;
+}
+
+.send-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-content i {
+  font-size: 15px;
+}
+
+.btn-content .spinner-border {
+  width: 18px;
+  height: 18px;
+}

@@ -225,25 +225,29 @@
           </div>
 
           <!-- SUBMIT BUTTON -->
-          <button
-            type="submit"
-            class="send-btn"
-            [disabled]="loading || !contactForm.valid || !captchaChecked"
-          >
-            <ng-container class="bg-primary" *ngIf="!loading; else  loadingTemplate">
-              <button class="btn " ><span >Send Message</span>
-              <i class="fa-solid fa-paper-plane"></i></button>
-            </ng-container>
+        <button
+  type="submit"
+  class="send-btn"
+  [disabled]="loading || !contactForm.valid || !captchaChecked"
+>
+  <ng-container *ngIf="!loading; else loadingTemplate">
+    <span class="btn-content">
+      Send Message
+      <i class="fa-solid fa-paper-plane"></i>
+    </span>
+  </ng-container>
 
-            <ng-template #loadingTemplate>
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-              <span>Sending...</span>
-            </ng-template>
-          </button>
+  <ng-template #loadingTemplate>
+    <span class="btn-content">
+      <span
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      Sending...
+    </span>
+  </ng-template>
+</button>
 
         </form>
       </div>
