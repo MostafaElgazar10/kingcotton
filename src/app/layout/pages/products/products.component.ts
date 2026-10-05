@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import {
   ProductService,
@@ -6,10 +5,12 @@ import {
   Category,
   ProductSearchParams
 } from './../../../core/services/product.service';
+
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../../core/services/cart.service';
+import { WishlistService } from '../../../core/services/wishlist.service';
 
 type SortOption = 'latest' | 'oldest' | 'low' | 'high';
 
@@ -54,6 +55,7 @@ export class ProductComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
+    private wishlistService: WishlistService,
     private route: ActivatedRoute
   ) {}
 
@@ -88,6 +90,38 @@ export class ProductComponent implements OnInit {
 
   addToCart(product: Product): void {
     this.cartService.addToCart(product);
+  }
+
+  // =========================
+  // WISHLIST
+  // =========================
+
+  toggleWishlist(product: Product): void {
+
+    if (this.wishlistService.isInWishlist(product.id)) {
+
+      this.wishlistService.removeFromWishlist(product.id);
+
+    } else {
+
+      this.wishlistService.addToWishlist({
+        id: product.id,
+        title: product.title,
+        thumbnail: product.thumbnail,
+        current_price: Number(product.current_price),
+        previous_price: product.previous_price
+          ? Number(product.previous_price)
+          : undefined,
+        rating: product.rating
+          ? Number(product.rating)
+          : undefined
+      });
+
+    }
+  }
+
+  isInWishlist(productId: number): boolean {
+    return this.wishlistService.isInWishlist(productId);
   }
 
   // =========================
@@ -170,7 +204,6 @@ export class ProductComponent implements OnInit {
 
   applyFilter(): void {
 
-    // Make sure min <= max
     if (this.priceMin > this.priceMax) {
       this.priceMin = this.priceMax;
     }
@@ -282,7 +315,6 @@ export class ProductComponent implements OnInit {
 
             if (response.status) {
 
-              // Filter by current_price
               const filteredProducts =
                 this.filterByPrice(response.data);
 
@@ -338,7 +370,6 @@ export class ProductComponent implements OnInit {
 
           if (response.status) {
 
-            // Make sure price filter is applied
             const filteredProducts =
               this.filterByPrice(response.data);
 

@@ -1,5 +1,4 @@
 
-
 <section class="hero-section">
 
   <div
@@ -8,10 +7,9 @@
     data-bs-ride="carousel"
   >
 
-    <!-- Indicators -->
-    <div class="carousel-indicators  ">
-
-      <button class="bg-primary"
+    <div class="carousel-indicators">
+      <button
+        class="bg-primary"
         *ngFor="let slider of homeData?.sliders; let i = index"
         type="button"
         data-bs-target="#homeSlider"
@@ -20,11 +18,8 @@
         [attr.aria-current]="i === 0 ? 'true' : null"
         [attr.aria-label]="'Slide ' + (i + 1)"
       ></button>
-
     </div>
 
-
-    <!-- Slides -->
     <div class="carousel-inner">
 
       <div
@@ -39,46 +34,37 @@
           class="d-block w-100 hero-image"
         >
 
-        <!-- Overlay -->
         <div class="hero-overlay"></div>
 
-
-        <!-- Content -->
         <div class="carousel-caption hero-content">
 
-          <p class="subtitle text-primary ">
+          <p class="subtitle text-primary">
             {{ slider.subtitle }}
           </p>
 
-          <h1 class="text-dark" >
+          <h1 class="text-dark">
             {{ slider.title }}
           </h1>
 
-          <p class="description text-body-tertiary  ">
+          <p class="description text-body-tertiary">
             {{ slider.small_text }}
           </p>
 
-         
         </div>
 
       </div>
 
     </div>
 
-
-
-
   </div>
 
 </section>
 
 
+<!-- ==================================================
+     CATEGORIES
+================================================== -->
 
-
-
-
-
-<!-- Categories -->
 <section class="categories-section py-5">
 
   <div class="container">
@@ -90,11 +76,11 @@
         *ngFor="let category of categories"
       >
 
-       <a
-  [routerLink]="['/products']"
-  [queryParams]="{ category: category.id }"
-  class="category-link"
->
+        <a
+          [routerLink]="['/products']"
+          [queryParams]="{ category: category.id }"
+          class="category-link"
+        >
 
           <div class="category-image">
 
@@ -124,208 +110,208 @@
 </section>
 
 
-
-
-
-
-
-
-
+<!-- ==================================================
+     EXPLORE PRODUCTS
+================================================== -->
 
 <section class="gs-explore-product-section py-5">
 
   <div class="container">
 
-<!-- Title -->
-<div class="text-center">
-  <h2 class="title">
-    Explore Our Products
-  </h2>
-</div>
+    <div class="text-center">
 
-<!-- Tabs -->
-<ul
-  class="nav explore-tab-navbar"
-  id="myTab"
-  role="tablist"
->
+      <h2 class="title">
+        Explore Our Products
+      </h2>
 
-  <!-- NEW ARRIVAL -->
-  <li class="nav-item">
-    <button
-      class="nav-link active"
-      data-bs-toggle="tab"
-      data-bs-target="#new-arrival"
-      type="button"
+    </div>
+
+
+    <!-- Tabs -->
+
+    <ul
+      class="nav explore-tab-navbar"
+      id="myTab"
+      role="tablist"
     >
-      NEW ARRIVAL
-    </button>
-  </li>
 
-  <!-- TRENDING -->
-  <li class="nav-item">
-    <button
-      class="nav-link"
-      data-bs-toggle="tab"
-      data-bs-target="#trending"
-      type="button"
-    >
-      TRENDING
-    </button>
-  </li>
+      <li class="nav-item">
 
-  <!-- BEST SELLING -->
-  <li class="nav-item">
-    <button
-      class="nav-link"
-      data-bs-toggle="tab"
-      data-bs-target="#best-selling"
-      type="button"
-    >
-      BEST SELLING
-    </button>
-  </li>
+        <button
+          class="nav-link active"
+          data-bs-toggle="tab"
+          data-bs-target="#new-arrival"
+          type="button"
+        >
+          NEW ARRIVAL
+        </button>
 
-  <!-- POPULAR -->
-  <li class="nav-item">
-    <button
-      class="nav-link"
-      data-bs-toggle="tab"
-      data-bs-target="#popular"
-      type="button"
-    >
-      POPULAR
-    </button>
-  </li>
+      </li>
 
-</ul>
+      <li class="nav-item">
+
+        <button
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#trending"
+          type="button"
+        >
+          TRENDING
+        </button>
+
+      </li>
+
+      <li class="nav-item">
+
+        <button
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#best-selling"
+          type="button"
+        >
+          BEST SELLING
+        </button>
+
+      </li>
+
+      <li class="nav-item">
+
+        <button
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#popular"
+          type="button"
+        >
+          POPULAR
+        </button>
+
+      </li>
+
+    </ul>
 
 
-<!-- Tab Content -->
-<div class="tab-content">
+    <!-- Tab Content -->
+
+    <div class="tab-content">
 
 
-  <!-- =========================================
-       NEW ARRIVAL
-  ========================================== -->
-  <div
-    class="tab-pane fade show active"
-    id="new-arrival"
-  >
-
-    <div class="row gy-4 justify-content-center">
+      <!-- NEW ARRIVAL -->
 
       <div
-        class="col-md-6 col-lg-4 col-xl-3"
-        *ngFor="let product of newArrivalProducts"
+        class="tab-pane fade show active"
+        id="new-arrival"
       >
 
-        <ng-container
-          *ngTemplateOutlet="
-            productCard;
-            context: { product: product }
-          "
-        ></ng-container>
+        <div class="row gy-4 justify-content-center">
+
+          <div
+            class="col-md-6 col-lg-4 col-xl-3"
+            *ngFor="let product of newArrivalProducts"
+          >
+
+            <ng-container
+              *ngTemplateOutlet="
+                productCard;
+                context: { product: product }
+              "
+            ></ng-container>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- TRENDING -->
+
+      <div
+        class="tab-pane fade"
+        id="trending"
+      >
+
+        <div class="row gy-4 justify-content-center">
+
+          <div
+            class="col-md-6 col-lg-4 col-xl-3"
+            *ngFor="let product of trendyProducts"
+          >
+
+            <ng-container
+              *ngTemplateOutlet="
+                productCard;
+                context: { product: product }
+              "
+            ></ng-container>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- BEST SELLING -->
+
+      <div
+        class="tab-pane fade"
+        id="best-selling"
+      >
+
+        <div class="row gy-4 justify-content-center">
+
+          <div
+            class="col-md-6 col-lg-4 col-xl-3"
+            *ngFor="let product of bestSellerProducts"
+          >
+
+            <ng-container
+              *ngTemplateOutlet="
+                productCard;
+                context: { product: product }
+              "
+            ></ng-container>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- POPULAR -->
+
+      <div
+        class="tab-pane fade"
+        id="popular"
+      >
+
+        <div class="row gy-4 justify-content-center">
+
+          <div
+            class="col-md-6 col-lg-4 col-xl-3"
+            *ngFor="let product of popularProducts"
+          >
+
+            <ng-container
+              *ngTemplateOutlet="
+                productCard;
+                context: { product: product }
+              "
+            ></ng-container>
+
+          </div>
+
+        </div>
 
       </div>
 
     </div>
-
-  </div>
-
-
-  <!-- =========================================
-       TRENDING
-  ========================================== -->
-  <div
-    class="tab-pane fade"
-    id="trending"
-  >
-
-    <div class="row gy-4 justify-content-center">
-
-      <div
-        class="col-md-6 col-lg-4 col-xl-3"
-        *ngFor="let product of trendyProducts"
-      >
-
-        <ng-container
-          *ngTemplateOutlet="
-            productCard;
-            context: { product: product }
-          "
-        ></ng-container>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================================
-       BEST SELLING
-  ========================================== -->
-  <div
-    class="tab-pane fade"
-    id="best-selling"
-  >
-
-    <div class="row gy-4 justify-content-center">
-
-      <div
-        class="col-md-6 col-lg-4 col-xl-3"
-        *ngFor="let product of bestSellerProducts"
-      >
-
-        <ng-container
-          *ngTemplateOutlet="
-            productCard;
-            context: { product: product }
-          "
-        ></ng-container>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================================
-       POPULAR
-  ========================================== -->
-  <div
-    class="tab-pane fade"
-    id="popular"
-  >
-
-    <div class="row gy-4 justify-content-center">
-
-      <div
-        class="col-md-6 col-lg-4 col-xl-3"
-        *ngFor="let product of popularProducts"
-      >
-
-        <ng-container
-          *ngTemplateOutlet="
-            productCard;
-            context: { product: product }
-          "
-        ></ng-container>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
 
   </div>
 
 </section>
+
 
 <!-- ==================================================
      REUSABLE PRODUCT CARD
@@ -338,235 +324,222 @@
     [routerLink]="['/products', product.id]"
   >
 
-
-<!-- =========================================
-     IMAGE WRAPPER
-========================================== -->
-<div class="img-wrapper bg-white">
+    <div class="img-wrapper bg-white">
 
 
-  <!-- Discount -->
-  <span
-    class="product-badge"
-    *ngIf="
-      product.previous_price &&
-      product.current_price &&
-      +product.previous_price > +product.current_price
-    "
-  >
-    -{{
-      (
-        (+product.previous_price - +product.current_price)
-        / +product.previous_price * 100
-      ) | number:'1.0-0'
-    }}%
-  </span>
+      <!-- Discount -->
+
+      <span
+        class="product-badge"
+        *ngIf="
+          product.previous_price &&
+          product.current_price &&
+          +product.previous_price > +product.current_price
+        "
+      >
+        -{{
+          (
+            (+product.previous_price - +product.current_price)
+            / +product.previous_price * 100
+          ) | number:'1.0-0'
+        }}%
+      </span>
 
 
-  <!-- =========================================
-       WISHLIST
-  ========================================== -->
-  <a
-    href="javascript:void(0)"
-    (click)="$event.stopPropagation()"
-  >
+      <!-- ==================================================
+           WISHLIST
+      ================================================== -->
 
-    <div class="add-to-wishlist-btn">
-
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
+      <button
+        type="button"
+        class="wishlist-btn"
+        [class.active]="isInWishlist(product.id)"
+        (click)="toggleWishlist(product); $event.stopPropagation()"
       >
 
-        <path
-          d="M12 21C12 21 3 15.5 3 9.5C3 6.5 5 4 8 4C10 4 11.5 5 12 6.5C12.5 5 14 4 16 4C19 4 21 6.5 21 9.5C21 15.5 12 21 12 21Z"
-          stroke="#030712"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+        <div class="add-to-wishlist-btn">
 
-      </svg>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
 
-    </div>
+            <path
+              d="M12 21C12 21 3 15.5 3 9.5C3 6.5 5 4 8 4C10 4 11.5 5 12 6.5C12.5 5 14 4 16 4C19 4 21 6.5 21 9.5C21 15.5 12 21 12 21Z"
+              [attr.fill]="isInWishlist(product.id) ? '#025abe' : 'none'"
+              [attr.stroke]="isInWishlist(product.id) ? '#025abe' : '#030712'"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
 
-  </a>
+          </svg>
+
+        </div>
+
+      </button>
 
 
-  <!-- =========================================
-       PRODUCT IMAGE
-  ========================================== -->
-  <img
-    class="product-img"
-    [src]="product.thumbnail"
-    [alt]="product.title"
-  >
+      <!-- Product Image -->
+
+      <img
+        class="product-img"
+        [src]="product.thumbnail"
+        [alt]="product.title"
+      >
 
 
-  <!-- =========================================
-       PRODUCT ACTIONS
-  ========================================== -->
-  <div
-    class="product-actions"
-    (click)="$event.stopPropagation()"
-  >
+      <!-- Product Actions -->
 
-    <!-- Compare -->
-    <a
-      href="javascript:void(0)"
-      class="compare_product"
-    >
+      <div
+        class="product-actions"
+        (click)="$event.stopPropagation()"
+      >
 
-      <div class="compare">
+        <!-- Compare -->
 
-        <svg
-          class="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
+        <a
+          href="javascript:void(0)"
+          class="compare_product"
         >
 
-          <path
-            d="M18.1777 8C23.2737 8 23.2737 16 18.1777 16C13.0827 16 11.0447 8 5.43875 8C0.85375 8 0.85375 16 5.43875 16C11.0447 16 11.0447 8 18.1788 8H18.1777Z"
-            stroke="#030712"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+          <div class="compare">
 
-        </svg>
+            <svg
+              class="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+
+              <path
+                d="M18.1777 8C23.2737 8 23.2737 16 18.1777 16C13.0827 16 11.0447 8 5.43875 8C0.85375 8 0.85375 16 5.43875 16C11.0447 16 11.0447 8 18.1788 8H18.1777Z"
+                stroke="#030712"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+            </svg>
+
+          </div>
+
+        </a>
+
+
+        <!-- Add To Cart -->
+
+        <button
+          type="button"
+          class="add-cart rounded-2"
+          (click)="addToCart(product); $event.stopPropagation()"
+        >
+          Add To Cart
+        </button>
+
+
+        <!-- View -->
+
+        <button
+          type="button"
+          class="rounded-2"
+          [routerLink]="['/products', product.id]"
+          (click)="$event.stopPropagation()"
+        >
+
+          <i class="bi bi-eye"></i>
+
+        </button>
 
       </div>
 
-    </a>
+    </div>
 
 
-    <!-- =====================================
-         ADD TO CART
-    ====================================== -->
-    <button
-      type="button"
-      class="add-cart rounded-2"
-      (click)="addToCart(product); $event.stopPropagation()"
-    >
-      Add To Cart
-    </button>
+    <!-- Product Info -->
+
+    <div class="content-wrapper">
+
+      <a
+        [routerLink]="['/products', product.id]"
+        (click)="$event.stopPropagation()"
+      >
+
+        <h6 class="product-title">
+          {{ product.title }}
+        </h6>
+
+      </a>
 
 
-    <!-- =====================================
-         VIEW PRODUCT
-    ====================================== -->
-    <button
-      type="button"
-      class="rounded-2"
-      [routerLink]="['/products', product.id]"
-      (click)="$event.stopPropagation()"
-    >
+      <div class="price-wrapper">
 
-      <i class="bi bi-eye"></i>
+        <h6>
+          {{ product.current_price }} EGP
+        </h6>
 
-    </button>
+        <del
+          *ngIf="
+            product.previous_price &&
+            +product.previous_price > +product.current_price
+          "
+        >
+          {{ product.previous_price }} EGP
+        </del>
 
-  </div>
-
-</div>
-
-
-<!-- =========================================
-     PRODUCT INFO
-========================================== -->
-<div class="content-wrapper">
+      </div>
 
 
-  <!-- Product Title -->
-  <a
-    [routerLink]="['/products', product.id]"
-    (click)="$event.stopPropagation()"
-  >
+      <div class="ratings-wrapper">
 
-    <h6 class="product-title">
-      {{ product.title }}
-    </h6>
+        <i class="bi bi-star-fill text-warning"></i>
 
-  </a>
+        <span class="rating-title">
+          {{ product.rating || 0 }} (0)
+        </span>
 
+      </div>
 
-  <!-- =====================================
-       PRICE
-  ====================================== -->
-  <div class="price-wrapper">
-
-    <h6>
-      {{ product.current_price }} EGP
-    </h6>
-
-    <del
-      *ngIf="
-        product.previous_price &&
-        +product.previous_price > +product.current_price
-      "
-    >
-      {{ product.previous_price }} EGP
-    </del>
-
-  </div>
-
-
-  <!-- =====================================
-       RATING
-  ====================================== -->
-  <div class="ratings-wrapper">
-
-    <i class="bi bi-star-fill text-warning"></i>
-
-    <span class="rating-title">
-      {{ product.rating || 0 }} (0)
-    </span>
-
-  </div>
-
-</div>
-
+    </div>
 
   </div>
 
 </ng-template>
 
 
-
-
-
-
-
-
+<!-- ==================================================
+     FEATURED PRODUCTS
+================================================== -->
 
 <section class="gs-explore-product-section bg-white">
+
   <div class="container">
 
-    <!-- =========================
-         SECTION TITLE
-    ========================== -->
     <div class="row mb-36 justify-content-center">
+
       <div class="col-12">
 
-        <div class="gs-title-box text-center m-5 ">
+        <div class="gs-title-box text-center m-5">
+
           <h2 class="title wow-replaced">
             Our Featured Products
           </h2>
+
         </div>
 
       </div>
+
     </div>
 
 
-    <!-- =========================
-         FEATURED PRODUCTS
-    ========================== -->
-    <div class="tab-content" id="myTabContent1">
+    <div
+      class="tab-content"
+      id="myTabContent1"
+    >
 
       <div
         class="tab-pane fade show active"
@@ -576,18 +549,8 @@
         tabindex="0"
       >
 
-        <!--
-          Desktop:
-          2 cards per row
-
-          Mobile:
-          1 card per row
-        -->
         <div class="row g-4 justify-content-center">
 
-          <!-- =========================
-               PRODUCT CARD
-          ========================== -->
           <div
             class="col-md-3"
             *ngFor="let product of featuredProducts"
@@ -598,12 +561,11 @@
               [routerLink]="['/products', product.id]"
             >
 
-              <!-- =========================
-                   IMAGE
-              ========================== -->
-              <div class="img-wrapper bg-white ">
+              <div class="img-wrapper bg-white">
+
 
                 <!-- Discount -->
+
                 <span
                   class="product-badge"
                   *ngIf="
@@ -621,13 +583,17 @@
                 </span>
 
 
-                <!-- =========================
+                <!-- ==================================================
                      WISHLIST
-                ========================== -->
-                <a
-                  href="javascript:void(0)"
-                  (click)="$event.stopPropagation()"
+                ================================================== -->
+
+                <button
+                  type="button"
+                  class="wishlist-btn"
+                  [class.active]="isInWishlist(product.id)"
+                  (click)="toggleWishlist(product); $event.stopPropagation()"
                 >
+
                   <div class="add-to-wishlist-btn">
 
                     <svg
@@ -637,24 +603,27 @@
                       viewBox="0 0 24 24"
                       fill="none"
                     >
+
                       <path
                         fill-rule="evenodd"
                         clip-rule="evenodd"
                         d="M11.9932 5.13581C9.9938 2.7984 6.65975 2.16964 4.15469 4.31001C1.64964 6.45038 1.29697 10.029 3.2642 12.5604C4.89982 14.6651 9.84977 19.1041 11.4721 20.5408C11.6536 20.7016 11.7444 20.7819 11.8502 20.8135C11.9426 20.8411 12.0437 20.8411 12.1361 20.8135C12.2419 20.7819 12.3327 20.7016 12.5142 20.5408C14.1365 19.1041 19.0865 14.6651 20.7221 12.5604C22.6897 10.029 22.3797 6.42787 19.8316 4.31001C17.2835 2.19216 13.9925 2.7984 11.9932 5.13581Z"
-                        stroke="#030712"
+                        [attr.fill]="isInWishlist(product.id) ? '#025abe' : 'none'"
+                        [attr.stroke]="isInWishlist(product.id) ? '#025abe' : '#030712'"
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                       />
+
                     </svg>
 
                   </div>
-                </a>
+
+                </button>
 
 
-                <!-- =========================
-                     PRODUCT IMAGE
-                ========================== -->
+                <!-- Product Image -->
+
                 <img
                   class="product-img"
                   [src]="product.thumbnail"
@@ -662,18 +631,18 @@
                 >
 
 
-                <!-- =========================
-                     PRODUCT ACTIONS
-                ========================== -->
-           <div
-              class="product-actions"
-              (click)="$event.stopPropagation()"
-            >
+                <!-- Product Actions -->
 
-            <a
+                <div
+                  class="product-actions"
+                  (click)="$event.stopPropagation()"
+                >
+
+                  <a
                     href="javascript:void(0)"
                     class="compare_product"
                   >
+
                     <div class="compare">
 
                       <svg
@@ -684,6 +653,7 @@
                         viewBox="0 0 24 24"
                         fill="none"
                       >
+
                         <path
                           d="M18.1777 8C23.2737 8 23.2737 16 18.1777 16C13.0827 16 11.0447 8 5.43875 8C0.85375 8 0.85375 16 5.43875 16C11.0447 16 11.0447 8 18.1788 8H18.1777Z"
                           stroke="#030712"
@@ -691,55 +661,59 @@
                           stroke-linecap="round"
                           stroke-linejoin="round"
                         />
+
                       </svg>
 
                     </div>
+
                   </a>
 
-              <button
-                type="button"
-      class="add-cart rounded-2"
-      (click)="addToCart(product); $event.stopPropagation()"
-     >
-                Add To Cart
-              </button>
 
-              <button
-                type="button"
-                [routerLink]="['/products', product.id]"
-                (click)="$event.stopPropagation()"
-                class="rounded-2"
-              >
-                <i class="bi bi-eye"></i>
-              </button>
+                  <button
+                    type="button"
+                    class="add-cart rounded-2"
+                    (click)="addToCart(product); $event.stopPropagation()"
+                  >
+                    Add To Cart
+                  </button>
 
-            </div>
 
+                  <button
+                    type="button"
+                    [routerLink]="['/products', product.id]"
+                    (click)="$event.stopPropagation()"
+                    class="rounded-2"
+                  >
+
+                    <i class="bi bi-eye"></i>
+
+                  </button>
+
+                </div>
 
               </div>
 
 
-              <!-- =========================
-                   PRODUCT INFO
-              ========================== -->
+              <!-- Product Info -->
+
               <div class="content-wrapper">
 
-                <!-- Product Title -->
                 <a
                   [routerLink]="['/products', product.id]"
                   (click)="$event.stopPropagation()"
                 >
+
                   <h6 class="product-title">
                     {{ product.title }}
                   </h6>
+
                 </a>
 
 
-                <!-- Price -->
                 <div class="price-wrapper">
 
                   <h6>
-                    {{ product.current_price }}EGP
+                    {{ product.current_price }} EGP
                   </h6>
 
                   <h6
@@ -748,29 +722,19 @@
                       +product.previous_price > +product.current_price
                     "
                   >
+
                     <del>
-                      {{ product.previous_price }}EGP
+                      {{ product.previous_price }} EGP
                     </del>
+
                   </h6>
 
                 </div>
 
 
-                <!-- Rating -->
                 <div class="ratings-wrapper">
 
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="17"
-                    height="16"
-                    viewBox="0 0 17 16"
-                    fill="none"
-                  >
-                    <path
-                      d="M8.5 0.5L10.4084 6.37336L16.584 6.37336L11.5878 10.0033L13.4962 15.8766L8.5 12.2467L3.50383 15.8766L5.41219 10.0033L0.416019 6.37336L6.59163 6.37336L8.5 0.5Z"
-                      fill="#EEAE0B"
-                    />
-                  </svg>
+                  <i class="bi bi-star-fill text-warning"></i>
 
                   <span class="rating-title">
                     {{ product.rating || 0 }} (0)
@@ -791,27 +755,20 @@
     </div>
 
   </div>
+
 </section>
 
 
+<!-- ==================================================
+     DEAL OF THE DAY
+================================================== -->
 
-
-
-
-
-
-
-
-
-
-<!-- Deal Of The Day Section -->
 <section class="deal-section py-5">
 
   <div class="container-fluid px-0">
 
     <div class="row g-0 align-items-stretch">
 
-      <!-- Left Content -->
       <div
         class="col-12 col-lg-6 d-flex align-items-center"
         style="background-color: #fff7f5;"
@@ -828,7 +785,10 @@
             CLICK SHOP NOW FOR ALL DEAL OF THE PRODUCT
           </h6>
 
-          <p class="text-dark mb-4" style="max-width: 650px;">
+          <p
+            class="text-dark mb-4"
+            style="max-width: 650px;"
+          >
             Donec condimentum Lorem ipsum dolor sit amet,
             consectetur adipiscing elit. Cras cursus pretium sapien,
             in pulvinar ipsum molestie id. Aliquam erat volutpat.
@@ -836,9 +796,11 @@
           </p>
 
           <div class="mb-3">
+
             <span class="fw-semibold">
               Deal Expired!
             </span>
+
           </div>
 
         </div>
@@ -846,7 +808,6 @@
       </div>
 
 
-      <!-- Right Image -->
       <div class="col-12 col-lg-6">
 
         <img
@@ -864,18 +825,14 @@
 </section>
 
 
+<!-- ==================================================
+     OUR PARTNERS
+================================================== -->
 
-
-
-
-
-
-<!-- Our Partners Section -->
 <section class="partners-section py-5">
 
-  <div class="container py-5 ">
+  <div class="container py-5">
 
-    <!-- Section Title -->
     <div class="text-center my-5">
 
       <h2 class="partners-title">
@@ -889,7 +846,7 @@
 
     </div>
 
-    <!-- Partners -->
+
     <div class="row justify-content-center g-4">
 
       <div
@@ -921,31 +878,55 @@
 </section>
 
 
+<!-- ==================================================
+     SERVICES
+================================================== -->
 
+<div class="bg-dark py-4 text-white py-5">
 
-
-
-
-
-<!-- Services / Features Section -->
-<div class="bg-[#1a0a00] bg-dark py-4 text-white py-5 ">
   <div class="container mx-auto">
-    <div class="row justify-content-center g-4"> <!-- مستخدم Bootstrap عندك واضح من الكود -->
-      
-      <div class="col-md-3 col-sm-6" *ngFor="let service of Service">
-        <div class="d-flex align-items-center justify-content-center gap-3 p-2">
-          <img [src]="service.photo" [alt]="service.title" style="width: 40px; height: 40px; object-fit: contain;">
+
+    <div class="row justify-content-center g-4">
+
+      <div
+        class="col-md-3 col-sm-6"
+        *ngFor="let service of Service"
+      >
+
+        <div
+          class="d-flex align-items-center justify-content-center gap-3 p-2"
+        >
+
+          <img
+            [src]="service.photo"
+            [alt]="service.title"
+            style="width: 40px; height: 40px; object-fit: contain;"
+          >
+
           <div>
-            <h6 class="mb-0 fw-bold text-white" style="font-size: 14px;">{{ service.title }}</h6>
-            <p >{{ service.details }}</p>
+
+            <h6
+              class="mb-0 fw-bold text-white"
+              style="font-size: 14px;"
+            >
+              {{ service.title }}
+            </h6>
+
+            <p>
+              {{ service.details }}
+            </p>
+
           </div>
+
         </div>
+
       </div>
 
     </div>
-  </div>
-</div>
 
+  </div>
+
+</div>
 
 
 <!-- ==================================================
@@ -956,7 +937,6 @@
 
   <div class="container">
 
-    <!-- Section Header -->
     <div class="best-selling-header text-center mb-5">
 
       <h2 class="best-selling-title">
@@ -970,7 +950,6 @@
     </div>
 
 
-    <!-- Products -->
     <div class="row justify-content-center g-4">
 
       <div
@@ -983,10 +962,11 @@
           [routerLink]="['/products', product.id]"
         >
 
-          <!-- Product Image Area -->
           <div class="best-selling-image-wrapper">
 
+
             <!-- Discount -->
+
             <span
               class="best-selling-badge"
               *ngIf="
@@ -1004,19 +984,31 @@
             </span>
 
 
-            <!-- Wishlist -->
-            <a
-              href="javascript:void(0)"
+            <!-- ==================================================
+                 WISHLIST
+            ================================================== -->
+
+            <button
+              type="button"
               class="best-selling-wishlist"
-              (click)="$event.stopPropagation()"
+              [class.active]="isInWishlist(product.id)"
+              (click)="toggleWishlist(product); $event.stopPropagation()"
             >
 
-              <i class="bi bi-heart"></i>
+              <i
+                class="bi"
+                [ngClass]="
+                  isInWishlist(product.id)
+                    ? 'bi-heart-fill'
+                    : 'bi-heart'
+                "
+              ></i>
 
-            </a>
+            </button>
 
 
             <!-- Product Image -->
+
             <img
               [src]="product.thumbnail"
               [alt]="product.title"
@@ -1025,21 +1017,26 @@
 
 
             <!-- Hover Actions -->
+
             <div
               class="best-selling-actions"
               (click)="$event.stopPropagation()"
             >
 
               <!-- Compare -->
+
               <a
                 href="javascript:void(0)"
                 class="best-selling-action"
               >
+
                 <i class="bi bi-arrow-left-right"></i>
+
               </a>
 
 
               <!-- Add To Cart -->
+
               <button
                 type="button"
                 class="best-selling-cart"
@@ -1050,13 +1047,16 @@
 
 
               <!-- View -->
+
               <button
                 type="button"
                 class="best-selling-action"
                 [routerLink]="['/products', product.id]"
                 (click)="$event.stopPropagation()"
               >
+
                 <i class="bi bi-eye"></i>
+
               </button>
 
             </div>
@@ -1065,9 +1065,9 @@
 
 
           <!-- Product Information -->
+
           <div class="best-selling-content">
 
-            <!-- Product Title -->
             <a
               [routerLink]="['/products', product.id]"
               (click)="$event.stopPropagation()"
@@ -1077,7 +1077,6 @@
             </a>
 
 
-            <!-- Price -->
             <div class="best-selling-price">
 
               <span class="current-price">
@@ -1096,7 +1095,6 @@
             </div>
 
 
-            <!-- Rating -->
             <div class="best-selling-rating">
 
               <i class="bi bi-star-fill"></i>
@@ -1118,16 +1116,3 @@
   </div>
 
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
-

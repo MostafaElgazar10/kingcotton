@@ -1,4 +1,3 @@
-
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -13,7 +12,7 @@ import { Partner } from './../../../core/models/partener.model';
 import { ServiceItem } from './../../../core/models/service.model';
 import { CartService } from '../../../core/services/cart.service';
 
-
+import { WishlistService } from '../../../core/services/wishlist.service';
 
 
 @Component({
@@ -25,13 +24,14 @@ import { CartService } from '../../../core/services/cart.service';
 })
 export class HomeComponent implements OnInit {
 
+  private wishlistService = inject(WishlistService);
+
   // Services
   private homeService = inject(HomeService);
   private categoryService = inject(CategoryService);
   private partnerService = inject(PartnerService);
-  private cartService =inject(CartService)
-private productService = inject(ProductService);
-  
+  private cartService = inject(CartService);
+  private productService = inject(ProductService);
 
   // Home Data
   homeData: HomeData | null = null;
@@ -41,15 +41,15 @@ private productService = inject(ProductService);
   trendyProducts: Product[] = [];
   bestSellerProducts: Product[] = [];
   popularProducts: Product[] = [];
-  
+
   featuredProducts: any[] = [];
-  Service : ServiceItem[] = []
+  Service: ServiceItem[] = [];
+
   // Categories
   categories: any[] = [];
 
   // Partners
   partners: Partner[] = [];
-
 
 
   ngOnInit(): void {
@@ -85,7 +85,8 @@ private productService = inject(ProductService);
         this.popularProducts =
           this.homeData.popular_products ?? [];
 
-          this.Service = this.homeData.services ??[];
+        this.Service =
+          this.homeData.services ?? [];
 
         console.log('NEW ARRIVAL:', this.newArrivalProducts);
         console.log('TRENDING:', this.trendyProducts);
@@ -93,7 +94,7 @@ private productService = inject(ProductService);
         console.log('POPULAR:', this.popularProducts);
         console.log('FEATURED:', this.featuredProducts);
         console.log('services', this.Service);
-        
+
       },
 
       error: (error) => {
@@ -106,20 +107,23 @@ private productService = inject(ProductService);
     // CATEGORIES API
     // =========================
 
-    this.categoryService.getCategories().subscribe({
-      next: (response) => {
+   this.categoryService.getCategories().subscribe({
+  next: (response) => {
 
-        console.log('CATEGORIES API RESPONSE:', response);
+    console.log('CATEGORIES API RESPONSE:', response);
 
-        this.categories = response.data ?? [];
+    this.categories = (response.data ?? []).map((category: any) => ({
+      ...category,
+      count: String(category.count ?? '0').match(/\d+/)?.[0] ?? '0'
+    }));
 
-        console.log('CATEGORIES:', this.categories);
-      },
+    console.log('CATEGORIES:', this.categories);
+  },
 
-      error: (error) => {
-        console.error('CATEGORIES API ERROR:', error);
-      }
-    });
+  error: (error) => {
+    console.error('CATEGORIES API ERROR:', error);
+  }
+});
 
 
     // =========================
@@ -143,9 +147,35 @@ private productService = inject(ProductService);
 
   }
 
-    addToCart(product: Product): void {
+
+  addToCart(product: Product): void {
     this.cartService.addToCart(product);
   }
 
-}
 
+  toggleWishlist(product: any): void {
+
+    if (this.wishlistService.isInWishlist(product.id)) {
+
+      this.wishlistService.removeFromWishlist(product.id);
+
+    } else {
+
+      this.wishlistService.addToWishlist({
+        id: product.id,
+        title: product.title,
+        thumbnail: product.thumbnail,
+        current_price: product.current_price,
+        previous_price: product.previous_price,
+        rating: product.rating
+      });
+
+    }
+  }
+
+
+  isInWishlist(productId: number): boolean {
+    return this.wishlistService.isInWishlist(productId);
+  }
+
+}

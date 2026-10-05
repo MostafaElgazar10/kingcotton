@@ -664,4 +664,41 @@
   position: sticky;
   top: 0;
   z-index: 999;
-}r
+}
+
+
+.wishlist-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.wishlist-link i {
+  font-size: 21px;
+}
+
+.wishlist-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+
+  min-width: 18px;
+  height: 18px;
+
+  padding: 0 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #025abe;
+  color: #fff;
+
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+}

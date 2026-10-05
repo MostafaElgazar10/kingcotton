@@ -1,0 +1,154 @@
+
+<div class="wishlist-page">
+
+  <div class="container">
+
+    <!-- Page Header -->
+    <div class="wishlist-header">
+
+      <div>
+        <h2>My Wishlist</h2>
+        <p>
+          Your favorite products are saved here.
+        </p>
+      </div>
+
+      <button
+        *ngIf="wishlist.length > 0"
+        type="button"
+        class="clear-btn"
+        (click)="clearWishlist()"
+      >
+        <i class="bi bi-trash"></i>
+        Clear Wishlist
+      </button>
+
+    </div>
+
+
+    <!-- Empty Wishlist -->
+    <div
+      class="empty-wishlist"
+      *ngIf="wishlist.length === 0"
+    >
+
+      <div class="empty-icon">
+        <i class="bi bi-heart"></i>
+      </div>
+
+      <h3>Your Wishlist is Empty</h3>
+
+      <p>
+        You haven't added any products to your wishlist yet.
+      </p>
+
+      <a
+        routerLink="/products"
+        class="shop-btn"
+      >
+        Start Shopping
+      </a>
+
+    </div>
+
+
+    <!-- Wishlist Products -->
+    <div
+      class="wishlist-grid"
+      *ngIf="wishlist.length > 0"
+    >
+
+      <div
+        class="wishlist-card"
+        *ngFor="let product of wishlist"
+      >
+
+        <!-- Product Image -->
+        <div class="product-image">
+
+          <img
+            [src]="product.thumbnail"
+            [alt]="product.title"
+          >
+
+          <button
+            type="button"
+            class="remove-btn"
+            (click)="removeFromWishlist(product.id)"
+          >
+            <i class="bi bi-x"></i>
+          </button>
+
+        </div>
+
+
+        <!-- Product Info -->
+        <div class="product-info">
+
+          <h3>
+            {{ product.title }}
+          </h3>
+
+          <!-- Rating -->
+          <div
+            class="rating"
+            *ngIf="product.rating !== undefined"
+          >
+
+            <i class="bi bi-star-fill"></i>
+
+            <span>
+              {{ product.rating }}
+            </span>
+
+          </div>
+
+
+          <!-- Price -->
+          <div class="price">
+
+            <span class="current-price">
+              {{ product.current_price }}
+            </span>
+
+            <span
+              class="old-price"
+              *ngIf="product.previous_price"
+            >
+              {{ product.previous_price }}
+            </span>
+
+          </div>
+
+
+          <!-- Actions -->
+          <div class="product-actions">
+
+            <a
+              [routerLink]="['/products', product.id]"
+              class="view-btn"
+            >
+              <i class="bi bi-eye"></i>
+              View Product
+            </a>
+
+            <button
+              type="button"
+              class="remove-product-btn"
+              (click)="removeFromWishlist(product.id)"
+            >
+              <i class="bi bi-heart-fill"></i>
+              Remove
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

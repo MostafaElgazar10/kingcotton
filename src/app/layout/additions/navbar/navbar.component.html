@@ -351,21 +351,21 @@
           <!-- WISHLIST -->
           <!-- ========================= -->
 
-          <a
-            routerLink="/login"
-            class="action-icon-btn position-relative"
-            aria-label="Wishlist"
-            (click)="closeMobileMenu()"
-          >
+       <a
+  routerLink="/wishlist"
+  class="wishlist-link"
+  (click)="closeMobileMenu()"
+>
+  <i class="bi bi-heart"></i>
 
-            <i class="bi bi-heart fs-5"></i>
-
-            <!-- <span class="badge-count">
-              
-            </span> -->
-
-          </a>
-
+  <span
+    class="wishlist-badge"
+    *ngIf="wishlistCount > 0"
+  >
+    {{ wishlistCount }}
+  </span>
+</a>
+       
 
           <!-- ========================= -->
           <!-- CART -->

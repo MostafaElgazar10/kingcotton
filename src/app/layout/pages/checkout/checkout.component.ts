@@ -1,4 +1,3 @@
-
 import { Component, inject, OnInit } from '@angular/core';
 
 import {
@@ -19,6 +18,8 @@ import { CheckoutStateService } from '../../../core/services/checkout-state.serv
 import { CartService } from '../../../core/services/cart.service';
 
 import { CheckoutOrderPayload } from '../../../core/models/checkout.model';
+
+import { AuthService } from '../../../core/services/auth.service';
 
 
 @Component({
@@ -51,6 +52,9 @@ export class CheckoutComponent implements OnInit {
   private cartService =
     inject(CartService);
 
+  private authService =
+    inject(AuthService);
+
 
   // =========================================================
   // FORM
@@ -72,39 +76,16 @@ export class CheckoutComponent implements OnInit {
   // SUMMARY
   // =========================================================
 
-  /**
-   * السعر الأصلي قبل الخصم
-   */
   totalMRP = 0;
 
-
-  /**
-   * إجمالي الخصم
-   */
   discount = 0;
 
-
-  /**
-   * الضريبة
-   */
   tax = 0;
 
-
-  /**
-   * تكلفة الشحن
-   */
   shippingCost = 0;
 
-
-  /**
-   * تكلفة التغليف
-   */
   packagingCost = 0;
 
-
-  /**
-   * السعر النهائي بعد الخصم
-   */
   finalPrice = 0;
 
 
@@ -245,7 +226,72 @@ export class CheckoutComponent implements OnInit {
 
 
     // =======================================================
-    // LOAD SAVED ADDRESS
+    // LOAD REGISTERED USER DATA
+    // =======================================================
+
+    const user: any =
+      this.authService.getUser();
+
+
+    if (user) {
+
+      this.checkoutForm.patchValue({
+
+        // Personal Information
+        personalName:
+          user.full_name ||
+          user.fullname ||
+          user.name ||
+          '',
+
+        personalEmail:
+          user.email ||
+          '',
+
+        // Billing Details
+        billingName:
+          user.full_name ||
+          user.fullname ||
+          user.name ||
+          '',
+
+        billingEmail:
+          user.email ||
+          '',
+
+        phone:
+          user.phone ||
+          '',
+
+        country:
+          user.country ||
+          '',
+
+        state:
+          user.state ||
+          '',
+
+        city:
+          user.city ||
+          '',
+
+        address:
+          user.address ||
+          '',
+
+        postalCode:
+          user.postal_code ||
+          user.postalCode ||
+          user.zip ||
+          ''
+
+      });
+
+    }
+
+
+    // =======================================================
+    // LOAD SAVED CHECKOUT ADDRESS
     // =======================================================
 
     const savedAddress =

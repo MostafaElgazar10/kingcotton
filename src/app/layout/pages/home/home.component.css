@@ -1003,3 +1003,35 @@
 .category-item:hover .category-link span {
   color: #025abe;
 }
+
+
+.wishlist-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.wishlist-btn:focus {
+  outline: none;
+}
+
+.wishlist-btn .add-to-wishlist-btn {
+  cursor: pointer;
+}
+
+.best-selling-wishlist {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.best-selling-wishlist:focus {
+  outline: none;
+}
+
+.best-selling-wishlist.active i {
+  color: #025abe;
+}

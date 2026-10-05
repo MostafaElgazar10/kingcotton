@@ -17,6 +17,7 @@ import { TermsComponent } from './layout/pages/terms/terms.component';
 import { FaqComponent } from './layout/pages/faq/faq.component';
 import { OrderSuccessComponent } from './layout/pages/order-success/order-success.component';
 import { OrdersComponent } from './layout/pages/orders/orders.component';
+import { WishlistComponent } from './layout/pages/wishlist/wishlist.component';
 
 export const routes: Routes = [
     {path: '' , redirectTo : 'home' , pathMatch : 'full'  },
@@ -50,6 +51,11 @@ export const routes: Routes = [
   {
     path: 'checkout',
     component: CheckoutComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'wishlist',
+    component: WishlistComponent,
     canActivate: [authGuard]
   },
   {

@@ -1,3 +1,4 @@
+
 import {
   Component,
   OnInit,
@@ -18,6 +19,8 @@ import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 
 import { CartService } from '../../../core/services/cart.service';
+
+import { WishlistService } from '../../../core/services/wishlist.service';
 
 import {
   AuthService,
@@ -40,11 +43,20 @@ import {
 })
 export class NavbarComponent implements OnInit, OnDestroy {
 
+  // =========================
+  // SERVICES
+  // =========================
+
   private cartService = inject(CartService);
+
+  private wishlistService = inject(WishlistService);
+
   private authService = inject(AuthService);
+
   private router = inject(Router);
 
   private destroy$ = new Subject<void>();
+
 
   // =========================
   // CART
@@ -52,17 +64,27 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   cartItemsCount = 0;
 
+
+  // =========================
+  // WISHLIST
+  // =========================
+
+  wishlistCount = 0;
+
+
   // =========================
   // USER
   // =========================
 
   currentUser: User | null = null;
 
+
   // =========================
   // MOBILE MENU
   // =========================
 
   mobileMenuOpen = false;
+
 
   // =========================
   // SEARCH
@@ -73,6 +95,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   selectedCategory = 'all';
 
   showCategories = false;
+
 
   // =========================
   // CATEGORIES
@@ -97,6 +120,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   ];
 
+
   // =========================
   // LOGIN STATUS
   // =========================
@@ -105,20 +129,28 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return this.authService.isLoggedIn();
   }
 
+
   // =========================
   // INIT
   // =========================
 
   ngOnInit(): void {
 
-    // User
+    // =========================
+    // USER
+    // =========================
+
     this.authService.user$
       .pipe(takeUntil(this.destroy$))
       .subscribe(user => {
         this.currentUser = user;
       });
 
-    // Cart
+
+    // =========================
+    // CART
+    // =========================
+
     this.cartService.cartItems$
       .pipe(takeUntil(this.destroy$))
       .subscribe(items => {
@@ -129,7 +161,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
         );
 
       });
+
+
+    // =========================
+    // WISHLIST
+    // =========================
+
+    this.wishlistService.wishlist$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(products => {
+
+        this.wishlistCount = products.length;
+
+      });
+
   }
+
 
   // =========================
   // MOBILE MENU
@@ -139,13 +186,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.mobileMenuOpen = true;
   }
 
+
   toggleMobileMenu(): void {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
 
+
   closeMobileMenu(): void {
     this.mobileMenuOpen = false;
   }
+
 
   // =========================
   // SEARCH
@@ -157,19 +207,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     const queryParams: any = {};
 
+
     // Search text
     if (search) {
       queryParams.search = search;
     }
+
 
     // Category
     if (this.selectedCategory !== 'all') {
       queryParams.category = this.selectedCategory;
     }
 
+
     this.showCategories = false;
 
     this.closeMobileMenu();
+
 
     this.router.navigate(
       ['/products'],
@@ -177,7 +231,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         queryParams
       }
     );
+
   }
+
 
   // =========================
   // SELECT CATEGORY
@@ -189,8 +245,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.showCategories = false;
 
-    // لو المستخدم اختار category
-    // نقدر نعمل البحث مباشرة
 
     this.router.navigate(
       ['/products'],
@@ -201,8 +255,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     );
 
+
     this.closeMobileMenu();
+
   }
+
 
   // =========================
   // ALL CATEGORIES
@@ -214,12 +271,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.showCategories = false;
 
+
     this.router.navigate(
       ['/products']
     );
 
+
     this.closeMobileMenu();
+
   }
+
 
   // =========================
   // CATEGORY DROPDOWN
@@ -228,6 +289,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   toggleCategories(): void {
     this.showCategories = !this.showCategories;
   }
+
 
   // =========================
   // LOGOUT
@@ -240,19 +302,31 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.closeMobileMenu();
 
     this.router.navigate(['/login']);
-  }
-get selectedCategoryName(): string {
 
-  if (this.selectedCategory === 'all') {
-    return 'All Categories';
   }
 
-  const category = this.categories.find(
-    c => c.id === this.selectedCategory
-  );
 
-  return category?.name || 'All Categories';
-}
+  // =========================
+  // SELECTED CATEGORY NAME
+  // =========================
+
+  get selectedCategoryName(): string {
+
+    if (this.selectedCategory === 'all') {
+      return 'All Categories';
+    }
+
+
+    const category = this.categories.find(
+      c => c.id === this.selectedCategory
+    );
+
+
+    return category?.name || 'All Categories';
+
+  }
+
+
   // =========================
   // CLEANUP
   // =========================
@@ -262,5 +336,7 @@ get selectedCategoryName(): string {
     this.destroy$.next();
 
     this.destroy$.complete();
+
   }
+
 }

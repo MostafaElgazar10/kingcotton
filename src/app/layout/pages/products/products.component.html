@@ -84,26 +84,31 @@
   <div class="price-slider">
 
     <!-- MIN PRICE -->
-    <input
-      type="range"
-      min="0"
-      max="5000"
-      step="10"
-      [(ngModel)]="priceMin"
-      (input)="onMinPriceChange()"
-      class="range-min"
-    >
+   <div
+  class="price-slider"
+  [style.--min-position.%]="(priceMin / 5000) * 100"
+  [style.--max-position.%]="(priceMax / 5000) * 100"
+>
+  <input
+    type="range"
+    min="0"
+    max="5000"
+    step="10"
+    [(ngModel)]="priceMin"
+    (input)="onMinPriceChange()"
+    class="range-min"
+  />
 
-    <!-- MAX PRICE -->
-    <input
-      type="range"
-      min="0"
-      max="5000"
-      step="10"
-      [(ngModel)]="priceMax"
-      (input)="onMaxPriceChange()"
-      class="range-max"
-    >
+  <input
+    type="range"
+    min="0"
+    max="5000"
+    step="10"
+    [(ngModel)]="priceMax"
+    (input)="onMaxPriceChange()"
+    class="range-max"
+  />
+</div>
 
   </div>
 
@@ -242,26 +247,28 @@
                 </span>
 
                 <!-- Wishlist -->
-                <button
-                  type="button"
-                  class="add-to-wishlist-btn"
-                  (click)="$event.stopPropagation()"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M12 21C12 21 3 15.5 3 9.5C3 6.5 5 4 8 4C10 4 11.5 5 12 6.5C12.5 5 14 4 16 4C19 4 21 6.5 21 9.5C21 15.5 12 21 12 21Z"
-                      stroke="#030712"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </button>
+               <!-- ==================== WISHLIST ==================== -->
+<button
+  type="button"
+  class="add-to-wishlist-btn"
+  [class.active]="isInWishlist(product.id)"
+  (click)="toggleWishlist(product); $event.stopPropagation()"
+>
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    [attr.fill]="isInWishlist(product.id) ? '#107bc7' : 'none'"
+  >
+    <path
+      d="M12 21C12 21 3 15.5 3 9.5C3 6.5 5 4 8 4C10 4 11.5 5 12 6.5C12.5 5 14 4 16 4C19 4 21 6.5 21 9.5C21 15.5 12 21 12 21Z"
+      [attr.stroke]="isInWishlist(product.id) ? '#107bc7' : '#030712'"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</button>
 
                 <!-- Product Image -->
                 <img
