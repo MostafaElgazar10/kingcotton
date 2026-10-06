@@ -148,10 +148,13 @@ export class HomeComponent implements OnInit {
   }
 
 
-  addToCart(product: Product): void {
-    this.cartService.addToCart(product);
-  }
-
+addToCart(product: Product): void {
+  this.cartService.addToCart({
+    ...product,
+    size: 'L',
+    color:'white'
+  } as any);
+}
 
   toggleWishlist(product: any): void {
 

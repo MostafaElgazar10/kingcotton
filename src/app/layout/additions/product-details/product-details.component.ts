@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { ToastService } from '../../../core/services/toast.service';
 import {
   ActivatedRoute,
   Router,
@@ -52,7 +53,8 @@ export class ProductDetailsComponent implements OnInit {
 
   private cartService =
     inject(CartService);
-
+private toastService =
+  inject(ToastService);
 
   product: ProductDetails | null = null;
 
@@ -734,6 +736,7 @@ export class ProductDetailsComponent implements OnInit {
 
   addToCart(): void {
 
+
     if (
       !this.product ||
       !this.inStock
@@ -787,6 +790,10 @@ export class ProductDetailsComponent implements OnInit {
       });
 
     }
+
+    this.toastService.showSuccess(
+  'Product added to cart successfully!'
+);
 
   }
 
