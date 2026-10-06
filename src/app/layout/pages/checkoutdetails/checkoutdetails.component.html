@@ -100,6 +100,11 @@
             <h3 class="product-title">{{ item.title }}</h3>
             <p class="product-meta">Price : <span>{{ item.current_price }}EGP</span></p>
             <p class="product-meta">Quantity : <span>{{ item.quantity }}</span></p>
+ <p class="product-meta">
+    Size :
+    <span>{{ item.size || 'Not Selected' }}</span>
+  </p>
+
             <p class="product-meta color-row">
   Color :
   <span

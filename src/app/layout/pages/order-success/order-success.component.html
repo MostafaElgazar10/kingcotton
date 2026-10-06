@@ -256,13 +256,17 @@
             </strong>
           </p>
 
-          <p *ngIf="product.color">
-            Color:
-            <strong>
-              {{ product.color }}
-            </strong>
-          </p>
+         <p *ngIf="product.color" class="product-color">
+  Color:
 
+  <strong
+    class="color-circle"
+    [style.background-color]="product.color"
+    [title]="product.color"
+  ></strong>
+
+  <span>{{ product.color }}</span>
+</p>
         </div>
 
 

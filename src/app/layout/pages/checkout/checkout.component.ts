@@ -591,7 +591,7 @@ export class CheckoutComponent implements OnInit {
           // =================================================
 
           this.totalMRP =
-            originalTotal;
+            currentTotal;
 
 
           this.discount =
