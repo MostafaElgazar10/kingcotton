@@ -1,19 +1,9 @@
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import {
-  Component,
-  OnInit,
-  inject
-} from '@angular/core';
-
-import {
-  CommonModule
-} from '@angular/common';
-
-import {
-  ToastService,
-  ToastMessage
+  ToastService
 } from '../../../core/services/toast.service';
-
 
 @Component({
   selector: 'app-toast',
@@ -25,118 +15,181 @@ import {
   ],
 
   template: `
-    <div
-      *ngIf="toast$ | async as toast"
-      class="toast-container"
-      [class.error]="toast.type === 'error'"
-    >
 
-      <div class="toast-icon">
-        <i
-          class="fa-solid"
-          [class.fa-check]="toast.type === 'success'"
-          [class.fa-xmark]="toast.type === 'error'"
-        ></i>
-      </div>
+    <div class="app-toast-wrapper">
 
-      <div class="toast-message">
-        {{ toast.message }}
-      </div>
-
-      <button
-        type="button"
-        class="toast-close"
-        (click)="close()"
+      <div
+        *ngFor="let toast of (toast$ | async)"
+        class="app-toast-item"
+        [class.app-toast-error]="toast.type === 'error'"
       >
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+
+        <div class="app-toast-icon">
+
+          <i
+            class="fa-solid"
+            [class.fa-check]="toast.type === 'success'"
+            [class.fa-xmark]="toast.type === 'error'"
+          ></i>
+
+        </div>
+
+        <div class="app-toast-message">
+          {{ toast.message }}
+        </div>
+
+        <button
+          type="button"
+          class="app-toast-close"
+          (click)="close(toast.id)"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+      </div>
 
     </div>
   `,
 
   styles: [`
-    .toast-container {
-      position: fixed;
-      top: 25px;
-      right: 25px;
-      z-index: 99999;
 
-      min-width: 320px;
-      max-width: 420px;
+    .app-toast-wrapper {
+      position: fixed !important;
+
+      top: 25px !important;
+      right: 25px !important;
+
+      width: 380px;
+
+      max-width: calc(100vw - 50px);
+
+      z-index: 999999 !important;
 
       display: flex;
+
+      flex-direction: column;
+
+      align-items: stretch;
+
+      gap: 10px;
+
+      pointer-events: none;
+    }
+
+
+    .app-toast-item {
+      width: 100%;
+
+      min-height: 60px;
+
+      box-sizing: border-box;
+
+      display: flex;
+
       align-items: center;
+
       gap: 12px;
 
-      padding: 14px 18px;
+      padding: 14px 16px;
 
       background: #ffffff;
+
       border-radius: 8px;
+
+      border-left: 4px solid #198754;
 
       box-shadow:
         0 8px 25px rgba(0, 0, 0, 0.15);
 
-      border-left: 4px solid #198754;
+      pointer-events: auto;
 
-      animation:
-        toastSlideIn 0.35s ease forwards;
+      animation: appToastSlideIn 0.35s ease-out;
+
+      overflow: hidden;
     }
 
-    .toast-container.error {
+
+    .app-toast-item.app-toast-error {
       border-left-color: #dc3545;
     }
 
-    .toast-icon {
+
+    .app-toast-icon {
       width: 32px;
+
       height: 32px;
 
+      min-width: 32px;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       border-radius: 50%;
 
       background: #198754;
-      color: #ffffff;
 
-      flex-shrink: 0;
+      color: #ffffff;
     }
 
-    .toast-container.error .toast-icon {
+
+    .app-toast-error .app-toast-icon {
       background: #dc3545;
     }
 
-    .toast-message {
+
+    .app-toast-message {
       flex: 1;
 
+      min-width: 0;
+
       font-size: 14px;
+
       font-weight: 500;
 
       color: #333333;
+
+      word-break: break-word;
     }
 
-    .toast-close {
+
+    .app-toast-close {
+      width: 28px;
+
+      height: 28px;
+
+      min-width: 28px;
+
+      padding: 0;
+
       border: 0;
+
       background: transparent;
 
       color: #888888;
 
       cursor: pointer;
 
-      font-size: 14px;
+      display: flex;
 
-      padding: 4px;
+      align-items: center;
+
+      justify-content: center;
     }
 
-    .toast-close:hover {
+
+    .app-toast-close:hover {
       color: #333333;
     }
 
-    @keyframes toastSlideIn {
+
+    @keyframes appToastSlideIn {
 
       from {
         opacity: 0;
-        transform: translateX(100%);
+        transform: translateX(30px);
       }
 
       to {
@@ -146,18 +199,23 @@ import {
 
     }
 
+
     @media (max-width: 576px) {
 
-      .toast-container {
-        top: 15px;
-        right: 15px;
-        left: 15px;
+      .app-toast-wrapper {
+        top: 15px !important;
 
-        min-width: auto;
+        right: 15px !important;
+
+        left: 15px !important;
+
+        width: auto;
+
         max-width: none;
       }
 
     }
+
   `]
 })
 export class ToastComponent {
@@ -169,9 +227,9 @@ export class ToastComponent {
     this.toastService.toast$;
 
 
-  close(): void {
+  close(id: number): void {
 
-    this.toastService.hide();
+    this.toastService.remove(id);
 
   }
 

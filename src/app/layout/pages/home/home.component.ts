@@ -13,7 +13,7 @@ import { ServiceItem } from './../../../core/models/service.model';
 import { CartService } from '../../../core/services/cart.service';
 
 import { WishlistService } from '../../../core/services/wishlist.service';
-
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
   private partnerService = inject(PartnerService);
   private cartService = inject(CartService);
   private productService = inject(ProductService);
-
+private toastService = inject(ToastService);
   // Home Data
   homeData: HomeData | null = null;
 
@@ -154,6 +154,8 @@ addToCart(product: Product): void {
     size: 'L',
     color:'white'
   } as any);
+    this.toastService.showSuccess('Product added to cart successfully!');
+
 }
 
   toggleWishlist(product: any): void {

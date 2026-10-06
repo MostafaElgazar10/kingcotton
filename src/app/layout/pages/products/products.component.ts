@@ -88,9 +88,13 @@ export class ProductComponent implements OnInit {
   // ADD TO CART
   // =========================
 
-  addToCart(product: Product): void {
-    this.cartService.addToCart(product);
-  }
+addToCart(product: Product): void {
+  this.cartService.addToCart({
+    ...product,
+    size: 'L',
+    color:'white'
+  } as any);
+}
 
   // =========================
   // WISHLIST

@@ -1,8 +1,8 @@
-
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 export interface ToastMessage {
+  id: number;
   message: string;
   type: 'success' | 'error';
 }
@@ -13,12 +13,12 @@ export interface ToastMessage {
 export class ToastService {
 
   private toastSubject =
-    new BehaviorSubject<ToastMessage | null>(null);
+    new BehaviorSubject<ToastMessage[]>([]);
 
   toast$ =
     this.toastSubject.asObservable();
 
-  private timeoutId?: ReturnType<typeof setTimeout>;
+  private toastId = 0;
 
   showSuccess(message: string): void {
 
@@ -38,30 +38,41 @@ export class ToastService {
 
   }
 
-  private show(toast: ToastMessage): void {
+  private show(toast: Omit<ToastMessage, 'id'>): void {
 
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
+    const newToast: ToastMessage = {
+      ...toast,
+      id: ++this.toastId
+    };
 
-    this.toastSubject.next(toast);
+    const currentToasts = this.toastSubject.value;
 
-    this.timeoutId =
-      setTimeout(() => {
+    this.toastSubject.next([
+      ...currentToasts,
+      newToast
+    ]);
 
-        this.toastSubject.next(null);
+    setTimeout(() => {
 
-      }, 3000);
+      this.remove(newToast.id);
+
+    }, 3000);
+
+  }
+
+  remove(id: number): void {
+
+    const currentToasts = this.toastSubject.value;
+
+    this.toastSubject.next(
+      currentToasts.filter(toast => toast.id !== id)
+    );
 
   }
 
   hide(): void {
 
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
-
-    this.toastSubject.next(null);
+    this.toastSubject.next([]);
 
   }
 
