@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   ProductService,
   Product,
   Category,
   ProductSearchParams
 } from './../../../core/services/product.service';
+import { ToastService } from '../../../core/services/toast.service';
 
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
@@ -56,7 +57,8 @@ export class ProductComponent implements OnInit {
     private productService: ProductService,
     private cartService: CartService,
     private wishlistService: WishlistService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastService:ToastService    
   ) {}
 
   // =========================
@@ -93,7 +95,8 @@ addToCart(product: Product): void {
     ...product,
     size: 'L',
     color:'white'
-  } as any);
+  } as any)
+   this.toastService.showSuccess('Product added to cart successfully!');
 }
 
   // =========================
