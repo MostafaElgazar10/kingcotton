@@ -1,17 +1,38 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import {
+  CommonModule,
+  isPlatformBrowser
+} from '@angular/common';
+
 import {
   Component,
   Inject,
   OnInit,
   PLATFORM_ID
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { take } from 'rxjs';
 
-import { CartService } from '../../../core/services/cart.service';
-import { CheckoutService } from '../../../core/services/checkout.service';
-import { CheckoutStateService } from '../../../core/services/checkout-state.service';
+import {
+  FormsModule
+} from '@angular/forms';
+
+import {
+  Router
+} from '@angular/router';
+
+import {
+  take
+} from 'rxjs';
+
+import {
+  CartService
+} from '../../../core/services/cart.service';
+
+import {
+  CheckoutService
+} from '../../../core/services/checkout.service';
+
+import {
+  CheckoutStateService
+} from '../../../core/services/checkout-state.service';
 
 import {
   CheckoutApiPayload,
@@ -19,17 +40,23 @@ import {
   CheckoutOrderResponse
 } from '../../../core/models/checkout.model';
 
+
 @Component({
   selector: 'app-checkout3',
+
   standalone: true,
+
   imports: [
     CommonModule,
     FormsModule
   ],
+
   templateUrl: './checkout3.component.html',
+
   styleUrl: './checkout3.component.scss'
 })
 export class Checkout3Component implements OnInit {
+
 
   // ========================================
   // PAYMENT
@@ -37,46 +64,76 @@ export class Checkout3Component implements OnInit {
 
   paymentMethod: 'cash' = 'cash';
 
+
   // ========================================
   // COUPON
   // ========================================
 
   couponCode = '';
+
   couponMessage = '';
+
+  couponError = false;
+
+  couponLoading = false;
+
+  couponApplied = false;
+
+  appliedCoupon: any = null;
+
 
   // ========================================
   // STATE
   // ========================================
 
   loading = false;
+
   errorMessage = '';
+
 
   // ========================================
   // ORDER SUMMARY
   // ========================================
 
   total = 0;
+
   tax = 0;
+
   shippingCost = 0;
+
   packingCost = 0;
+
   discount = 0;
+
 
   // ========================================
   // SHIPPING / PACKAGING
   // ========================================
 
   shippingId = 1;
+
   packagingId = 1;
 
+
   constructor(
-    private checkoutService: CheckoutService,
-    private checkoutStateService: CheckoutStateService,
-    private cartService: CartService,
-    private router: Router,
+
+    private checkoutService:
+      CheckoutService,
+
+    private checkoutStateService:
+      CheckoutStateService,
+
+    private cartService:
+      CartService,
+
+    private router:
+      Router,
 
     @Inject(PLATFORM_ID)
     private platformId: object
+
   ) {}
+
 
   // ========================================
   // INIT
@@ -84,12 +141,17 @@ export class Checkout3Component implements OnInit {
 
   ngOnInit(): void {
 
-    if (!isPlatformBrowser(this.platformId)) {
+    if (
+      !isPlatformBrowser(
+        this.platformId
+      )
+    ) {
       return;
     }
 
     this.loadOrderSummary();
   }
+
 
   // ========================================
   // LOAD ORDER SUMMARY
@@ -103,40 +165,56 @@ export class Checkout3Component implements OnInit {
 
         next: (cartItems) => {
 
-          if (!cartItems || cartItems.length === 0) {
+          if (
+            !cartItems ||
+            cartItems.length === 0
+          ) {
 
             this.total = 0;
+
             this.shippingCost = 0;
+
             this.packingCost = 0;
+
             this.tax = 0;
+
             this.discount = 0;
 
             return;
           }
 
+
           // ========================================
           // PRODUCTS TOTAL
           // ========================================
 
-          this.total = cartItems.reduce(
-            (sum: number, product: any) => {
+          this.total =
+            cartItems.reduce(
+              (
+                sum: number,
+                product: any
+              ) => {
 
-              const price = Number(
-                product.current_price ??
-                product.price ??
-                0
-              );
+                const price =
+                  Number(
+                    product.current_price ??
+                    product.price ??
+                    0
+                  );
 
-              const quantity = Number(
-                product.quantity ??
-                1
-              );
+                const quantity =
+                  Number(
+                    product.quantity ??
+                    1
+                  );
 
-              return sum + (price * quantity);
+                return sum +
+                  (price * quantity);
 
-            },
-            0
-          );
+              },
+              0
+            );
+
 
           // ========================================
           // DEFAULT SHIPPING
@@ -144,11 +222,13 @@ export class Checkout3Component implements OnInit {
 
           this.shippingCost = 0;
 
+
           // ========================================
           // DEFAULT PACKAGING
           // ========================================
 
           this.packingCost = 0;
+
 
           // ========================================
           // TAX
@@ -156,24 +236,36 @@ export class Checkout3Component implements OnInit {
 
           this.tax = 0;
 
+
           // ========================================
           // DISCOUNT
           // ========================================
 
           this.discount = 0;
 
+
           console.log(
             'CHECKOUT SUMMARY:',
             {
               total: this.total,
+
               tax: this.tax,
-              shippingCost: this.shippingCost,
-              packingCost: this.packingCost,
-              discount: this.discount,
-              finalPrice: this.finalPrice
+
+              shippingCost:
+                this.shippingCost,
+
+              packingCost:
+                this.packingCost,
+
+              discount:
+                this.discount,
+
+              finalPrice:
+                this.finalPrice
             }
           );
         },
+
 
         error: (error) => {
 
@@ -191,6 +283,7 @@ export class Checkout3Component implements OnInit {
       });
   }
 
+
   // ========================================
   // FINAL PRICE
   // ========================================
@@ -198,17 +291,352 @@ export class Checkout3Component implements OnInit {
   get finalPrice(): number {
 
     const taxAmount =
-      this.total * (this.tax / 100);
+      this.total *
+      (this.tax / 100);
 
     return Math.max(
       0,
+
       this.total +
+
       taxAmount +
+
       this.shippingCost +
+
       this.packingCost -
+
       this.discount
     );
   }
+
+
+  // ========================================
+  // APPLY COUPON
+  // ========================================
+
+  applyCoupon(): void {
+
+    const code =
+      this.couponCode
+        .trim();
+
+
+    // ========================================
+    // EMPTY CODE
+    // ========================================
+
+    if (!code) {
+
+      this.couponMessage =
+        'من فضلك أدخل كود الكوبون.';
+
+      this.couponError = true;
+
+      return;
+    }
+
+
+    // ========================================
+    // LOADING
+    // ========================================
+
+    this.couponLoading = true;
+
+    this.couponMessage = '';
+
+    this.couponError = false;
+
+
+    // ========================================
+    // CHECK API
+    // ========================================
+
+    this.checkoutService
+      .getCoupon(code)
+      .subscribe({
+
+        next: (response) => {
+
+          this.couponLoading = false;
+
+
+          console.log(
+            'COUPON API RESPONSE:',
+            response
+          );
+
+
+          // ========================================
+          // INVALID RESPONSE
+          // ========================================
+
+          if (
+            !response ||
+            !response.status ||
+            !response.data
+          ) {
+
+            this.couponApplied = false;
+
+            this.appliedCoupon = null;
+
+            this.discount = 0;
+
+            this.couponError = true;
+
+            this.couponMessage =
+              this.getApiErrorMessage(
+                response?.error
+              ) ||
+              'الكوبون غير صحيح.';
+
+            return;
+          }
+
+
+          const coupon =
+            response.data;
+
+
+          // ========================================
+          // COUPON STATUS
+          // ========================================
+
+          if (
+            Number(coupon.status) !== 1
+          ) {
+
+            this.couponApplied = false;
+
+            this.appliedCoupon = null;
+
+            this.discount = 0;
+
+            this.couponError = true;
+
+            this.couponMessage =
+              'هذا الكوبون غير فعال.';
+
+            return;
+          }
+
+
+          // ========================================
+          // START DATE
+          // ========================================
+
+          const today =
+            new Date()
+              .toISOString()
+              .slice(0, 10);
+
+
+          if (
+            coupon.start_date &&
+            today < coupon.start_date
+          ) {
+
+            this.couponApplied = false;
+
+            this.appliedCoupon = null;
+
+            this.discount = 0;
+
+            this.couponError = true;
+
+            this.couponMessage =
+              'هذا الكوبون لم يبدأ بعد.';
+
+            return;
+          }
+
+
+          // ========================================
+          // END DATE
+          // ========================================
+
+          if (
+            coupon.end_date &&
+            today > coupon.end_date
+          ) {
+
+            this.couponApplied = false;
+
+            this.appliedCoupon = null;
+
+            this.discount = 0;
+
+            this.couponError = true;
+
+            this.couponMessage =
+              'هذا الكوبون منتهي الصلاحية.';
+
+            return;
+          }
+
+
+          // ========================================
+          // USAGE LIMIT
+          // ========================================
+
+          const maxTimes =
+            Number(
+              coupon.times
+            );
+
+          const used =
+            Number(
+              coupon.used
+            );
+
+
+          if (
+            maxTimes > 0 &&
+            used >= maxTimes
+          ) {
+
+            this.couponApplied = false;
+
+            this.appliedCoupon = null;
+
+            this.discount = 0;
+
+            this.couponError = true;
+
+            this.couponMessage =
+              'تم استخدام هذا الكوبون بالكامل.';
+
+            return;
+          }
+
+
+          // ========================================
+          // DISCOUNT
+          // ========================================
+
+          const couponPrice =
+            Number(
+              coupon.price ?? 0
+            );
+
+
+          if (
+            couponPrice <= 0
+          ) {
+
+            this.couponApplied = false;
+
+            this.appliedCoupon = null;
+
+            this.discount = 0;
+
+            this.couponError = true;
+
+            this.couponMessage =
+              'قيمة الخصم غير صحيحة.';
+
+            return;
+          }
+
+
+          // ========================================
+          // APPLY DISCOUNT
+          // ========================================
+
+          this.discount =
+            Math.min(
+              couponPrice,
+              this.total
+            );
+
+
+          // ========================================
+          // SAVE COUPON
+          // ========================================
+
+          this.appliedCoupon =
+            coupon;
+
+          this.couponApplied =
+            true;
+
+
+          // ========================================
+          // SUCCESS MESSAGE
+          // ========================================
+
+          this.couponError = false;
+
+          this.couponMessage =
+            `تم تطبيق الكوبون بنجاح. الخصم ${this.discount} EGP`;
+
+
+          console.log(
+            'APPLIED COUPON:',
+            coupon
+          );
+
+          console.log(
+            'COUPON DISCOUNT:',
+            this.discount
+          );
+
+          console.log(
+            'FINAL PRICE:',
+            this.finalPrice
+          );
+        },
+
+
+        error: (error) => {
+
+          this.couponLoading = false;
+
+          console.error(
+            'COUPON API ERROR:',
+            error
+          );
+
+
+          this.couponApplied = false;
+
+          this.appliedCoupon = null;
+
+          this.discount = 0;
+
+          this.couponError = true;
+
+
+          this.couponMessage =
+            this.getApiErrorMessage(
+              error
+            ) ||
+            'حصل خطأ أثناء التحقق من الكوبون.';
+        }
+
+      });
+  }
+
+
+  // ========================================
+  // REMOVE COUPON
+  // ========================================
+
+  removeCoupon(): void {
+
+    this.couponCode = '';
+
+    this.couponMessage = '';
+
+    this.couponError = false;
+
+    this.couponApplied = false;
+
+    this.appliedCoupon = null;
+
+    this.discount = 0;
+  }
+
 
   // ========================================
   // CREATE ORDER
@@ -220,13 +648,19 @@ export class Checkout3Component implements OnInit {
       return;
     }
 
+
     this.errorMessage = '';
+
 
     // ========================================
     // BROWSER CHECK
     // ========================================
 
-    if (!isPlatformBrowser(this.platformId)) {
+    if (
+      !isPlatformBrowser(
+        this.platformId
+      )
+    ) {
 
       this.errorMessage =
         'إتمام الطلب متاح من المتصفح فقط.';
@@ -234,12 +668,15 @@ export class Checkout3Component implements OnInit {
       return;
     }
 
+
     // ========================================
     // GET BILLING ADDRESS
     // ========================================
 
     const address =
-      this.checkoutStateService.getBillingAddress();
+      this.checkoutStateService
+        .getBillingAddress();
+
 
     if (!address) {
 
@@ -248,6 +685,7 @@ export class Checkout3Component implements OnInit {
 
       return;
     }
+
 
     // ========================================
     // GET CART
@@ -270,10 +708,12 @@ export class Checkout3Component implements OnInit {
             return;
           }
 
+
           console.log(
             'CART ITEMS BEFORE ORDER:',
             cartItems
           );
+
 
           // ========================================
           // CUSTOMER DATA
@@ -303,16 +743,21 @@ export class Checkout3Component implements OnInit {
           const customerState =
             address.state ?? '';
 
+
           // ========================================
           // PREPARE API ITEMS
           // ========================================
 
-          const items: CheckoutItemPayload[] =
+          const items:
+            CheckoutItemPayload[] =
+
             cartItems.map(
               (product: any) => ({
 
                 id:
-                  Number(product.id),
+                  Number(
+                    product.id
+                  ),
 
                 qty:
                   Number(
@@ -361,11 +806,13 @@ export class Checkout3Component implements OnInit {
               })
             );
 
+
           // ========================================
           // CHECKOUT API PAYLOAD
           // ========================================
 
-          const payload: CheckoutApiPayload = {
+          const payload:
+            CheckoutApiPayload = {
 
             // ----------------------------------------
             // CUSTOMER / BILLING
@@ -395,6 +842,7 @@ export class Checkout3Component implements OnInit {
             customer_state:
               customerState,
 
+
             // ----------------------------------------
             // SHIPPING
             // ----------------------------------------
@@ -423,6 +871,7 @@ export class Checkout3Component implements OnInit {
             shipping_state:
               customerState,
 
+
             // ----------------------------------------
             // CHECKOUT
             // ----------------------------------------
@@ -437,16 +886,23 @@ export class Checkout3Component implements OnInit {
               0,
 
             tax:
-              Number(this.tax),
+              Number(
+                this.tax
+              ),
 
             tax_type:
               'state_tax',
 
             shipping_id:
-              Number(this.shippingId),
+              Number(
+                this.shippingId
+              ),
 
             packaging_id:
-              Number(this.packagingId),
+              Number(
+                this.packagingId
+              ),
+
 
             // ----------------------------------------
             // PAYMENT
@@ -455,27 +911,37 @@ export class Checkout3Component implements OnInit {
             method:
               'Cash On Delivery',
 
+
             // ----------------------------------------
             // ITEMS
             // ----------------------------------------
 
             items:
-              JSON.stringify(items),
+              JSON.stringify(
+                items
+              ),
+
 
             // ----------------------------------------
             // COUPON
             // ----------------------------------------
 
             coupon_code:
+              this.couponApplied &&
               this.couponCode.trim()
-                ? this.couponCode.trim()
+
+                ? this.couponCode
+                    .trim()
+
                 : null
           };
+
 
           console.log(
             'CHECKOUT PAYLOAD:',
             payload
           );
+
 
           // ========================================
           // START LOADING
@@ -483,24 +949,30 @@ export class Checkout3Component implements OnInit {
 
           this.loading = true;
 
+
           // ========================================
           // CREATE ORDER API
           // ========================================
 
           this.checkoutService
-            .createCheckoutOrder(payload)
+            .createCheckoutOrder(
+              payload
+            )
             .subscribe({
 
               next: (
-                response: CheckoutOrderResponse
+                response:
+                  CheckoutOrderResponse
               ) => {
 
                 this.loading = false;
+
 
                 console.log(
                   'CHECKOUT API RESPONSE:',
                   response
                 );
+
 
                 // ========================================
                 // API FAILED
@@ -520,17 +992,21 @@ export class Checkout3Component implements OnInit {
                   return;
                 }
 
+
                 // ========================================
                 // API DATA
                 // ========================================
 
-                const apiData: any =
+                const apiData:
+                  any =
                   response.data ?? {};
+
 
                 console.log(
                   'CHECKOUT API DATA:',
                   apiData
                 );
+
 
                 // ========================================
                 // ORDER ID
@@ -540,6 +1016,7 @@ export class Checkout3Component implements OnInit {
                   apiData.order_id ??
                   apiData.id ??
                   '-';
+
 
                 // ========================================
                 // ORDER NUMBER
@@ -552,6 +1029,7 @@ export class Checkout3Component implements OnInit {
                   apiData.code ??
                   orderId;
 
+
                 // ========================================
                 // ORDER DATE
                 // ========================================
@@ -562,10 +1040,12 @@ export class Checkout3Component implements OnInit {
                   apiData.date ??
                   new Date().toISOString();
 
+
                 const orderDate =
                   this.formatOrderDate(
                     rawOrderDate
                   );
+
 
                 // ========================================
                 // PICKUP LOCATION
@@ -578,6 +1058,7 @@ export class Checkout3Component implements OnInit {
                   apiData.pickupAddress ??
                   'Azampur';
 
+
                 // ========================================
                 // SHIPPING METHOD
                 // ========================================
@@ -587,6 +1068,7 @@ export class Checkout3Component implements OnInit {
                   apiData.shippingMethod ??
                   apiData.shipping_type ??
                   'Pick Up';
+
 
                 // ========================================
                 // SAVE PRODUCTS BEFORE CLEAR CART
@@ -642,10 +1124,12 @@ export class Checkout3Component implements OnInit {
                     })
                   );
 
+
                 console.log(
                   'ORDER PRODUCTS:',
                   orderProducts
                 );
+
 
                 // ========================================
                 // COMPLETE ORDER SUCCESS DATA
@@ -666,12 +1150,14 @@ export class Checkout3Component implements OnInit {
                   orderDate:
                     orderDate,
 
+
                   // ----------------------------------------
                   // PICKUP
                   // ----------------------------------------
 
                   pickupLocation:
                     pickupLocation,
+
 
                   // ----------------------------------------
                   // SHIPPING
@@ -680,12 +1166,14 @@ export class Checkout3Component implements OnInit {
                   shippingMethod:
                     shippingMethod,
 
+
                   // ----------------------------------------
                   // PAYMENT
                   // ----------------------------------------
 
                   paymentMethod:
                     'Cash On Delivery',
+
 
                   // ----------------------------------------
                   // AMOUNTS
@@ -696,10 +1184,26 @@ export class Checkout3Component implements OnInit {
                       this.tax ?? 0
                     ),
 
+                  discount:
+                    Number(
+                      this.discount ?? 0
+                    ),
+
                   total:
                     Number(
                       this.finalPrice ?? 0
                     ),
+
+
+                  // ----------------------------------------
+                  // COUPON
+                  // ----------------------------------------
+
+                  couponCode:
+                    this.couponApplied
+                      ? this.couponCode.trim()
+                      : '',
+
 
                   // ----------------------------------------
                   // CUSTOMER
@@ -729,6 +1233,7 @@ export class Checkout3Component implements OnInit {
                   customerState:
                     customerState,
 
+
                   // ----------------------------------------
                   // PRODUCTS
                   // ----------------------------------------
@@ -736,6 +1241,7 @@ export class Checkout3Component implements OnInit {
                   products:
                     orderProducts
                 };
+
 
                 console.log(
                   '================================'
@@ -750,14 +1256,18 @@ export class Checkout3Component implements OnInit {
                   '================================'
                 );
 
+
                 // ========================================
                 // SAVE ORDER ID
                 // ========================================
 
                 sessionStorage.setItem(
                   'order_id',
-                  String(orderId)
+                  String(
+                    orderId
+                  )
                 );
+
 
                 // ========================================
                 // SAVE COMPLETE ORDER DATA
@@ -765,10 +1275,12 @@ export class Checkout3Component implements OnInit {
 
                 sessionStorage.setItem(
                   'order_success_data',
+
                   JSON.stringify(
                     orderSuccessData
                   )
                 );
+
 
                 console.log(
                   'SAVED ORDER SUCCESS DATA:',
@@ -777,14 +1289,16 @@ export class Checkout3Component implements OnInit {
                   )
                 );
 
+
                 // ========================================
-                // CLEAR CART AFTER SAVING PRODUCTS
+                // CLEAR CART
                 // ========================================
 
                 this.cartService.clearCart();
 
+
                 // ========================================
-                // NAVIGATE TO ORDER SUCCESS
+                // NAVIGATE
                 // ========================================
 
                 this.router.navigate(
@@ -797,6 +1311,7 @@ export class Checkout3Component implements OnInit {
 
               },
 
+
               // ========================================
               // API ERROR
               // ========================================
@@ -805,10 +1320,12 @@ export class Checkout3Component implements OnInit {
 
                 this.loading = false;
 
+
                 console.error(
                   'CHECKOUT API ERROR:',
                   error
                 );
+
 
                 this.errorMessage =
                   this.getApiErrorMessage(
@@ -819,6 +1336,7 @@ export class Checkout3Component implements OnInit {
             });
         },
 
+
         // ========================================
         // CART ERROR
         // ========================================
@@ -827,10 +1345,12 @@ export class Checkout3Component implements OnInit {
 
           this.loading = false;
 
+
           console.error(
             'CART ERROR:',
             error
           );
+
 
           this.errorMessage =
             'حصل خطأ أثناء قراءة السلة.';
@@ -838,6 +1358,7 @@ export class Checkout3Component implements OnInit {
 
       });
   }
+
 
   // ========================================
   // FORMAT ORDER DATE
@@ -851,16 +1372,22 @@ export class Checkout3Component implements OnInit {
       return '-';
     }
 
+
     const date =
       new Date(value);
+
 
     if (
       isNaN(
         date.getTime()
       )
     ) {
-      return String(value);
+
+      return String(
+        value
+      );
     }
+
 
     const day =
       String(
@@ -870,7 +1397,9 @@ export class Checkout3Component implements OnInit {
         '0'
       );
 
+
     const monthNames = [
+
       'Jan',
       'Feb',
       'Mar',
@@ -883,18 +1412,23 @@ export class Checkout3Component implements OnInit {
       'Oct',
       'Nov',
       'Dec'
+
     ];
+
 
     const month =
       monthNames[
         date.getMonth()
       ];
 
+
     const year =
       date.getFullYear();
 
+
     return `${day}-${month}-${year}`;
   }
+
 
   // ========================================
   // BACK TO DETAILS
@@ -906,32 +1440,12 @@ export class Checkout3Component implements OnInit {
       return;
     }
 
+
     this.router.navigate([
       '/checkoutdetails'
     ]);
   }
 
-  // ========================================
-  // APPLY COUPON
-  // ========================================
-
-  applyCoupon(): void {
-
-    this.couponMessage = '';
-
-    if (
-      !this.couponCode.trim()
-    ) {
-
-      this.couponMessage =
-        'من فضلك أدخل كود الكوبون.';
-
-      return;
-    }
-
-    this.couponMessage =
-      'تحقق الكوبون غير مربوط في هذه الخطوة حتى الآن.';
-  }
 
   // ========================================
   // API ERROR MESSAGE
@@ -945,47 +1459,57 @@ export class Checkout3Component implements OnInit {
       return '';
     }
 
+
     // ----------------------------------------
-    // String
+    // STRING
     // ----------------------------------------
 
     if (
       typeof response === 'string'
     ) {
+
       return response;
     }
 
+
     // ----------------------------------------
-    // Message
+    // MESSAGE
     // ----------------------------------------
 
     if (
       typeof response.message === 'string'
     ) {
+
       return response.message;
     }
 
+
     // ----------------------------------------
-    // Error
+    // ERROR
     // ----------------------------------------
 
     const errors =
       response.error;
 
+
     if (
       typeof errors === 'string'
     ) {
+
       return errors;
     }
+
 
     if (
       typeof errors?.message === 'string'
     ) {
+
       return errors.message;
     }
 
+
     // ----------------------------------------
-    // Object Errors
+    // OBJECT ERRORS
     // ----------------------------------------
 
     if (
@@ -998,12 +1522,14 @@ export class Checkout3Component implements OnInit {
           errors
         );
 
+
       if (
         values.length > 0
       ) {
 
         const firstValue =
           values[0];
+
 
         if (
           Array.isArray(
@@ -1017,11 +1543,13 @@ export class Checkout3Component implements OnInit {
           );
         }
 
+
         return String(
           firstValue
         );
       }
     }
+
 
     return '';
   }

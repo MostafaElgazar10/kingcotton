@@ -58,22 +58,7 @@
             </label>
 
             <!-- Mobile Money -->
-            <label
-              class="payment-option"
-            >
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="mobile_money"
-                [(ngModel)]="paymentMethod"
-              />
-
-              <div class="payment-details">
-                <h6>Mobile Money</h6>
-                <p>(5 - 6 days)</p>
-              </div>
-            </label>
-
+           
           </div>
 
           <!-- Error Message -->
@@ -134,7 +119,12 @@
               <span>Total</span>
               <span>{{ total | number:'1.0-2' }}EGP</span>
             </div>
-
+<div class="price-row" >
+     <span>Discount</span>
+    <span>
+      -{{ discount | number:'1.0-2' }}EGP
+    </span>
+</div>
             <div class="price-row">
               <span>Tax</span>
               <span>{{ tax | number:'1.0-2' }}%</span>
