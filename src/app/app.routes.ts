@@ -18,6 +18,8 @@ import { FaqComponent } from './layout/pages/faq/faq.component';
 import { OrderSuccessComponent } from './layout/pages/order-success/order-success.component';
 import { OrdersComponent } from './layout/pages/orders/orders.component';
 import { WishlistComponent } from './layout/pages/wishlist/wishlist.component';
+import { ProfileComponent } from './layout/pages/profile/profile.component';
+import { OrderDetailsComponent } from './layout/pages/order-details/order-details.component';
 
 export const routes: Routes = [
     {path: '' , redirectTo : 'home' , pathMatch : 'full'  },
@@ -36,7 +38,7 @@ export const routes: Routes = [
         {path : 'faq' , component : FaqComponent },
         {path : 'order-success' , component : OrderSuccessComponent },
         {path : 'orders' , component : OrdersComponent },
-
+        {path : 'profile', component : ProfileComponent},
     // {path : 'checkout' , component : CheckoutComponent},
     // {path : 'checkoutdetails' , component : CheckoutDetailsComponent},
     // {path : 'checkout3' , component : Checkout3Component},
@@ -66,6 +68,11 @@ export const routes: Routes = [
   {
     path: 'checkout3',
     component: Checkout3Component,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'orderdetails/:id',
+    component: OrderDetailsComponent,
     canActivate: [authGuard]
   },
 

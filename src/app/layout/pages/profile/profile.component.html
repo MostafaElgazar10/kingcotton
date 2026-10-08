@@ -1,0 +1,452 @@
+<div class="profile-page">
+
+  <div class="container">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1>My Profile</h1>
+        <p>Manage your personal information and account details</p>
+      </div>
+    </div>
+
+
+    <!-- Loading -->
+    <div
+      class="loading-box"
+      *ngIf="loading"
+    >
+      <div class="spinner"></div>
+      <p>Loading profile...</p>
+    </div>
+
+
+    <!-- Error -->
+    <div
+      class="error-box"
+      *ngIf="!loading && error"
+    >
+      <i class="bi bi-exclamation-circle"></i>
+      <span>{{ error }}</span>
+    </div>
+
+
+    <!-- Profile -->
+    <div
+      class="profile-content"
+      *ngIf="!loading && user"
+    >
+ 
+
+
+
+
+
+
+      <!-- =========================
+           Profile Header
+      ========================== -->
+
+      <div class="profile-card profile-header-card">
+
+        <div class="profile-image-wrapper">
+
+          <img
+            [src]="user.propic"
+            [alt]="user.full_name"
+            class="profile-image"
+          >
+        
+
+        </div>
+
+
+        <div class="profile-main-info">
+
+          <h2>
+            {{ user.full_name }}
+          </h2>
+
+          <p class="email">
+            <i class="bi bi-envelope"></i>
+            {{ user.email }}
+          </p>
+
+          <p class="phone">
+            <i class="bi bi-telephone"></i>
+            {{ user.phone }}
+          </p>
+
+          <span
+            class="verified-badge"
+            *ngIf="user.email_verified === 'Yes'"
+          >
+            <i class="bi bi-patch-check-fill"></i>
+            Email Verified
+          </span>
+
+        </div>
+
+
+        
+     <button
+    type="button"
+    class="logout-profile-btn"
+    (click)="logout()"
+  >
+    <i class="bi bi-box-arrow-right"></i>
+    Logout
+  </button>
+      </div>
+
+
+
+      <!-- =========================
+           Personal + Address
+      ========================== -->
+
+      <div class="profile-grid">
+
+
+        <!-- Personal Information -->
+        <div class="profile-card">
+
+          <div class="card-title">
+
+            <div class="title-icon">
+              <i class="bi bi-person"></i>
+            </div>
+
+            <div>
+              <h3>Personal Information</h3>
+              <p>Your personal details</p>
+            </div>
+
+          </div>
+
+
+          <div class="info-list">
+
+            <div class="info-item">
+
+              <span class="label">
+                Full Name
+              </span>
+
+              <span class="value">
+                {{ user.full_name }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="label">
+                Email
+              </span>
+
+              <span class="value">
+                {{ user.email }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="label">
+                Phone
+              </span>
+
+              <span class="value">
+                {{ user.phone }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="label">
+                Fax
+              </span>
+
+              <span class="value">
+                {{ user.fax || '-' }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Address Information -->
+        <div class="profile-card address-card">
+
+          <div class="card-title">
+
+            <div class="title-icon">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+
+            <div>
+              <h3>Address Information</h3>
+              <p>Your current address</p>
+            </div>
+
+          </div>
+
+
+          <div class="address-grid">
+
+            <div class="info-item">
+
+              <span class="label">
+                Address
+              </span>
+
+              <span class="value">
+                {{ user.address || '-' }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="label">
+                City
+              </span>
+
+              <span class="value">
+                {{ user.city || '-' }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="label">
+                State
+              </span>
+
+              <span class="value">
+                {{ user.state || '-' }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="label">
+                Country
+              </span>
+
+              <span class="value">
+                {{ user.country || '-' }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="label">
+                Zip Code
+              </span>
+
+              <span class="value">
+                {{ user.zip_code || '-' }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =========================
+           My Orders
+      ========================== -->
+
+      <div class="profile-card orders-card">
+
+        <div class="card-title">
+
+          <div class="title-icon">
+            <i class="bi bi-bag-check"></i>
+          </div>
+
+          <div>
+            <h3>My Orders</h3>
+            <p>Your recent orders</p>
+          </div>
+
+        </div>
+
+
+        <!-- Orders Loading -->
+        <div
+          class="orders-loading"
+          *ngIf="ordersLoading"
+        >
+
+          <div class="small-spinner"></div>
+
+          <span>
+            Loading your orders...
+          </span>
+
+        </div>
+
+
+        <!-- Orders Error -->
+        <div
+          class="orders-error"
+          *ngIf="!ordersLoading && ordersError"
+        >
+
+          <i class="bi bi-exclamation-circle"></i>
+
+          <span>
+            {{ ordersError }}
+          </span>
+
+        </div>
+
+
+        <!-- No Orders -->
+        <div
+          class="no-orders"
+          *ngIf="
+            !ordersLoading &&
+            !ordersError &&
+            orders.length === 0
+          "
+        >
+
+          <div class="empty-orders-icon">
+
+            <i class="bi bi-bag-x"></i>
+
+          </div>
+
+          <h4>
+            No Orders Yet
+          </h4>
+
+          <p>
+            You haven't placed any orders yet.
+          </p>
+
+        </div>
+
+
+        <!-- Orders List -->
+        <div
+          class="orders-list"
+          *ngIf="
+            !ordersLoading &&
+            !ordersError &&
+            orders.length > 0
+          "
+        >
+
+          <div
+            class="order-item"
+            *ngFor="let order of orders"
+          >
+
+            <!-- Order Icon -->
+            <div class="order-icon">
+
+              <i class="bi bi-box-seam"></i>
+
+            </div>
+
+
+            <!-- Order Information -->
+            <div class="order-info">
+
+              <div class="order-number">
+                Order #{{ order.number }}
+              </div>
+
+              <div class="order-meta">
+
+                <span>
+                  <i class="bi bi-calendar3"></i>
+                  Order #{{ order.id }}
+                </span>
+
+                <span>
+                  <i class="bi bi-credit-card"></i>
+                  {{ order.method || 'Payment' }}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- Order Status -->
+            <div class="order-status">
+
+              <span
+                class="status-badge"
+                [ngClass]="getStatusClass(order.status)"
+              >
+                {{ order.status }}
+              </span>
+
+            </div>
+
+
+            <!-- Order Total -->
+            <div class="order-total">
+
+              <span>
+                Total
+              </span>
+
+              <strong>
+                {{ order.total }}
+              </strong>
+
+            </div>
+
+
+            <!-- View Details -->
+            <button
+              type="button"
+              class="view-order-btn"
+              (click)="viewOrder(order.id)"
+            >
+
+              View Details
+
+              <i class="bi bi-arrow-right"></i>
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

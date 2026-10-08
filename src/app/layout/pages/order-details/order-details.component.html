@@ -1,0 +1,572 @@
+
+<div class="order-details-page">
+
+  <!-- ===================================== -->
+  <!-- LOADING -->
+  <!-- ===================================== -->
+
+  <div
+    class="loading-box"
+    *ngIf="loading"
+  >
+
+    <div class="spinner"></div>
+
+    <p>
+      Loading order details...
+    </p>
+
+  </div>
+
+
+  <!-- ===================================== -->
+  <!-- ERROR -->
+  <!-- ===================================== -->
+
+  <div
+    class="error-box"
+    *ngIf="!loading && errorMessage"
+  >
+
+    <i class="bi bi-exclamation-circle"></i>
+
+    <p>
+      {{ errorMessage }}
+    </p>
+
+  </div>
+
+
+  <!-- ===================================== -->
+  <!-- ORDER DETAILS -->
+  <!-- ===================================== -->
+
+  <ng-container *ngIf="!loading && order">
+
+    <!-- ================================= -->
+    <!-- HEADER -->
+    <!-- ================================= -->
+
+    <div class="page-header">
+
+      <div>
+
+        <span class="small-title">
+          ORDER DETAILS
+        </span>
+
+        <h1>
+          Order #{{ order.number }}
+        </h1>
+
+        <p>
+          Placed on {{ formatDate(order.created_at) }}
+        </p>
+
+      </div>
+
+
+      <div
+        class="order-status"
+        [ngClass]="getStatusClass(order.status)"
+      >
+
+        {{ order.status }}
+
+      </div>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- ORDER INFO -->
+    <!-- ================================= -->
+
+    <div class="info-grid">
+
+      <div class="info-card">
+
+        <div class="icon">
+          <i class="bi bi-box-seam"></i>
+        </div>
+
+        <div>
+
+          <span>
+            Order Status
+          </span>
+
+          <strong>
+            {{ order.status }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="info-card">
+
+        <div class="icon">
+          <i class="bi bi-credit-card"></i>
+        </div>
+
+        <div>
+
+          <span>
+            Payment Status
+          </span>
+
+          <strong>
+            {{ order.payment_status }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="info-card">
+
+        <div class="icon">
+          <i class="bi bi-wallet2"></i>
+        </div>
+
+        <div>
+
+          <span>
+            Payment Method
+          </span>
+
+          <strong>
+            {{ order.payment_method }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="info-card">
+
+        <div class="icon">
+          <i class="bi bi-currency-dollar"></i>
+        </div>
+
+        <div>
+
+          <span>
+            Total
+          </span>
+
+          <strong>
+            {{ order.total }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ================================= -->
+
+    <div class="content-grid">
+
+
+      <!-- =============================== -->
+      <!-- PRODUCTS -->
+      <!-- =============================== -->
+
+      <div class="products-card">
+
+        <div class="card-header">
+
+          <h2>
+            Ordered Products
+          </h2>
+
+          <span>
+            {{ getOrderProducts().length }} Items
+          </span>
+
+        </div>
+
+
+        <div
+          class="product-row"
+          *ngFor="let product of getOrderProducts()"
+        >
+
+          <div class="product-image">
+
+            <img
+              [src]="product.item.item.photo"
+              [alt]="product.item.item.name"
+            >
+
+          </div>
+
+
+          <div class="product-info">
+
+            <h3>
+              {{ product.item.item.name }}
+            </h3>
+
+            <div class="product-meta">
+
+              <span>
+                Qty: {{ product.item.qty }}
+              </span>
+
+              <span
+                *ngIf="product.item.size"
+              >
+                Size: {{ product.item.size }}
+              </span>
+
+              <span
+                *ngIf="product.item.color"
+              >
+                Color: {{ product.item.color }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="product-price">
+
+            ${{ getPrice(product.item.item_price).toFixed(2) }}
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =============================== -->
+      <!-- ORDER SUMMARY -->
+      <!-- =============================== -->
+
+      <div class="summary-card">
+
+        <div class="card-header">
+
+          <h2>
+            Order Summary
+          </h2>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Subtotal
+          </span>
+
+          <strong>
+            ${{ getPrice(order.total).toFixed(2) }}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Shipping
+          </span>
+
+          <strong>
+            ${{ getPrice(order.shipping_cost).toFixed(2) }}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Packaging
+          </span>
+
+          <strong>
+            ${{ getPrice(order.packing_cost).toFixed(2) }}
+          </strong>
+
+        </div>
+
+
+        <div
+          class="summary-row"
+          *ngIf="order.coupon_discount"
+        >
+
+          <span>
+            Discount
+          </span>
+
+          <strong class="discount">
+            -${{ getPrice(order.coupon_discount).toFixed(2) }}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-total">
+
+          <span>
+            Total
+          </span>
+
+          <strong>
+            {{ order.total }}
+          </strong>
+
+        </div>
+
+
+        <div class="paid-box">
+
+          <span>
+            Paid Amount
+          </span>
+
+          <strong>
+            {{ order.paid_amount }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- CUSTOMER / SHIPPING -->
+    <!-- ================================= -->
+
+    <div class="address-grid">
+
+
+      <!-- CUSTOMER -->
+      <div class="address-card">
+
+        <div class="card-header">
+
+          <h2>
+            Customer Information
+          </h2>
+
+        </div>
+
+
+        <div class="address-content">
+
+          <div class="address-item">
+
+            <i class="bi bi-person"></i>
+
+            <div>
+
+              <span>
+                Name
+              </span>
+
+              <strong>
+                {{ order.customer_name }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="address-item">
+
+            <i class="bi bi-envelope"></i>
+
+            <div>
+
+              <span>
+                Email
+              </span>
+
+              <strong>
+                {{ order.customer_email }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="address-item">
+
+            <i class="bi bi-telephone"></i>
+
+            <div>
+
+              <span>
+                Phone
+              </span>
+
+              <strong>
+                {{ order.customer_phone }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="address-item">
+
+            <i class="bi bi-geo-alt"></i>
+
+            <div>
+
+              <span>
+                Address
+              </span>
+
+              <strong>
+                {{ order.customer_address }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- SHIPPING -->
+      <div class="address-card">
+
+        <div class="card-header">
+
+          <h2>
+            Shipping Address
+          </h2>
+
+        </div>
+
+
+        <div class="address-content">
+
+          <div class="address-item">
+
+            <i class="bi bi-person"></i>
+
+            <div>
+
+              <span>
+                Name
+              </span>
+
+              <strong>
+                {{ order.shipping_name }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="address-item">
+
+            <i class="bi bi-telephone"></i>
+
+            <div>
+
+              <span>
+                Phone
+              </span>
+
+              <strong>
+                {{ order.shipping_phone }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="address-item">
+
+            <i class="bi bi-geo-alt"></i>
+
+            <div>
+
+              <span>
+                Address
+              </span>
+
+              <strong>
+                {{ order.shipping_address }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="address-item">
+
+            <i class="bi bi-building"></i>
+
+            <div>
+
+              <span>
+                City
+              </span>
+
+              <strong>
+                {{ order.shipping_city }},
+                {{ order.shipping_country }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="address-item">
+
+            <i class="bi bi-mailbox"></i>
+
+            <div>
+
+              <span>
+                ZIP Code
+              </span>
+
+              <strong>
+                {{ order.shipping_zip }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>

@@ -1,0 +1,670 @@
+.profile-page {
+  min-height: 100vh;
+  background: #f7f9fc;
+  padding: 50px 0 80px;
+}
+
+
+/* =========================
+   Page Header
+========================= */
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1d2939;
+}
+
+.page-header p {
+  margin: 0;
+  color: #667085;
+  font-size: 15px;
+}
+
+
+/* =========================
+   Cards
+========================= */
+
+.profile-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #eaecf0;
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(16, 24, 40, 0.04);
+}
+
+
+/* =========================
+   Profile Header
+========================= */
+
+.profile-header-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 25px;
+}
+
+.profile-image-wrapper {
+  width: 105px;
+  height: 105px;
+  min-width: 105px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #f0f4f8;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-main-info {
+  flex: 1;
+}
+
+.profile-main-info h2 {
+  margin: 0 0 10px;
+  font-size: 25px;
+  font-weight: 700;
+  color: #1d2939;
+}
+
+.profile-main-info p {
+  margin: 5px 0;
+  color: #667085;
+  font-size: 14px;
+}
+
+.profile-main-info i {
+  margin-right: 7px;
+}
+
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #ecfdf3;
+  color: #027a48;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.verified-badge i {
+  margin: 0;
+}
+
+
+/* =========================
+   Profile Grid
+   Personal + Address
+========================= */
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+
+/* =========================
+   Card Title
+========================= */
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 25px;
+}
+
+.title-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef7fb;
+  color: #005c86;
+  font-size: 18px;
+}
+
+.title-icon i {
+  margin: 0;
+}
+
+.card-title h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1d2939;
+}
+
+.card-title p {
+  margin: 0;
+  color: #98a2b3;
+  font-size: 13px;
+}
+
+
+/* =========================
+   Information
+========================= */
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.info-item:first-child {
+  padding-top: 0;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.label {
+  color: #667085;
+  font-size: 14px;
+}
+
+.value {
+  color: #1d2939;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: right;
+}
+
+
+/* =========================
+   Address
+========================= */
+
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 30px;
+}
+
+.address-grid .info-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+
+/* =========================
+   My Orders
+========================= */
+
+.orders-card {
+  width: 100%;
+}
+
+
+/* =========================
+   Orders Loading
+========================= */
+
+.orders-loading {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #667085;
+  font-size: 14px;
+}
+
+.small-spinner {
+  width: 25px;
+  height: 25px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #005c86;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+
+/* =========================
+   Orders Error
+========================= */
+
+.orders-error {
+  padding: 16px;
+  background: #fff5f5;
+  border: 1px solid #ffd6d6;
+  border-radius: 10px;
+  color: #c62828;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+
+/* =========================
+   Empty Orders
+========================= */
+
+.no-orders {
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+}
+
+.empty-orders-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #eef7fb;
+  color: #005c86;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+.no-orders h4 {
+  margin: 0 0 7px;
+  color: #1d2939;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.no-orders p {
+  margin: 0;
+  color: #98a2b3;
+  font-size: 14px;
+}
+
+
+/* =========================
+   Orders List
+========================= */
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-item {
+  display: grid;
+  grid-template-columns: 50px 1fr auto auto auto;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.order-item:first-child {
+  padding-top: 0;
+}
+
+.order-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+
+/* =========================
+   Order Icon
+========================= */
+
+.order-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: #eef7fb;
+  color: #005c86;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.order-icon i {
+  margin: 0;
+}
+
+
+/* =========================
+   Order Info
+========================= */
+
+.order-number {
+  color: #1d2939;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.order-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #98a2b3;
+  font-size: 12px;
+}
+
+.order-meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.order-meta i {
+  color: #667085;
+}
+
+
+/* =========================
+   Order Status
+========================= */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #fff7e6;
+  color: #b54708;
+}
+
+.status-completed {
+  background: #ecfdf3;
+  color: #027a48;
+}
+
+.status-processing {
+  background: #eef4ff;
+  color: #3538cd;
+}
+
+.status-cancelled {
+  background: #fff1f3;
+  color: #c01048;
+}
+
+.status-default {
+  background: #f2f4f7;
+  color: #475467;
+}
+
+
+/* =========================
+   Order Total
+========================= */
+
+.order-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.order-total span {
+  color: #98a2b3;
+  font-size: 12px;
+}
+
+.order-total strong {
+  color: #1d2939;
+  font-size: 16px;
+}
+
+
+/* =========================
+   View Order
+========================= */
+
+.view-order-btn {
+  border: 1px solid #005c86;
+  background: #ffffff;
+  color: #005c86;
+  padding: 9px 14px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  white-space: nowrap;
+}
+
+.view-order-btn:hover {
+  background: #005c86;
+  color: #ffffff;
+}
+
+.view-order-btn i {
+  margin-left: 5px;
+}
+
+
+/* =========================
+   Loading
+========================= */
+
+.loading-box {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #667085;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #005c86;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================
+   Error
+========================= */
+
+.error-box {
+  padding: 20px;
+  background: #fff5f5;
+  border: 1px solid #ffd6d6;
+  border-radius: 10px;
+  color: #c62828;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 991px) {
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .address-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .order-item {
+    grid-template-columns: 50px 1fr auto;
+  }
+
+  .order-status {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .order-total {
+    grid-column: 2;
+    grid-row: 2;
+    align-items: flex-start;
+  }
+
+  .view-order-btn {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+}
+
+
+@media (max-width: 767px) {
+
+  .profile-page {
+    padding: 30px 0 50px;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+  }
+
+  .profile-header-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-main-info {
+    width: 100%;
+  }
+
+  .address-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-item {
+    align-items: flex-start;
+  }
+
+  .value {
+    text-align: left;
+  }
+
+  .order-item {
+    grid-template-columns: 50px 1fr;
+    gap: 12px;
+  }
+
+  .order-icon {
+    grid-row: 1;
+  }
+
+  .order-info {
+    grid-column: 2;
+  }
+
+  .order-status {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    justify-self: start;
+  }
+
+  .order-total {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    align-items: flex-start;
+  }
+
+  .view-order-btn {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    width: 100%;
+  }
+
+  .order-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .profile-card {
+    padding: 20px;
+  }
+
+  .profile-image-wrapper {
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
+  }
+
+}
+
+.profile-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logout-profile-btn {
+  border: 1px solid #dc3545;
+  background: #fff;
+  color: #dc3545;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-profile-btn:hover {
+  background: #dc3545;
+  color: #fff;
+}
