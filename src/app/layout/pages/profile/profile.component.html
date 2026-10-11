@@ -411,20 +411,19 @@
 
             </div>
 
+<!-- Order Total -->
 
-            <!-- Order Total -->
-            <div class="order-total">
+<div class="order-total">
 
-              <span>
-                Total
-              </span>
+  <span>
+    Total
+  </span>
 
-              <strong>
-                {{ order.total }}
-              </strong>
+  <strong>
+    EGP{{ getDisplayOrderTotal(order) | number:'1.0-2' }}
+  </strong>
 
-            </div>
-
+</div>
 
             <!-- View Details -->
             <button

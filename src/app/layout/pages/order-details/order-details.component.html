@@ -9,13 +9,11 @@
     class="loading-box"
     *ngIf="loading"
   >
-
     <div class="spinner"></div>
 
     <p>
       Loading order details...
     </p>
-
   </div>
 
 
@@ -27,13 +25,11 @@
     class="error-box"
     *ngIf="!loading && errorMessage"
   >
-
     <i class="bi bi-exclamation-circle"></i>
 
     <p>
       {{ errorMessage }}
     </p>
-
   </div>
 
 
@@ -65,14 +61,11 @@
 
       </div>
 
-
       <div
         class="order-status"
         [ngClass]="getStatusClass(order.status)"
       >
-
         {{ order.status }}
-
       </div>
 
     </div>
@@ -147,6 +140,8 @@
       </div>
 
 
+      <!-- TOTAL CARD -->
+
       <div class="info-card">
 
         <div class="icon">
@@ -160,7 +155,7 @@
           </span>
 
           <strong>
-            {{ order.total }}
+            EGP{{ getDisplayTotal() | number:'1.0-2' }}
           </strong>
 
         </div>
@@ -175,7 +170,6 @@
     <!-- ================================= -->
 
     <div class="content-grid">
-
 
       <!-- =============================== -->
       <!-- PRODUCTS -->
@@ -223,15 +217,11 @@
                 Qty: {{ product.item.qty }}
               </span>
 
-              <span
-                *ngIf="product.item.size"
-              >
+              <span *ngIf="product.item.size">
                 Size: {{ product.item.size }}
               </span>
 
-              <span
-                *ngIf="product.item.color"
-              >
+              <span *ngIf="product.item.color">
                 Color: {{ product.item.color }}
               </span>
 
@@ -242,7 +232,7 @@
 
           <div class="product-price">
 
-            ${{ getPrice(product.item.item_price).toFixed(2) }}
+            EGP{{ getPrice(product.item.item_price) | number:'1.0-2' }}
 
           </div>
 
@@ -266,6 +256,8 @@
         </div>
 
 
+        <!-- SUBTOTAL -->
+
         <div class="summary-row">
 
           <span>
@@ -273,11 +265,13 @@
           </span>
 
           <strong>
-            ${{ getPrice(order.total).toFixed(2) }}
+            EGP{{ getDisplayTotal() | number:'1.0-2' }}
           </strong>
 
         </div>
 
+
+        <!-- SHIPPING -->
 
         <div class="summary-row">
 
@@ -286,11 +280,13 @@
           </span>
 
           <strong>
-            ${{ getPrice(order.shipping_cost).toFixed(2) }}
+            EGP{{ getPrice(order.shipping_cost) | number:'1.0-2' }}
           </strong>
 
         </div>
 
+
+        <!-- PACKAGING -->
 
         <div class="summary-row">
 
@@ -299,27 +295,31 @@
           </span>
 
           <strong>
-            ${{ getPrice(order.packing_cost).toFixed(2) }}
+            EGP{{ getPrice(order.packing_cost) | number:'1.0-2' }}
           </strong>
 
         </div>
 
 
-        <div
-          class="summary-row"
-          *ngIf="order.coupon_discount"
-        >
+      
+<!-- COUPON DISCOUNT -->
 
-          <span>
-            Discount
-          </span>
+<div
+  class="summary-row"
+  *ngIf="getDisplayDiscount() > 0"
+>
+  <span>
+    Coupon Discount
+  </span>
 
-          <strong class="discount">
-            -${{ getPrice(order.coupon_discount).toFixed(2) }}
-          </strong>
+  <strong class="discount">
+    -EGP{{ getDisplayDiscount() | number:'1.0-2' }}
+  </strong>
+</div>
 
-        </div>
 
+
+        <!-- FINAL TOTAL -->
 
         <div class="summary-total">
 
@@ -328,11 +328,13 @@
           </span>
 
           <strong>
-            {{ order.total }}
+            EGP{{ getDisplayTotal() | number:'1.0-2' }}
           </strong>
 
         </div>
 
+
+        <!-- PAID AMOUNT -->
 
         <div class="paid-box">
 
@@ -341,7 +343,7 @@
           </span>
 
           <strong>
-            {{ order.paid_amount }}
+            EGP{{ getDisplayPaidAmount() | number:'1.0-2' }}
           </strong>
 
         </div>
@@ -357,8 +359,8 @@
 
     <div class="address-grid">
 
-
       <!-- CUSTOMER -->
+
       <div class="address-card">
 
         <div class="card-header">
@@ -453,6 +455,7 @@
 
 
       <!-- SHIPPING -->
+
       <div class="address-card">
 
         <div class="card-header">
